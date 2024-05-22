@@ -1,0 +1,472 @@
+openapi: 3.0.0
+info:
+  title: Market Place API
+  description: Documentation de l'API Market Place
+  version: 1.0.0
+servers:
+  - url: https://a760-92-88-170-121.ngrok-free.app
+    description: Serveur local
+paths:
+  /api/market_place/v1/auth/signup:
+    post:
+      summary: Créer un compte utilisateur
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Utilisateur créé avec succès
+  /api/market_place/v1/auth/login:
+    post:
+      summary: Connectez-vous à un compte utilisateur
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Connexion réussie, jeton JWT généré
+  /api/market_place/v1/auth/logout:
+    post:
+      summary: Déconnectez-vous d'un compte utilisateur
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Utilisateur déconnecté avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/auth/confirm-email:
+    get:
+      summary: Confirmez votre adresse mail
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Mail confirmé avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/admin/user/{id}:
+    delete:
+      summary: Supprimer un utilisateur (admin)
+      tags:
+        - Admin
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Utilisateur supprimé avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/admin/users:
+    get:
+      summary: Récupérer tous les utilisateurs (admin)
+      tags:
+        - Admin
+      responses:
+        "200":
+          description: Liste des utilisateurs récupérée avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/user/{id}:
+    get:
+      summary: Récupérer un utilisateur spécifique
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Utilisateur récupéré avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/user/profile/{id}:
+    put:
+      summary: Mettre à jour les informations de l'utilisateur
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Informations utilisateur mises à jour avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/admin/products/product:
+    post:
+      summary: Créer un produit (admin)
+      tags:
+        - Admin/products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+      responses:
+        "200":
+          description: Produit créé avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/admin/products/product/profile/{id}:
+    put:
+      summary: Mettre à jour un produit (admin)
+      tags:
+        - Admin/products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+      responses:
+        "200":
+          description: Produit mis à jour avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/products:
+    get:
+      summary: Récupérer tous les produits
+      tags:
+        - Shop
+      responses:
+        "200":
+          description: Liste des produits récupérée avec succès
+  /api/market_place/v1/shop/product/{id}:
+    get:
+      summary: Récupérer un produit spécifique
+      tags:
+        - Shop
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Produit récupéré avec succès
+  /api/market_place/v1/admin/products/product/{id}:
+    delete:
+      summary: Supprimer un produit (admin)
+      tags:
+        - Admin/products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Produit supprimé avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/shop/user/order:
+    post:
+      summary: Créer une commande
+      tags:
+        - Shop/user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: integer
+      responses:
+        "200":
+          description: Commande créée avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/admin/orders/order/{id}:
+    delete:
+      summary: Supprimer une commande (admin)
+      tags:
+        - Admin/orders
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Commande supprimée avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/admin/orders:
+    get:
+      summary: Récupérer toutes les commandes (admin)
+      tags:
+        - Admin/orders
+      responses:
+        "200":
+          description: Liste des commandes récupérée avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/admin/orders/orderDetails/{id}:
+    get:
+      summary: Récupérer les détails d'une commande spécifique (admin)
+      tags:
+        - Admin/orders
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Détails de la commande récupérés avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/user/myOrders/{id}:
+    get:
+      summary: Récupérer toutes les commandes d'un utilisateur
+      tags:
+        - Shop/user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Liste des commandes de l'utilisateur récupérée avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/user/myOrderDetails/{id}:
+    get:
+      summary: Récupérer les détails d'une commande spécifique de l'utilisateur
+      tags:
+        - Shop/user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Détails de la commande de l'utilisateur récupérés avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/user/myOrder/{id}:
+    delete:
+      summary: Supprimer une commande
+      tags:
+        - Shop/user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Commande supprimée avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/shop/payment/create-payment-session:
+    post:
+      summary: Créer une session de paiement
+      tags:
+        - Shop/payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: number
+      responses:
+        "200":
+          description: Session de paiement créée avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/payment/success:
+    get:
+      summary: Page de succès de paiement
+      tags:
+        - Shop/payment
+      responses:
+        "200":
+          description: Paiement effectué avec succès
+  /api/market_place/v1/shop/payment/cancel:
+    post:
+      summary: Annuler un paiement
+      tags:
+        - Shop/payment
+      responses:
+        "200":
+          description: Paiement annulé avec succès
+      security:
+        - BearerAuth: []
+
+  /api/market_place/v1/shop/cart:
+    post:
+      summary: créer un panier tout en y ajoutant des produits
+      tags:
+        - Shop/cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ProductId:
+                  type: array
+      responses:
+        "200":
+          description: Produit ajouté au panier avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/cart/{cartId}/{id}:
+    post:
+      summary: Ajouter un article au panier
+      tags:
+        - Shop/cart
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Article ajouté au panier avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/shop/cart/Item/{cartId}/{id}:
+    delete:
+      summary: Supprimer un article du panier
+      tags:
+        - Shop/cart
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Article supprimé du panier avec succès
+      security:
+        - BearerAuth: []
+  /api/market_place/v1/cart/myCart/{cartId}/{id}:
+    get:
+      summary: Récupérer le panier
+      tags:
+        - Shop/cart
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Panier récupéré avec succès
+      security:
+        - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
