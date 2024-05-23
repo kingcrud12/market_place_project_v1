@@ -4,7 +4,7 @@ info:
   description: Documentation de l'API Market Place
   version: 1.0.0
 servers:
-  - url: https://a760-92-88-170-121.ngrok-free.app
+  - url: https://568e-45-149-155-124.ngrok-free.app
     description: Serveur local
 paths:
   /api/market_place/v1/auth/signup:
