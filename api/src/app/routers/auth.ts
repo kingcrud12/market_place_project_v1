@@ -9,7 +9,7 @@ authRoutes.post("/signup", signup)
 
 authRoutes.post("/login", login)
 
-authRoutes.post("/logout", logout)
+authRoutes.post("/logout",isAuthenticated, logout)
 
 authRoutes.get('/confirm-email', confirmEmail);
 

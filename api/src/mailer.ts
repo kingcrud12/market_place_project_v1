@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import * as nodemailer from 'nodemailer';
 import { mdp_mail, user_mail } from './secret';
 
 const transporter = nodemailer.createTransport({

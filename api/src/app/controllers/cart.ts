@@ -17,6 +17,29 @@ export const addToCart = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Product IDs are required in the request body' });
     }
 
+
+    const token = req.headers.authorization?.split(' ')[1]
+
+    // Je vérifie si le token n'est pas fourni
+    if (!token) {
+      return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
+    }
+
+    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number };
+
+    //je récupère  l'ID de l'utilisateur depuis le token
+    const userId = decodedToken.userId;
+
+    const user = await prismaClient.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+      },
+    }); //je recherche l'id dans la base de données
+
+
     // je récupère les des produits à partir de la base de données
     const products = await prismaClient.product.findMany({
       where: { id: { in: productIds.map(id => parseInt(id)) } },
@@ -31,16 +54,19 @@ export const addToCart = async (req: Request, res: Response) => {
     // je créee le panier dans la base de données
     const cart = await prisma.cart.create({
       data: {
+        consummerId: userId,
         products: {
           connect: productIds.map(productId => ({ id: Number(productId) }))
-        }
+        },
       },
       // je sélectionne les champs que je souhaite renvoyer dans la réponse
       select: {
         id: true,
         products: {
           select: {
-            id: true
+            id: true,
+            name: true,
+            price: true,
           }
         },
         createdAt: true,
@@ -122,7 +148,7 @@ export const addItemToCart = async (req: Request, res: Response) => {
         id: true,
         products: {
           select: {
-            id: true
+            id: true,
           }
         },
         createdAt: true,

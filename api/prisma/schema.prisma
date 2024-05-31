@@ -61,10 +61,11 @@ model OrderStatus {
 }
 
 model Cart {
-  id        Int       @id @default(autoincrement())
-  products  Product[] @relation("CartProducts")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          Int       @id @default(autoincrement())
+  consummerId Int
+  products    Product[] @relation("CartProducts")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("Carts")
 }

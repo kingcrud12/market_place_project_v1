@@ -4,7 +4,7 @@ info:
   description: Documentation de l'API Market Place
   version: 1.0.0
 servers:
-  - url: https://568e-45-149-155-124.ngrok-free.app
+  - url: https://8cb6-176-124-43-18.ngrok-free.app
     description: Serveur local
 paths:
   /api/market_place/v1/auth/signup:
@@ -68,7 +68,7 @@ paths:
       security:
         - BearerAuth: []
 
-  /api/market_place/v1/admin/user/{id}:
+  /api/market_place/v1/admin/user:
     delete:
       summary: Supprimer un utilisateur (admin)
       tags:
@@ -95,7 +95,7 @@ paths:
       security:
         - BearerAuth: []
 
-  /api/market_place/v1/user/{id}:
+  /api/market_place/v1/user:
     get:
       summary: Récupérer un utilisateur spécifique
       tags:

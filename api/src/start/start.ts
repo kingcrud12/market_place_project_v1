@@ -5,8 +5,11 @@ import { PrismaClient } from "@prisma/client"
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from 'path';
+import paymentRoutes from "../app/routers/payment";
 
 const app: Express = express();
+
+app.use('/api/market_place/v1/bills', paymentRoutes)
 
 // Middleware pour analyser les demandes JSON
 app.use(express.json());

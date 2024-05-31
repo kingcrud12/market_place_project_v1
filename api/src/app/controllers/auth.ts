@@ -4,6 +4,7 @@ import {hashSync, compareSync} from "bcrypt"
 import * as jwt from "jsonwebtoken"
 import { JWT_SECRET } from "../../secret"
 import { sendConfirmationEmail } from "../../mailer"
+import { Jwt } from "jwt-destroy"
 
 //1. création de compte
 export const signup = async (req: Request, res: Response) =>{
@@ -59,8 +60,22 @@ export const login = async (req: Request, res: Response) =>{
 
 //3. déconnexion
 export const logout = async(req: Request, res: Response) =>{
+  const token = req.headers.authorization!.split(' ')[1]
+
+  if(!token){
+    res.status(401).json({message : "token non fourni, vous devez être authentifié pour accéder à cette ressource"})
+  }
+
+  console.log(token)
+
+  const tokenDestroyer = new Jwt(JWT_SECRET)
+
+  const tokenDestoryed = tokenDestroyer.destroy(token)
+
+  console.log(tokenDestoryed)
+
     try{
-        return res.status(200).json({message: "vous avez déconnecté avec succès"})
+        return res.status(200).json({message: "vous avez déconnecté avec succès", tokenDestoryed})
     } catch(error){
         console.error("Erreur lors de la déconnexion", error)
         return res.status(500).json({ message: 'Erreur interne du serveur' });
@@ -87,7 +102,12 @@ export const getUser = async (req: Request, res: Response) => {
         return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
       }
   
-      // Je décode le token JWT pour obtenir l'ID de l'utilisateur
+      /* Je décode le token JWT pour obtenir l'ID de l'utilisateur
+
+     /*if(!jwt.verify(token, JWT_SECRET)){
+      return res.status(401).json({message : "token non valide"})
+     }*/
+
       const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number };
   
       //je récupère  l'ID de l'utilisateur depuis le token

@@ -57,7 +57,7 @@ export const createPaymentSession = async (req: Request, res: Response) => {
 
     // Je créée une session de paiement Stripe
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'paypal', 'amazon_pay', 'mobilepay'], 
       line_items: products.map(product => ({
         price_data: {
           currency: 'eur',
@@ -80,7 +80,7 @@ export const createPaymentSession = async (req: Request, res: Response) => {
     return res.status(200).json({ url: session.url, session });
   } catch (error) {
     console.error('Erreur lors de la création de la session de paiement :', error);
-    return res.status(500).json({ message: 'Erreur interne du serveur' });
+    return res.status(500).json({ message: 'Erreur interne du serveur', error});
   }
 };
 
@@ -109,7 +109,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     const orderId = session.metadata!.orderId;
 
     // Je mets à jour le statut de la commande en 'PAID'
-    await prisma.orderStatus.update({
+    await prisma.order.update({
       where: { id: parseInt(orderId) },
       data: { status: 'PAID' },
     });
@@ -118,7 +118,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     const orderId = session.metadata!.orderId;
 
     // Je mets à jour le statut de la commande en 'UNPAID'
-    await prisma.orderStatus.update({
+    await prisma.order.update({
       where: { id: parseInt(orderId) },
       data: { status: 'UNPAID' },
     });
@@ -127,7 +127,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     const orderId = session.metadata!.orderId;
 
     // Je mets à jour le statut de la commande en 'PAID'
-    await prisma.orderStatus.update({
+    await prisma.order.update({
       where: { id: parseInt(orderId) },
       data: { status: 'PAID' },
     });

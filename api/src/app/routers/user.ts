@@ -8,4 +8,4 @@ const User = Router()
 User.get("/",isAuthenticated, getUser)
 User.put("/profile/:id",isAuthenticated, updateUserInfo)
 
-export default User
+export default User 
