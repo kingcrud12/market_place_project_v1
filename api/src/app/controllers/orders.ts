@@ -8,83 +8,84 @@ const prisma = new PrismaClient();
 
 //1. Create order
 export const createOrder = async (req: Request, res: Response) => {
+
+  //A. gestion de l'authentification
   try {
-    //je récupère  l'ID de l'utilisateur à partir du token JWT
+    // Récupérer l'ID de l'utilisateur à partir du token JWT
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
       return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
     }
+    
+    // Décoder le token JWT pour obtenir l'ID de l'utilisateur
+    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number, email: string };
 
-    // Je décode  le token JWT pour obtenir l'ID de l'utilisateur
-    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: string, email: string };
-
-    //je récupère l'ID de l'utilisateur et son mail depuis le token
+    // Récupérer l'ID de l'utilisateur et son mail depuis le token
     const userId = decodedToken.userId;
-    const email = decodedToken.email
+    const email = decodedToken.email;
 
-    // je recherche l'utilisateur dans la bdd à l'aide de l'email récupérée depuis le token
+    // Rechercher l'utilisateur dans la bdd à l'aide de l'email récupéré depuis le token
     const user = await prismaClient.user.findFirst({
-      where: {
-          email: email
-      },
-      select: {
-          emailConfirmed: true
-      }
-  })
+      where: { email },
+      select: { emailConfirmed: true }
+    });
 
-     //je vérifie si l'adresse mail récupérée dans la bdd et qui a l'utilisateur dans la base de données a bien la valeur true
-     if(!user || user.emailConfirmed !== true){
-      return res.status(403).json({error: "votre adresse mail n'est pas confirmée."})
-      }
+    // Vérifier si l'adresse mail récupérée dans la bdd et qui a l'utilisateur dans la base de données a bien la valeur true
+    if (!user || user.emailConfirmed !== true) {
+      return res.status(403).json({ error: "Votre adresse mail n'est pas confirmée." });
+    }
 
-    //je récupère l'ID du panier depuis le corps de la requête
-    const cartId : string = req.body.cartId;
+    //B. Gestion du panier
 
-    // je récupère les informations du panier à partir de son ID, en incluant les produits associés
-    const cart = await prisma.cart.findUnique({
+    // je récupère l'id du panier sous forme de string depuis le corps de la requête
+    const cartId: string = req.body.cartId;
+
+    // Récupérer les informations du panier à partir de son ID, en incluant les produits associés
+    const cart = await prismaClient.cart.findUnique({
       where: { id: parseInt(cartId) },
-      include: { products: true }
+      include: { products: { include: { product: true } } } // Inclure les détails du produit
     });
 
     if (!cart) {
-      return res.status(404).json({ message: 'Le panier spécifié n\'existe pas' });
+      return res.status(404).json({ message: "Le panier spécifié n'existe pas" });
     }
 
-    // je récupère les IDs des produits du panier
-    const productIds = cart.products.map(product => product.id);
-
-    // je récupère les prix des produits à partir des IDs
-    const products = await prisma.product.findMany({
-      where: { id: { in: productIds } },
-      select: { id: true, price: true }
-    });
-
-    // Je vérifie si tous les produits existent dans la base de données
-    if (products.length !== productIds.length) {
-      return res.status(400).json({ message: 'Certains produits n\'existent pas' });
+    if(cart.consummerId != userId){
+      return res.status(401).json({message: "Désolé, vous ne pouvez pas utiliser ce panier"})
     }
 
-    // Je calcule le coût total de la commande en additionnant les prix des produits
-    const totalPrice = products.reduce((total, product) => total + product.price, 0);
+    // Récupérer les IDs des produits du panier
+    const productDetails = cart.products.map(cp => ({
+      id: cp.product.id,
+      price: cp.product.price,
+      quantity: cp.quantity
+    }));
 
-    // Je créée la commande dans la base de données
-    const order = await prisma.order.create({
+    // Debugging: Log product details
+    console.log('Product Details:', productDetails);
+
+    // Calculer le coût total de la commande en additionnant les prix des produits multipliés par leur quantité
+    const totalPrice = productDetails.reduce((total, product) => total + product.price * product.quantity, 0);
+
+    // Créer la commande dans la base de données
+    const order = await prismaClient.order.create({
       data: {
         consummerId: Number(userId),
         cartId: parseInt(cartId),
-        productIds: String(productIds), // je convertis le cartId en nombre
+        productIds: productDetails.map(p => p.id).join(','), // Convertir le tableau des IDs de produits en une chaîne séparée par des virgules
         price: totalPrice
       }
     });
 
-    // Je retourne  l'ID de l'utilisateur, le coût total de la commande et l'ID de la commande nouvellement créée
+    // Retourner l'ID de l'utilisateur, le coût total de la commande et l'ID de la commande nouvellement créée
     return res.status(201).json(order);
   } catch (error) {
     console.error('Erreur lors de la création de la commande :', error);
-    return res.status(500).json({ message: 'Erreur interne du serveur' });
+    return res.status(500).json({ message: "Erreur interne du serveur" });
   }
 };
+
 
 //2.delete order (admin)
 export const deleteOrder = async (req: Request, res: Response) => {
@@ -185,11 +186,11 @@ export const getMyOrderDetails = async (req: Request, res: Response) => {
     
 
     //  je récupère  les détails de la commande à partir de la base de données
-    const orderDetails = await prismaClient.order.findUnique({
+    const order = await prismaClient.order.findUnique({
       where: { id: Number(id) }
     });
 
-    if (!orderDetails) {
+    if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
@@ -213,24 +214,30 @@ export const getMyOrderDetails = async (req: Request, res: Response) => {
     }); // je recherche l'id dans la base de données
 
     // Je vérifie si l'ID de l'utilisateur extrait du token JWT correspond à l'ID de l'utilisateur dans la requête
-    if (orderDetails.consummerId !== user?.id) {
+    if (order.consummerId !== user?.id) {
       return res.status(400).json({ error: 'Désolé, vous ne pouvez pas accéder à cette ressource.' });
     }
 
 
     //  je récupère  la chaîne productIds de la commande
-    const productIdsString = orderDetails.productIds;
+    const productIdsString = order.productIds;
 
     // je divise  la chaîne productIds en un tableau d'IDs individuels
     const productIds = productIdsString.split(',').map(id => parseInt(id));
 
     //  je récupère  les informations sur les produits correspondants depuis la base de données
     const products = await prismaClient.product.findMany({
-      where: { id: { in: productIds } }
+      where: { id: { in: productIds } },
+      select:{
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+      }
     });
 
     // Je retourne  les détails de la commande avec les informations sur les produits
-    return res.status(200).json({ orderDetails, products });
+    return res.status(200).json({ order, products });
   } catch (error) {
     console.error('Error fetching order details:', error);
     return res.status(500).json({ message: 'Internal Server Error' });

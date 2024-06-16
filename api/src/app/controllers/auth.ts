@@ -6,6 +6,7 @@ import { JWT_SECRET } from "../../secret"
 import { sendConfirmationEmail } from "../../mailer"
 import { Jwt } from "jwt-destroy"
 
+
 //1. création de compte
 export const signup = async (req: Request, res: Response) =>{
     const {email, password, name} = req.body

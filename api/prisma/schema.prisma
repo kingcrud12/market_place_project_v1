@@ -61,24 +61,32 @@ model OrderStatus {
 }
 
 model Cart {
-  id          Int       @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   consummerId Int
-  products    Product[] @relation("CartProducts")
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  products    CartProduct[]
 
   @@map("Carts")
 }
 
+model CartProduct {
+  id        Int @id @default(autoincrement())
+  cartId    Int
+  productId Int
+  quantity  Int @default(1) // Ajout de la colonne quantité
+
+  cart    Cart    @relation(fields: [cartId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   description String
-  price       Int
   authorId    Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  carts       Cart[]   @relation("CartProducts")
+  price       Float
+  carts       CartProduct[]
 
   @@map("products")
 }

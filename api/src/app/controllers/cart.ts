@@ -6,67 +6,105 @@ import { prismaClient } from '../../start/start';
 
 const prisma = new PrismaClient();
 
-//1. create a cart
+//1. création d'un panier
 export const addToCart = async (req: Request, res: Response) => {
   try {
-    // je récupère les IDs des produits depuis le corps de la requête
-    const productIds: string[] = req.body.productId;
+    // console.log du body pour debug
+    console.log('Request body:', req.body);
 
-    // je vérifie si les productIds sont fournis dans le corps de la requête
-    if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
-      return res.status(400).json({ message: 'Product IDs are required in the request body' });
+    // je recupère les noms et les ids des produits à partir du coprs de la requête
+    const products: { name: string, id: number, quantity: number }[] = req.body.products;
+
+    // je vérifie si les produits ont été bien ajoutés et si le tableau est dans un bon format
+    if (!products || !Array.isArray(products) || products.length === 0) {
+      return res.status(400).json({ message: 'Products are required in the request body' });
     }
 
+    // je récupère le token depuis les en-têtes
+    const token = req.headers.authorization?.split(' ')[1];
 
-    const token = req.headers.authorization?.split(' ')[1]
-
-    // Je vérifie si le token n'est pas fourni
+    // je vérifie si le token a bien été fourni
     if (!token) {
-      return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
+      return res.status(401).json({ error: "Token not provided. You must be authenticated to perform this operation." });
     }
 
+    // je récupère l'id de l'utilisateur depuis le token
     const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number };
-
-    //je récupère  l'ID de l'utilisateur depuis le token
     const userId = decodedToken.userId;
 
+    // je recherche l'utilisateur a partir de son token dans la bdd
     const user = await prismaClient.user.findUnique({
-      where: {
-        id: userId,
-      },
-      select: {
-        id: true,
-      },
-    }); //je recherche l'id dans la base de données
-
-
-    // je récupère les des produits à partir de la base de données
-    const products = await prismaClient.product.findMany({
-      where: { id: { in: productIds.map(id => parseInt(id)) } },
-      select: { id: true, price: true }
+      where: { id: userId },
+      select: { id: true },
     });
 
-    // je vérifie si tous les produits existent dans la base de données
-    if (products.length !== productIds.length) {
+    // si l'utilisateur n'existe pas, je retourne cette erreur
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // je récupère tous les produits uniques par leurs IDS
+    const uniqueProductIds = Array.from(new Set(products.map(product => product.id)));
+    const fetchedProducts = await prismaClient.product.findMany({
+      where: { id: { in: uniqueProductIds } },
+      select: { id: true, name: true, price: true }
+    });
+
+    // debug
+    console.log('Unique Product IDs:', uniqueProductIds);
+    console.log('Fetched Products:', fetchedProducts);
+
+    // Je vérifie si chaque produit unique existe dans la bdd
+    if (fetchedProducts.length !== uniqueProductIds.length) {
       return res.status(400).json({ message: 'Some products do not exist' });
     }
 
-    // je créee le panier dans la base de données
-    const cart = await prisma.cart.create({
+    // je crée un nouveau panier
+    const cart = await prismaClient.cart.create({
       data: {
         consummerId: userId,
-        products: {
-          connect: productIds.map(productId => ({ id: Number(productId) }))
-        },
       },
-      // je sélectionne les champs que je souhaite renvoyer dans la réponse
       select: {
         id: true,
         products: {
           select: {
             id: true,
-            name: true,
-            price: true,
+            productId: true 
+          }
+        },
+        createdAt: true,
+        updatedAt: true
+      },
+    });
+
+    // J'ajoute des produits dans le panier
+    for (const product of products) {
+      await prismaClient.cartProduct.create({
+        data: {
+          cartId: cart.id,
+          productId: product.id,
+          quantity: product.quantity, // Ajout de la quantité
+        }
+      });
+    }
+
+    // je mets à jour le panier
+    const updatedCart = await prismaClient.cart.findUnique({
+      where: { id: cart.id },
+      select: {
+        id: true,
+        products: {
+          select: {
+            id: true,
+            productId: true,
+            quantity: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              }
+            }
           }
         },
         createdAt: true,
@@ -74,81 +112,83 @@ export const addToCart = async (req: Request, res: Response) => {
       }
     });
 
-    // je retourne avec l'ID de l'utilisateur, le coût total de la commande et l'ID de la commande nouvellement créée
-    return res.status(201).json(cart);
+    //je retourne le panier mis à jour
+    res.json(updatedCart);
+
   } catch (error) {
-    console.error('Error creating order:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    console.error('Error adding to cart:', error);
+    res.status(500).json({ error: 'An error occurred while adding to the cart' });
   }
 };
 
 export const addItemToCart = async (req: Request, res: Response) => {
   try {
-    const { cartId } = req.params; //  je récupère  l'identifiant du panier à mettre à jour
-    const { productIds } = req.body; //  je récupère  les IDs des produits à ajouter ou supprimer
-    const token = req.headers.authorization?.split(' ')[1]
-    const { id } = req.params; 
+    const { cartId } = req.params; 
+    const { products } = req.body;
+    const token = req.headers.authorization?.split(' ')[1];
 
-    // Je vérifie si le token n'est pas fourni
     if (!token) {
-      return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
+      return res.status(401).json({ error: "Token not provided. You must be authenticated to perform this operation." });
     }
 
-    // Je décode  le token JWT pour obtenir l'ID de l'utilisateur
     const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number };
-
-    //je récupère  l'ID de l'utilisateur depuis le token
     const userId = decodedToken.userId;
 
     const user = await prismaClient.user.findUnique({
-      where: {
-        id: userId,
-      },
-      select: {
-        id: true,
-      },
-    }); //je recherche l'id dans la base de données
+      where: { id: userId },
+      select: { id: true },
+    });
 
-    // Je vérifie si l'ID de l'utilisateur extrait du token JWT correspond à l'ID de l'utilisateur dans la requête
-    if (id !== user?.id.toString()) {
-      return res.status(400).json({ error: 'Désolé, vous ne pouvez pas accéder à cette ressource.' });
+    if (!user || user.id !== userId) {
+      return res.status(400).json({ error: 'Sorry, you cannot access this resource.' });
     }
 
-    // Je vérifie si l'identifiant du panier est fourni dans la requête
     if (!cartId) {
       return res.status(400).json({ message: 'Cart ID is required' });
     }
 
-    // Je vérifie si les IDs des produits sont fournis dans la requête
-    if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
-      return res.status(400).json({ message: 'Product IDs are required in the request body' });
+    if (!products || !Array.isArray(products) || products.length === 0) {
+      return res.status(400).json({ message: 'Products are required in the request body' });
     }
 
-    //  je récupère  les des produits à partir de la base de données
-    const products = await prisma.product.findMany({
-      where: { id: { in: productIds.map(id => parseInt(id)) } },
+    //récupération des produits depuis la bdd
+    const productIds = products.map(product => product.id);
+    const fetchedProducts = await prismaClient.product.findMany({
+      where: { id: { in: productIds } },
       select: { id: true, price: true }
     });
 
-    // Je vérifie si tous les produits existent dans la base de données
-    if (products.length !== productIds.length) {
+    if (fetchedProducts.length !== productIds.length) {
       return res.status(400).json({ message: 'Some products do not exist' });
     }
 
-    // Je mets à jour le panier dans la base de données
-    const updatedCart = await prisma.cart.update({
-      where: { id: parseInt(cartId) }, // Identifier le panier à mettre à jour
-      data: {
-        products: {
-          connect: productIds.map(productId => ({ id: parseInt(productId) })) // Connecter les nouveaux produits
-        }
-      },
-      // je sélectionne les champs que vous souhaitez renvoyer dans la réponse
+    // J'ajoute les produits au panier
+    for (const { id, quantity } of products) {
+      for (let i = 0; i < quantity; i++) {
+        await prismaClient.cartProduct.create({
+          data: {
+            cartId: parseInt(cartId),
+            productId: id
+          }
+        });
+      }
+    }
+
+    // je récupère le panier mis à jour
+    const updatedCart = await prismaClient.cart.findUnique({
+      where: { id: parseInt(cartId) },
       select: {
         id: true,
         products: {
           select: {
             id: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              }
+            }
           }
         },
         createdAt: true,
@@ -156,66 +196,71 @@ export const addItemToCart = async (req: Request, res: Response) => {
       }
     });
 
-    // Je retourne  le panier mis à jour
     return res.status(200).json(updatedCart);
   } catch (error) {
-    console.error('Error updating cart:', error);
+    console.error('Error adding to cart:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
+
+// controller permettant de supprimer les articles du panier
 export const removeItemToCart = async (req: Request, res: Response) => {
   try {
-    const { cartId } = req.params; //  je récupère  l'identifiant du panier à mettre à jour
-    const { productIds } = req.body; //  je récupère  les IDs des produits à ajouter ou supprimer
-    const token = req.headers.authorization?.split(' ')[1]
+    const { cartId } = req.params;
+    const { productId, quantity } = req.body;
+    const token = req.headers.authorization?.split(' ')[1];
 
-    // Je vérifie si le token n'est pas fourni
     if (!token) {
-      return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
+      return res.status(401).json({ error: "Token not provided. You must be authenticated to perform this operation." });
     }
 
-    // Je décode  le token JWT pour obtenir l'ID de l'utilisateur
     const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number };
-
-    //je récupère  l'ID de l'utilisateur depuis le token
     const userId = decodedToken.userId;
 
-    // Je vérifie si l'identifiant du panier est fourni dans la requête
     if (!cartId) {
       return res.status(400).json({ message: 'Cart ID is required' });
     }
 
-    // Je vérifie si les IDs des produits sont fournis dans la requête
-    if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
-      return res.status(400).json({ message: 'Product IDs are required in the request body' });
+    if (!productId) {
+      return res.status(400).json({ message: 'Product ID is required in the request body' });
     }
 
-    //  je récupère  les des produits à partir de la base de données
-    const products = await prisma.product.findMany({
-      where: { id: { in: productIds.map(id => parseInt(id)) } },
-      select: { id: true, price: true }
-    });
-
-    // Je vérifie si tous les produits existent dans la base de données
-    if (products.length !== productIds.length) {
-      return res.status(400).json({ message: 'Some products do not exist' });
+    if (!quantity || quantity < 1) {
+      return res.status(400).json({ message: 'A valid quantity is required' });
     }
 
-    // Je mets à jour le panier dans la base de données
-    const updatedCart = await prisma.cart.update({
-      where: { id: parseInt(cartId) }, // Identifier le panier à mettre à jour
-      data: {
-        products: {
-          disconnect: productIds.map(productId => ({ id: parseInt(productId) })) // Connecter les nouveaux produits
+    // suppression des produits du paniers
+    for (let i = 0; i < quantity; i++) {
+      const cartProduct = await prismaClient.cartProduct.findFirst({
+        where: {
+          cartId: parseInt(cartId),
+          productId: parseInt(productId)
         }
-      },
-      // je sélectionne les champs que vous souhaitez renvoyer dans la réponse
+      });
+
+      if (cartProduct) {
+        await prismaClient.cartProduct.delete({
+          where: { id: cartProduct.id }
+        });
+      }
+    }
+
+    // je récupère le panier mis à jour
+    const updatedCart = await prismaClient.cart.findUnique({
+      where: { id: parseInt(cartId) },
       select: {
         id: true,
         products: {
           select: {
-            id: true
+            id: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              }
+            }
           }
         },
         createdAt: true,
@@ -223,58 +268,55 @@ export const removeItemToCart = async (req: Request, res: Response) => {
       }
     });
 
-    // Je retourne  le panier mis à jour
     return res.status(200).json(updatedCart);
   } catch (error) {
-    console.error('Error updating cart:', error);
+    console.error('Error removing from cart:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
+
+// controller permettant d'afficher un panier
 export const getCart = async (req: Request, res: Response) => {
   try {
-    const { cartId } = req.params; //je récupère  l'identifiant du panier à mettre à jour
-    const token = req.headers.authorization?.split(' ')[1]
-    const { id } = req.params; 
+    const { cartId } = req.params;
+    const token = req.headers.authorization?.split(' ')[1];
 
-    // Je vérifie si le token n'est pas fourni
     if (!token) {
-      return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
+      return res.status(401).json({ error: "Token not provided. You must be authenticated to perform this operation." });
     }
 
-    // Je décode  le token JWT pour obtenir l'ID de l'utilisateur
-    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: string };
-
-    //je récupère  l'ID de l'utilisateur depuis le token
+    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number }; // décode le token pour en retirer l'id
     const userId = decodedToken.userId;
 
     const user = await prismaClient.user.findUnique({
-      where: {
-        id: Number(userId),
-      },
-      select: {
-        id: true,
-      },
-    }); // rechercher l'id dans la base de données
+      where: { id: userId },
+      select: { id: true },
+    });
 
-    // Vérifier si l'ID de l'utilisateur extrait du token JWT correspond à l'ID de l'utilisateur dans la requête
-    if (id !== user?.id.toString()) {
-      return res.status(400).json({ error: 'Désolé, vous ne pouvez pas accéder à cette ressource.' });
+    if (!user || user.id !== userId) {
+      return res.status(400).json({ error: 'Sorry, you cannot access this resource.' });
     }
 
-    // Je vérifie si l'identifiant du panier est fourni dans la requête
     if (!cartId) {
       return res.status(400).json({ message: 'Cart ID is required' });
     }
-    // Je mets à jour le panier dans la base de données
-    const updatedCart = await prisma.cart.findFirst({
-      where: { id: parseInt(cartId) }, // J'identifie le panier à mettre à jour
-      // je sélectionne les champs que vous souhaitez renvoyer dans la réponse
+
+    // Fetch the cart from the database
+    const cart = await prismaClient.cart.findUnique({
+      where: { id: parseInt(cartId) },
       select: {
         id: true,
         products: {
           select: {
-            id: true
+            id: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              }
+            }
           }
         },
         createdAt: true,
@@ -282,13 +324,9 @@ export const getCart = async (req: Request, res: Response) => {
       }
     });
 
-    // Je retourne  le panier mis à jour
-    return res.status(200).json(updatedCart);
+    return res.status(200).json(cart);
   } catch (error) {
-    console.error('Error updating cart:', error);
+    console.error('Error fetching cart:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
-
-

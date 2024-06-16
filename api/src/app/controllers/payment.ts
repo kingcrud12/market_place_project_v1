@@ -14,59 +14,59 @@ const stripe = new Stripe(STRIPE_SECRET_KEY, {
 // je créée une session de paiement et je gère le statut de la commande
 export const createPaymentSession = async (req: Request, res: Response) => {
   try {
-    // Je récupère l'ID de l'utilisateur à partir du token JWT
+    // Récupérer l'ID de l'utilisateur à partir du token JWT
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
       return res.status(401).json({ error: "Token non fourni. Vous devez être authentifié pour réaliser cette opération." });
     }
 
-    // je décode le token JWT pour obtenir l'ID de l'utilisateur
+    // Décoder le token JWT pour obtenir l'ID de l'utilisateur
     const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: string };
 
-    // je récupère l'ID de l'utilisateur depuis le token
+    // Récupérer l'ID de l'utilisateur depuis le token
     const userId = decodedToken.userId;
 
-
+    // Récupérer l'utilisateur dans la base de données
     const user = await prismaClient.user.findFirst({
-        where: {
-            id: Number(userId)
-        }
-    })
+      where: {
+        id: Number(userId),
+      },
+    });
 
-    //je récupère  l'ID de la commande depuis le corps de la requête
+    // Récupérer l'ID de la commande depuis le corps de la requête
     const { orderId } = req.body;
 
-    //je récupère  les informations de la commande à partir de son ID
-    const order = await prisma.order.findUnique({
+    // Récupérer les informations de la commande à partir de son ID
+    const order = await prismaClient.order.findUnique({
       where: { id: parseInt(orderId) },
     });
 
     if (!order) {
-      return res.status(404).json({ message: 'La commande spécifiée n\'existe pas' });
+      return res.status(404).json({ message: "La commande spécifiée n'existe pas" });
     }
 
-    // Je convertis les productIds en tableau de nombres
+    // Convertir les productIds en tableau de nombres
     const productIds = order.productIds.split(',').map(id => parseInt(id.trim()));
 
-    //je récupère  les produits à partir de leurs IDs
-    const products = await prisma.product.findMany({
-      where: { id: { in: productIds } },
-      select: { id: true, price: true, name: true }
+    // Récupérer les produits à partir de leurs IDs
+    const products = await prismaClient.cartProduct.findMany({
+      where: { cartId: order.cartId, productId: { in: productIds } },
+      include: { product: true },
     });
 
-    // Je créée une session de paiement Stripe
+    // Créer une session de paiement Stripe
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'paypal', 'amazon_pay', 'mobilepay'], 
-      line_items: products.map(product => ({
+      payment_method_types: ['card', 'paypal', 'mobilepay'],
+      line_items: products.map(cartProduct => ({
         price_data: {
           currency: 'eur',
           product_data: {
-            name: product.name,
+            name: cartProduct.product.name,
           },
-          unit_amount: product.price * 100, // Stripe charge les montants en centimes
+          unit_amount: cartProduct.product.price * 100, // Stripe charge les montants en centimes
         },
-        quantity: 1,
+        quantity: cartProduct.quantity,
       })),
       mode: 'payment',
       success_url: `${process.env.BACKEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -76,11 +76,11 @@ export const createPaymentSession = async (req: Request, res: Response) => {
       },
     });
 
-    // Je retourne l'URL de la session de paiement
+    // Retourner l'URL de la session de paiement
     return res.status(200).json({ url: session.url, session });
   } catch (error) {
     console.error('Erreur lors de la création de la session de paiement :', error);
-    return res.status(500).json({ message: 'Erreur interne du serveur', error});
+    return res.status(500).json({ message: 'Erreur interne du serveur', error });
   }
 };
 
@@ -133,7 +133,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
     });
   }
 
-  res.status(200).send('Received Stripe webhook event');
+  res.status(201).send('Received Stripe webhook event');
 };
 // Endpoints pour success et cancel
 export const paymentSuccess = async (req: Request, res: Response) => {
@@ -142,10 +142,10 @@ export const paymentSuccess = async (req: Request, res: Response) => {
   // je peux récupérer les détails de la session de paiement ici si nécessaire
   // const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-  return res.status(200).send(`Payment was successful! Session ID: ${sessionId}`);
+  return res.status(201).send(`Payment was successful! Session ID: ${sessionId}`);
 };
 
 export const paymentCancel = async (req: Request, res: Response) => {
-  return res.status(200).send('Payment was canceled.');
+  return res.status(201).send('Payment was canceled.');
 };
 
