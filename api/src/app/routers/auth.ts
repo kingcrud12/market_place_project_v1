@@ -13,7 +13,4 @@ authRoutes.post("/logout",isAuthenticated, logout)
 
 authRoutes.get('/confirm-email', confirmEmail);
 
-authRoutes.get("/Shop/user/:id", isAuthenticated, getUser)
-authRoutes.put("/Shop/user/:id", updateUserInfo)
-
 export default authRoutes

@@ -1,34 +1,30 @@
 import { Router } from "express";;
 import authRoutes from "./auth";
-import paymentRoutes from "./payment";
-import adminRoutesUser from "./admin";
-import adminProducts from "./adminProducts";
-import Shop from "./Shop";
 import User from "./user";
-import adminOrders from "./adminOrders";
 import { createPaymentSession } from "../controllers/payment";
+import adminRoutes from "./adminRoutes";
+import shop from "./Shop";
 
 const rootRouter : Router = Router()
 
+//Auth endpoint
 rootRouter.use("/auth", authRoutes)
 
+//User endpoint
 rootRouter.use("/user", User)
 
-rootRouter.use("/admin/orders", adminOrders)
+//Admin endpoint
+rootRouter.use("/admin", adminRoutes)
 
-//rootRouter.use("/shop/payment", paymentRoutes)
+//Shop endpoint
+rootRouter.use("/shop", shop)
 
-rootRouter.use("/shop", Shop)
-
-rootRouter.use("/admin", adminRoutesUser)
-
-rootRouter.use("/admin/products", adminProducts)
-
+//Specific payment route
 rootRouter.post('/create-payment-session', createPaymentSession)
 
+//Index route
 rootRouter.get("/", (req, res)=>{
-    const documentationUrl = "https://5f98-92-88-171-222.ngrok-free.app/api-docs";
-    return res.status(200).json({message : "Hi buddy, welcome to my marketplace API, get the doc here:", documentationUrl})
+    return res.status(200).json({message : "Hi buddy, welcome to my marketplace API, get the doc here:"})
 })
 
 
