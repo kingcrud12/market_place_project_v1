@@ -64,9 +64,9 @@ Pour utiliser les controleurs de paiement ainsi que les routes associées :
 Vous pouvez utliser les variables suivantes : 
 - Creer un compte Stripe
 - Ajouter votre end point privé endpointSecret (clé stripe lue par le webhook)
-endpointSecret = 'whsec_655c86947dad01356835c55095895d4326b665837e5d8c545c22cac1bea7c851' 
+endpointSecret = 'some endpoint secret' 
 - Ajouter votre clé privé STRIPE_SECRET_KEY
-STRIPE_SECRET_KEY = sk_test_51PGXOLDQ2yD2McZ1rYtB5zPibJgTgsClxmcb5yOC8NheNeOV4lEzQtXaZjRzFGLQGmOzpk3zJFfqTCQrUc7TFMz300Xt3vmZFr 
+STRIPE_SECRET_KEY = some stripe key 
 
 ## Lancer l'API
 A partir du dossier api, lancer la commande <code>npm start</code>
