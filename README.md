@@ -145,7 +145,7 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 
 ### Gestion des produits
 
-#### **POST** `/admin/products/product`
+#### **POST** `/admin/product`
 - **Description** : Crée un nouveau produit.
 - **Corps de la requête** :
   ```json
@@ -159,19 +159,25 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 - **Middleware** : `isAdmin`
 - **Réponse** : Détails du produit créé.
 
-#### **PUT** `/admin/products/product/profile/:id`
+#### **PUT** `/admin/product/{id}`
 - **Description** : Met à jour un produit spécifique.
 - **Params** :
   - `id` : ID du produit à mettre à jour.
 - **Middleware** : `isAdmin`
 - **Réponse** : Détails du produit mis à jour.
 
-#### **DELETE** `/admin/products/product/:id`
+#### **DELETE** `/admin/product/{id}`
 - **Description** : Supprime un produit spécifique.
 - **Params** :
   - `id` : ID du produit à supprimer.
 - **Middleware** : `isAdmin`
 - **Réponse** : Confirmation de la suppression du produit.
+
+#### **GET** `/admin/products`
+- **Description** : Récupère tous les produits.
+- **Params** :
+- **Middleware** : `isAdmin`
+- **Réponse** : Confirmation de la récupération des produits.
 
 ### Gestion des commandes
 
@@ -180,14 +186,14 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 - **Middleware** : `isAdmin`
 - **Réponse** : Liste des commandes.
 
-#### **GET** `/admin/orders/orderDetails/:id`
+#### **GET** `/admin/order/{id}`
 - **Description** : Récupère les détails d'une commande spécifique.
 - **Params** :
   - `id` : ID de la commande.
 - **Middleware** : `isAdmin`
 - **Réponse** : Détails de la commande.
 
-#### **DELETE** `/admin/orders/order/:id`
+#### **DELETE** `/admin/order/{id}`
 - **Description** : Supprime une commande spécifique.
 - **Params** :
   - `id` : ID de la commande.
@@ -230,19 +236,19 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 - **Corps de la requête** : Détails des produits commandés.
 - **Réponse** : Détails de la commande créée.
 
-#### **GET** `/shop/user/myOrders`
+#### **GET** `/shop/user/Orders`
 - **Description** : Récupère la liste des commandes de l'utilisateur connecté.
 - **Middleware** : `isAuthenticated`
 - **Réponse** : Liste des commandes.
 
-#### **GET** `/shop/user/myOrderDetails/:id`
+#### **GET** `/shop/user/OrderDetails/:id`
 - **Description** : Récupère les détails d'une commande spécifique de l'utilisateur connecté.
 - **Params** :
   - `id` : ID de la commande.
 - **Middleware** : `isAuthenticated`
 - **Réponse** : Détails de la commande.
 
-#### **DELETE** `/shop/user/myOrder/:id`
+#### **DELETE** `/shop/user/Order/:id`
 - **Description** : Supprime une commande spécifique de l'utilisateur connecté.
 - **Params** :
   - `id` : ID de la commande.
@@ -273,7 +279,7 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 - **Middleware** : `isAuthenticated`
 - **Réponse** : Confirmation de la suppression des produits.
 
-#### **GET** `/shop/myCart/:cartId/:id`
+#### **GET** `/shop/Cart/:cartId/:id`
 - **Description** : Récupère les détails d'un panier spécifique.
 - **Params** :
   - `cartId` : ID du panier.
@@ -288,16 +294,16 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 - **Corps de la requête** : Détails de la commande pour laquelle la session est créée.
 - **Réponse** : Détails de la session de paiement.
 
-### **POST** `/shop/payment/webhook`
+### **POST** `/bills/payment/webhook`
 - **Description** : Gère les webhooks Stripe pour les paiements.
 - **Corps de la requête** : Webhook Stripe.
 - **Réponse** : Confirmation de la réception du webhook.
 
-### **GET** `/shop/payment/success`
+### **GET** `/bills/payment/success`
 - **Description** : Affiche la page de succès après un paiement réussi.
 - **Réponse** : Message de succès.
 
-### **POST** `/shop/payment/cancel`
+### **POST** `/bills/payment/cancel`
 - **Description** : Annule une session de paiement.
 - **Réponse** : Confirmation de l'annulation.
 
