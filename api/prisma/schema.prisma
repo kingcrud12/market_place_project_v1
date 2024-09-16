@@ -86,7 +86,14 @@ model Product {
   description String
   authorId    Int
   price       Float
+  imageUrl    String?       // Nouveau champ pour l'URL de l'image
   carts       CartProduct[]
 
   @@map("products")
+}
+
+model Blacklist {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createdAt DateTime @default(now())
 }

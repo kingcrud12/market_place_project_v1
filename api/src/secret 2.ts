@@ -13,3 +13,5 @@ export const EndpointSecret  = process.env.endpointSecret!
 export const user_mail  = process.env.user_mail!
 
 export const mdp_mail  = process.env.mdp_mail!
+
+export const reset_token_secret = process.env.resetTokenSecret!

@@ -1,0 +1,116 @@
+.admin-dashboard {
+  padding: 20px;
+  background-color: #f9f9f9; /* Couleur de fond plus douce pour un meilleur contraste */
+  min-height: 100vh; /* S'assure que le dashboard prend au moins toute la hauteur de l'écran */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px; /* Taille de texte augmentée pour une meilleure lisibilité */
+  color: #333; /* Couleur plus foncée pour un meilleur contraste */
+}
+
+/* Conteneur pour les boutons d'action */
+.actions-container {
+  display: flex;
+  justify-content: center; /* Centre les boutons */
+  gap: 15px; /* Ajoute un espacement uniforme entre les boutons */
+  margin-bottom: 25px;
+}
+
+/* Style du lien "Ajouter un produit" et bouton "Retour à l'accueil" */
+.add-product-link, .return-button {
+  display: inline-block;
+  padding: 12px 25px; /* Amélioration de la taille des boutons */
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Transition fluide pour le hover */
+}
+
+.add-product-link:hover, .return-button:hover {
+  background-color: #0056b3;
+}
+
+.return-button {
+  background-color: #007BFF; /* Couleur différente pour le bouton retour */
+  cursor: pointer;
+}
+
+/* Conteneur de la table */
+.table-container {
+  max-width: 80%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre légèrement augmentée pour l'esthétique */
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  text-align: left;
+}
+
+.products-table th, .products-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px; /* Amélioration du padding pour un meilleur confort visuel */
+}
+
+.products-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #555; /* Couleur légèrement plus foncée pour les en-têtes */
+}
+
+.products-table td {
+  vertical-align: middle; /* Assure un bon alignement vertical */
+}
+
+/* Style de l'image du produit */
+.product-image {
+  width: 80px;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* Conteneur pour les boutons "Modifier" et "Supprimer" */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Espacement uniforme entre les boutons */
+}
+
+.edit-button, .delete-button {
+  padding: 8px 12px; /* Taille uniforme et légèrement augmentée pour plus de confort */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  width: 100px; /* Assure que les boutons ont une taille uniforme */
+  font-size: 14px;
+  transition: background-color 0.3s ease; /* Effet de transition pour hover */
+}
+
+.edit-button {
+  background-color: #007BFF;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
