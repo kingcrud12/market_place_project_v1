@@ -1,0 +1,37 @@
+/* Style général pour la page CartScreen */
+.cart-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #f4f4f4; /* Couleur d'arrière-plan claire */
+    padding: 20px;
+  }
+  
+  .cart-screen-navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+  
+  .cart-content {
+    margin-top: 80px; /* Espace sous la navbar */
+    width: 100%;
+    max-width: 1200px; /* Largeur maximale de la page */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .cart-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  

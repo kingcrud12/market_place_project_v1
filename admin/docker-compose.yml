@@ -1,0 +1,16 @@
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: admin_client
+    ports:
+      - "3002:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BACKEND_URL=${NGROK_URL}  # Utilise l'URL ngrok ici si nécessaire
+    stdin_open: true
+    tty: true

@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-1.1.x", "linux-arm64-openssl-3.0.x"]
 }
 
 datasource db {
@@ -86,7 +87,15 @@ model Product {
   description String
   authorId    Int
   price       Float
+  imageUrl    String?       // Nouveau champ pour l'URL de l'image
   carts       CartProduct[]
 
   @@map("products")
 }
+
+model Blacklist {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createdAt DateTime @default(now())
+}
+

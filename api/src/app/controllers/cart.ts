@@ -310,12 +310,14 @@ export const getCart = async (req: Request, res: Response) => {
         products: {
           select: {
             id: true,
+            productId: true,
+            quantity:true,
             product: {
               select: {
                 id: true,
                 name: true,
                 price: true,
-              }
+              },
             }
           }
         },
@@ -327,6 +329,48 @@ export const getCart = async (req: Request, res: Response) => {
     return res.status(200).json(cart);
   } catch (error) {
     console.error('Error fetching cart:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+export const getAllCarts = async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ error: "Token not provided. You must be authenticated to perform this operation." });
+    }
+
+    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number }; // Décode le token pour obtenir l'id utilisateur
+    const userId = decodedToken.userId;
+
+    // Récupère tous les paniers de l'utilisateur
+    const carts = await prismaClient.cart.findMany({
+      where: { consummerId: userId },
+      select: {
+        id: true,
+        products: {
+          select: {
+            id: true,
+            productId: true,
+            quantity: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+                imageUrl: true
+              },
+            },
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return res.status(200).json(carts);
+  } catch (error) {
+    console.error('Error fetching all carts:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
