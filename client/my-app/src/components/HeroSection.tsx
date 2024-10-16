@@ -9,6 +9,7 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  stock: number; // Gestion de stock
 }
 
 interface HeroSectionProps {
@@ -18,61 +19,65 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [cartId, setCartId] = useState<number | null>(null); // Stocke l'ID du panier actif
+  const [cartId, setCartId] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("https://localhost:3000/market_place/v1/shop/products");
-        setProducts(response.data.products);
-      } catch (error) {
-        setError("Erreur lors de la récupération des produits");
-      }
-    };
-
-    const fetchActiveCart = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) return;
-
-        // Récupère le panier actif de l'utilisateur
-        const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response.data && response.data.cartId) {
-          setCartId(response.data.cartId); // Stocke l'ID du panier actif
-        }
-      } catch (error) {
-        console.error('Erreur lors de la récupération du panier actif:', error);
-      }
-    };
-
-    fetchProducts();
-    fetchActiveCart();
+    fetchProducts(); // Récupère les produits lors du chargement initial
+    fetchActiveCart(); // Récupère le panier actif
   }, []);
 
-  
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("https://localhost:3000/market_place/v1/shop/products");
+      setProducts(response.data.products);
+    } catch (error) {
+      setError("Erreur lors de la récupération des produits");
+    }
+  };
+
+  const fetchActiveCart = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      // Récupère le panier actif de l'utilisateur
+      const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.data && response.data.cartId) {
+        setCartId(response.data.cartId); // Stocke l'ID du panier actif
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du panier actif:', error);
+    }
+  };
+
   const handleAddToCart = async (product: Product) => {
+    if (product.stock <= 0) {
+      // Affiche l'alerte si le produit n'est pas en stock
+      alert(`Le produit ${product.name} est en rupture de stock.`);
+
+      // Relance l'appel pour récupérer les produits lorsque l'utilisateur clique sur "OK"
+      fetchProducts();
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No token found');
-  
-      // Vérifier si un panier actif est déjà défini dans le state
+
       let activeCartId = cartId;
-  
-      // Si pas de panier actif dans le state, récupérer le panier existant côté backend
+
       if (!activeCartId) {
         const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
           headers: { Authorization: `Bearer ${token}` },
         });
-  
+
         if (response.data && response.data.length > 0) {
-          // Utiliser le premier panier récupéré (ou gérer autrement si plusieurs paniers)
           activeCartId = response.data[0].id;
           setCartId(activeCartId);
         } else {
-          // Si pas de panier existant, en créer un nouveau
           const createCartResponse = await axios.post(
             'https://localhost:3000/market_place/v1/shop/user/cart',
             {
@@ -86,13 +91,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
             }
           );
           activeCartId = createCartResponse.data.cartId;
-          setCartId(activeCartId); // Stocker l'ID du panier nouvellement créé
+          setCartId(activeCartId);
           alert('Produit ajouté au panier!');
           return;
         }
       }
-  
-      // Ajoute le produit au panier existant avec la route PUT
+
       await axios.put(
         `https://localhost:3000/market_place/v1/shop/user/cart/${activeCartId}/${product.id}`,
         {
@@ -105,27 +109,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
           },
         }
       );
-  
+
       alert('Produit ajouté au panier!');
-  
-      // Mise à jour du nombre d'articles dans le panier
+
       const cartResponse = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (cartResponse.status === 200) {
         const totalItems = cartResponse.data.reduce((acc: number, cart: any) => {
           return acc + cart.products.reduce((acc: number, p: any) => acc + p.quantity, 0);
         }, 0);
-        updateCartCount(totalItems); // Mise à jour du compteur de panier
+        updateCartCount(totalItems); 
       }
     } catch (error) {
       console.error('Erreur lors de l\'ajout au panier:', error);
     }
-  };  
-  
+  };
+
   if (error) {
     return <div className="custom-error-message">{error}</div>;
   }
@@ -151,6 +154,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
                 <button
                   className="custom-add-to-cart-btn"
                   onClick={() => handleAddToCart(product)}
+                  disabled={product.stock <= 0}
+                  style={{
+                    backgroundColor: product.stock <= 0 ? '#ccc' : '#28a745',
+                    cursor: product.stock <= 0 ? 'not-allowed' : 'pointer'
+                  }}
                 >
                   <FaShoppingCart />
                 </button>

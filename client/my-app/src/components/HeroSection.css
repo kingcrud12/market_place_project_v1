@@ -1,7 +1,7 @@
 .custom-hero-section {
   padding: 40px 20px;
   background-color: #f9f9f9;
-  margin-bottom: 40px; /* Ajoute un espace sous les cartes pour éviter que le footer soit trop proche */
+  margin-bottom: 40px;
 }
 
 .custom-hero-grid {
@@ -25,8 +25,8 @@
   align-items: center;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   min-height: 380px;
-  max-height: 500px; /* Limite la hauteur maximale des cartes */
-  overflow: hidden; /* Empêche le contenu de déborder */
+  max-height: 500px;
+  overflow: hidden;
 }
 
 .custom-hero-card:hover {
@@ -36,7 +36,7 @@
 
 .custom-product-image {
   width: 100%;
-  max-height: 200px; /* Fixe la hauteur maximale de l'image */
+  max-height: 200px;
   object-fit: contain;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -76,26 +76,13 @@
   transition: background-color 0.3s ease;
 }
 
+.custom-add-to-cart-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .custom-add-to-cart-btn:hover {
   background-color: #218838;
-}
-
-.custom-view-cart-btn {
-  display: flex;
-  align-items: center;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.2em;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.custom-view-cart-btn:hover {
-  background-color: #0056b3;
 }
 
 .custom-error-message {
@@ -105,23 +92,23 @@
 }
 
 footer {
-  margin-top: 60px; /* Ajoute une marge au-dessus du footer */
+  margin-top: 60px;
 }
 
 @media (max-width: 1024px) {
   .custom-hero-card {
-    flex-basis: calc(33.33% - 20px); /* 3 cartes par ligne */
+    flex-basis: calc(33.33% - 20px);
   }
 }
 
 @media (max-width: 768px) {
   .custom-hero-card {
-    flex-basis: calc(50% - 20px); /* 2 cartes par ligne */
+    flex-basis: calc(50% - 20px);
   }
 }
 
 @media (max-width: 480px) {
   .custom-hero-card {
-    flex-basis: 100%; /* 1 carte par ligne sur mobile */
+    flex-basis: 100%;
   }
 }

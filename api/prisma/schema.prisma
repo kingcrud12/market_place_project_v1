@@ -86,7 +86,8 @@ model Product {
   description String
   authorId    Int
   price       Float
-  imageUrl    String?       // Nouveau champ pour l'URL de l'image
+  imageUrl    String?       // Champ pour l'URL de l'image
+  stock       Int           @default(0) // Nouveau champ pour le stock
   carts       CartProduct[]
 
   @@map("products")

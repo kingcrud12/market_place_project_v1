@@ -7,6 +7,7 @@ const EditProduct: React.FC = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(0);
   const [image, setImage] = useState<File | null>(null); // État pour l'image
   const [existingImageUrl, setExistingImageUrl] = useState(''); // URL de l'image existante
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const EditProduct: React.FC = () => {
         setName(product.name);
         setDescription(product.description);
         setPrice(product.price);
+        setStock(product.stock);
         setExistingImageUrl(product.imageUrl); // Récupérer l'URL de l'image existante
       } catch (error) {
         console.error('Erreur lors de la récupération du produit:', error);
@@ -46,6 +48,7 @@ const EditProduct: React.FC = () => {
     formData.append('name', name);
     formData.append('description', description);
     formData.append('price', price.toString());
+    formData.append('stock', stock.toString());
 
     // Si une nouvelle image a été sélectionnée, on l'ajoute à FormData
     if (image) {
@@ -103,6 +106,16 @@ const EditProduct: React.FC = () => {
             type="number"
             value={price}
             onChange={(e) => setPrice(parseFloat(e.target.value))}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="stock">Stock:</label>
+          <input
+            id="stock"
+            type="number"
+            value={stock}
+            onChange={(e) => setStock(parseFloat(e.target.value))}
             required
           />
         </div>

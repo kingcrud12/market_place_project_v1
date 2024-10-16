@@ -6,14 +6,14 @@
 
 .panier-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Augmentation de la taille minimale des cartes */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
   gap: 20px;
 }
 
 .panier {
   background-color: #fff;
   border-radius: 10px;
-  padding: 25px; /* Augmentation du padding pour aérer la carte */
+  padding: 25px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: box-shadow 0.3s ease-in-out;
@@ -38,7 +38,7 @@
 }
 
 .panier-image-container {
-  width: 150px; /* Augmentation de la taille de l'image */
+  width: 150px;
   height: 150px;
   overflow: hidden;
   border-radius: 10px;
@@ -48,7 +48,7 @@
 .panier-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Assure que l'image reste visible sans déformation */
+  object-fit: contain;
 }
 
 .panier-info {
@@ -58,12 +58,12 @@
 
 .panier-info h3 {
   font-size: 18px;
-  margin: 10px 0; /* Ajout d'espace pour les titres */
+  margin: 10px 0;
 }
 
 .panier-info p {
   margin: 5px 0;
-  font-size: 16px; /* Taille légèrement augmentée */
+  font-size: 16px;
 }
 
 .panier-actions {
@@ -87,6 +87,16 @@
   background-color: #0056b3;
 }
 
+/* Désactivation du bouton si le stock est insuffisant */
+.product-card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.product-card button:disabled:hover {
+  background-color: #ccc;
+}
+
 .product-list {
   margin-top: 30px;
   padding: 25px;
@@ -97,7 +107,7 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Agrandissement des cartes produits */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 
@@ -112,18 +122,18 @@
 .product-card img {
   width: 100%;
   height: auto;
-  max-height: 200px; /* Agrandissement des images dans les cartes */
+  max-height: 200px;
   object-fit: contain;
   border-radius: 10px;
 }
 
 .product-card h3 {
-  font-size: 20px; /* Agrandissement du titre des produits */
+  font-size: 20px;
   margin: 10px 0;
 }
 
 .product-card p {
-  font-size: 16px; /* Taille légèrement augmentée pour le texte */
+  font-size: 16px;
   margin-bottom: 10px;
 }
 
@@ -141,7 +151,6 @@
   background-color: #218838;
 }
 
-/* Bouton de création de commande */
 .checkout-button-container {
   margin-top: 30px;
 }
@@ -153,7 +162,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px; /* Augmentation de la taille du texte */
+  font-size: 18px;
   transition: background-color 0.3s ease-in-out;
 }
 

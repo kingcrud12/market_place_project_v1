@@ -67,7 +67,7 @@ const CartPage: React.FC = () => {
   const handleAddProduct = async (cartId: number, productId: number) => {
     try {
       await axios.put(
-        `https://localhost:3000/market_place/v1/shop/user/cart/${cartId}/${productId}`,
+        `https://localhost:3000/market_place/v1/shop/user/cart`,
         {
           products: [{ id: productId, quantity: 1 }],
         },

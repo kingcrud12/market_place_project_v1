@@ -8,7 +8,7 @@ import upload from '../../start/upload';
 export const createProduct = [
   upload.single('image'),
   async (req: Request, res: Response) => {
-    const { name, description, price } = req.body;
+    const { name, description, price, stock } = req.body;
 
     try {
       const token = req.headers.authorization?.split(' ')[1];
@@ -21,7 +21,7 @@ export const createProduct = [
 
       const imageUrl = req.file ? `https://localhost:3000/uploads/${req.file.filename}` : null;
 
-      if (!name || !description || !price || !imageUrl) {
+      if (!name || !description || !price || !imageUrl || !stock) {
         return res.status(400).json({ message: 'Erreur, propriétés manquantes ou image non fournie' });
       }
 
@@ -35,8 +35,9 @@ export const createProduct = [
           name,
           description,
           price: parseFloat(price),
-          imageUrl, // Ajouter l'URL de l'image au produit
+          imageUrl,
           authorId: Number(userId),
+          stock: parseInt(stock), // Ajouter la gestion du stock
         },
       });
 
@@ -48,12 +49,13 @@ export const createProduct = [
   },
 ];
 
+
 // Exemple pour la mise à jour d'un produit
 export const updateProduct = [
   upload.single('image'),
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { name, description, price } = req.body;
+    const { name, description, price, stock } = req.body;
 
     try {
       const imageUrl = req.file ? `https://localhost:3000/uploads/${req.file.filename}` : null;
@@ -62,6 +64,7 @@ export const updateProduct = [
         name,
         description,
         price: parseFloat(price),
+        stock: parseInt(stock), // Mise à jour du stock
       };
 
       if (imageUrl) {
@@ -81,15 +84,17 @@ export const updateProduct = [
   },
 ];
 
+
 //3.get all Products
 export const getProducts = async (req: Request, res: Response) => {
-    try {
-      const products = await prismaClient.product.findMany();
-      res.status(200).json({products});
-    } catch (e) {
-      res.status(500).json({ error: e });
-    }
-  };
+  try {
+    const products = await prismaClient.product.findMany();
+    res.status(200).json({ products });
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+};
+
 
  //4. get a single product
  export const getSingleProduct = async (req: Request, res: Response) => {

@@ -121,9 +121,10 @@ export const addToCart = async (req: Request, res: Response) => {
   }
 };
 
+
 export const addItemToCart = async (req: Request, res: Response) => {
   try {
-    const { cartId } = req.params; 
+    const { cartId } = req.params;
     const { products } = req.body;
     const token = req.headers.authorization?.split(' ')[1];
 
@@ -151,19 +152,30 @@ export const addItemToCart = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Products are required in the request body' });
     }
 
-    //récupération des produits depuis la bdd
-    const productIds = products.map(product => product.id);
-    const fetchedProducts = await prismaClient.product.findMany({
-      where: { id: { in: productIds } },
-      select: { id: true, price: true }
-    });
-
-    if (fetchedProducts.length !== productIds.length) {
-      return res.status(400).json({ message: 'Some products do not exist' });
-    }
-
-    // J'ajoute les produits au panier
+    // Vérification du stock pour chaque produit
     for (const { id, quantity } of products) {
+      const product = await prismaClient.product.findUnique({
+        where: { id },
+        select: { stock: true },
+      });
+
+      if (!product) {
+        return res.status(404).json({ message: `Product with id ${id} not found` });
+      }
+
+      if (product.stock < quantity) {
+        return res.status(400).json({ message: `Insufficient stock for product ${id}. Available stock: ${product.stock}` });
+      }
+
+      // Mise à jour du stock dans la base de données
+      await prismaClient.product.update({
+        where: { id },
+        data: {
+          stock: product.stock - quantity,
+        },
+      });
+
+      // Ajout du produit au panier
       for (let i = 0; i < quantity; i++) {
         await prismaClient.cartProduct.create({
           data: {
@@ -202,6 +214,7 @@ export const addItemToCart = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 
 
 // controller permettant de supprimer les articles du panier

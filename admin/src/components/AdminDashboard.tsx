@@ -9,6 +9,7 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  stock: number;
 }
 
 const AdminDashboard: React.FC = () => {
@@ -92,6 +93,7 @@ const AdminDashboard: React.FC = () => {
               <th>Nom</th>
               <th>Description</th>
               <th>Prix</th>
+              <th>Stock</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -102,6 +104,7 @@ const AdminDashboard: React.FC = () => {
                 <td>{product.name}</td>
                 <td>{product.description}</td>
                 <td>{product.price} €</td>
+                <td>{product.stock}</td>
                 <td>
                   <Link to={`/admin/products/edit/${product.id}`} className="edit-button">Modifier</Link>
                   <button onClick={() => handleDelete(product.id)} className="delete-button">Supprimer</button>
