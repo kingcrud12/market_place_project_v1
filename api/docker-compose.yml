@@ -4,12 +4,13 @@ services:
     build: .
     container_name: marketplace_api
     ports:
+      - "200:200"
       - "3000:3000"
     environment:
       - DATABASE_URL=${DATABASE_URL}  # Utilise la variable d'environnement du fichier .env
       - JWT_SECRET=${JWT_SECRET}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-      - BACKEND_URL=${DATABASE_URL}
+      - BACKEND_URL=${BACKEND_URL}
       - endpointSecret=${endpointSecret}
       - resetTokenSecret=${resetTokenSecret}
       - user_mail=${user_mail}

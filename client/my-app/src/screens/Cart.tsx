@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import './Cart.css';
@@ -27,66 +28,97 @@ interface Cart {
 const CartPage: React.FC = () => {
   const [carts, setCarts] = useState<Cart[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [showProducts, setShowProducts] = useState<boolean>(false); // Contrôle d'affichage des produits
   const [selectedCart, setSelectedCart] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCarts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/market_place/v1/shop/user/carts', {
+        const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCarts(response.data);
       } catch (error) {
         console.error('Error fetching carts:', error);
-        setErrorMessage('Erreur lors de la récupération des paniers.');
-      }
-    };
-
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/market_place/v1/shop/products');
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        setErrorMessage('Erreur lors de la récupération des produits.');
       }
     };
 
     fetchCarts();
-    fetchProducts();
   }, [token]);
 
-  const handleAddProduct = async (cartId: number, productId: number) => {
+  // Fonction pour récupérer la liste des produits
+  const fetchProducts = async () => {
     try {
-      await axios.post(`http://localhost:3000/market_place/v1/shop/user/cart/${cartId}/${productId}`, {}, {
+      const response = await axios.get('https://localhost:3000/market_place/v1/shop/products', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const response = await axios.get('http://localhost:3000/market_place/v1/shop/user/carts', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setCarts(response.data);
-      setSelectedCart(null);  // Fermer le menu après ajout
+      setProducts(response.data.products); // S'assurer que la structure des données est correcte
+      setShowProducts(true); // Afficher la liste des produits
     } catch (error) {
-      console.error('Error adding product to cart:', error);
-      setErrorMessage('Erreur lors de l\'ajout du produit au panier.');
+      console.error('Erreur lors de la récupération des produits :', error);
+      setErrorMessage('Erreur lors de la récupération des produits.');
     }
   };
 
-  const handleRemoveProduct = async (cartId: number, productId: number) => {
+  const handleAddProduct = async (cartId: number, productId: number) => {
     try {
-      await axios.delete(`http://localhost:3000/market_place/v1/shop/user/cart/Item/${cartId}/${productId}`, {
+      await axios.put(
+        `https://localhost:3000/market_place/v1/shop/user/cart/${cartId}/${productId}`,
+        {
+          products: [{ id: productId, quantity: 1 }],
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      // Mise à jour du panier après ajout
+      const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const response = await axios.get('http://localhost:3000/market_place/v1/shop/user/carts', {
+      setCarts(response.data);
+      setShowProducts(false); // Masquer la liste des produits après ajout
+      setSelectedCart(null); // Réinitialiser la sélection du panier
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      setErrorMessage("Erreur lors de l'ajout du produit au panier.");
+    }
+  };
+
+  const handleRemoveProduct = async (cartId: number, productId: number, quantity: number = 1) => {
+    try {
+      await axios.delete(`https://localhost:3000/market_place/v1/shop/user/cart/Item/${cartId}/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: { productId, quantity },
+      });
+
+      // Mise à jour du panier après suppression
+      const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCarts(response.data);
     } catch (error) {
       console.error('Error removing product from cart:', error);
       setErrorMessage('Erreur lors de la suppression du produit du panier.');
+    }
+  };
+
+  const handleCreateOrder = async (cartId: number) => {
+    try {
+      const response = await axios.post(
+        'https://localhost:3000/market_place/v1/shop/user/order',
+        { cartId: cartId.toString() }, 
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const newOrderId = response.data.id; 
+      navigate(`/order-details/${newOrderId}/${cartId}`); 
+    } catch (error) {
+      console.error('Error creating order:', error);
+      setErrorMessage('Erreur lors de la création de la commande.');
     }
   };
 
@@ -100,7 +132,7 @@ const CartPage: React.FC = () => {
         <div className="panier-grid">
           {carts.map(cart => (
             <div key={cart.id} className="panier">
-              <h2>Panier numero: {cart.id}</h2>
+              <h2>Votre Panier</h2>
               {cart.products.length === 0 ? (
                 <p>Aucun produit dans ce panier.</p>
               ) : (
@@ -119,28 +151,45 @@ const CartPage: React.FC = () => {
                         <button onClick={() => handleRemoveProduct(cart.id, product.id)}>
                           <FaMinus /> Retirer
                         </button>
-                        <button onClick={() => setSelectedCart(selectedCart === cart.id ? null : cart.id)}>
+                        <button onClick={() => { setSelectedCart(cart.id); fetchProducts(); }}>
                           <FaPlus /> Ajouter
                         </button>
                       </div>
                     </div>
-                    {selectedCart === cart.id && (
-                      <div className="dropdown-menu">
-                        {products.map(product => (
-                          <button
-                            key={product.id}
-                            onClick={() => handleAddProduct(cart.id, product.id)}
-                          >
-                            {product.name}
-                          </button>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 ))
               )}
+              {cart.products.length > 0 && (
+                <div className="checkout-button-container">
+                  <button
+                    className="checkout-button"
+                    onClick={() => handleCreateOrder(cart.id)}
+                  >
+                    Créer la commande
+                  </button>
+                </div>
+              )}
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Affichage de la liste des produits */}
+      {showProducts && (
+        <div className="product-list">
+          <h2>Ajouter un produit</h2>
+          <div className="product-grid">
+            {products.map(product => (
+              <div key={product.id} className="product-card">
+                <img src={product.imageUrl} alt={product.name} />
+                <h3>{product.name}</h3>
+                <p>Prix: {product.price} €</p>
+                <button onClick={() => handleAddProduct(selectedCart!, product.id)}>
+                  Ajouter au panier
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

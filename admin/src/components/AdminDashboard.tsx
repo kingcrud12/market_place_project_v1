@@ -25,7 +25,7 @@ const AdminDashboard: React.FC = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/market_place/v1/admin/products', {
+        const response = await fetch('https://localhost:3000/market_place/v1/admin/products', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -57,7 +57,7 @@ const AdminDashboard: React.FC = () => {
 
     if (window.confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
       try {
-        const response = await fetch(`http://localhost:3000/market_place/v1/admin/product/${id}`, {
+        const response = await fetch(`https://localhost:3000/market_place/v1/admin/product/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,

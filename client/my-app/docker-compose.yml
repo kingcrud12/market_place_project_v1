@@ -5,12 +5,14 @@ services:
       dockerfile: Dockerfile
     container_name: client_app
     ports:
-      - "3001:3000"
+      - "3002:3002"
     volumes:
       - .:/app
       - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
       - BACKEND_URL=${NGROK_URL}  # Utilise l'URL ngrok ici si nécessaire
+    env_file:
+      - .env 
     stdin_open: true
     tty: true

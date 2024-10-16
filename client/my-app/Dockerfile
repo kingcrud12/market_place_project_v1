@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installez les dépendances
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copiez le reste des fichiers de l'application
 COPY . .
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Exposez le port sur lequel l'application va tourner
-EXPOSE 3000
+EXPOSE 3002
 
 # Commande pour démarrer l'application
 CMD ["npm", "start"]

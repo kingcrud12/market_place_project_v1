@@ -15,7 +15,7 @@ const EditProduct: React.FC = () => {
     const fetchProduct = async () => {
       try {
         const token = localStorage.getItem('adminToken');
-        const response = await fetch(`http://localhost:3000/market_place/v1/admin/product/${id}`, {
+        const response = await fetch(`https://localhost:3000/market_place/v1/admin/product/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`, // Inclure le token dans le header
           },
@@ -54,7 +54,7 @@ const EditProduct: React.FC = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:3000/market_place/v1/admin/product/${id}`, {
+      const response = await fetch(`https://localhost:3000/market_place/v1/admin/product/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`, // Inclure le token dans le header

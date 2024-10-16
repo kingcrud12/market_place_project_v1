@@ -6,6 +6,7 @@ import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import ResetPassword from './screens/ResetPassword';
 import { CartScreen } from './screens/CartScreen';
+import OrderDetails from './screens/OrderDetails';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/maincomponent" element={<SignUp />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
         <Route path="/cart" element={<CartScreen />} />
+        <Route path="/order-details/:orderId/:cartId" element={<OrderDetails />} />
       </Routes>
     </Router>
   );

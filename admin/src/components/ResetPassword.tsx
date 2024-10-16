@@ -20,7 +20,7 @@ const ResetPassword: React.FC = () => {
 
     try {
       const token = searchParams.get('token');
-      const response = await fetch(`http://localhost:3000/market_place/v1/user/reset-password/${id}`, {
+      const response = await fetch(`https://localhost:3000/market_place/v1/user/reset-password/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

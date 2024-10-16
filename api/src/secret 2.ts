@@ -10,6 +10,7 @@ export const EndpointSecret = process.env.endpointSecret!;
 export const user_mail = process.env.user_mail!;
 export const mdp_mail = process.env.mdp_mail!;
 export const reset_token_secret = process.env.resetTokenSecret!;
+export const BACKEND_URL = process.env.BACKEND_URL!;
 
 // Chemins vers les fichiers SSL
 export const SSL_KEY_PATH = process.env.SSL_KEY_PATH!;

@@ -26,7 +26,7 @@ const AddProduct: React.FC = () => {
     formData.append('image', image);
 
     try {
-      const response = await fetch('http://localhost:3000/market_place/v1/admin/product', {
+      const response = await fetch('https://localhost:3000/market_place/v1/admin/product', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,

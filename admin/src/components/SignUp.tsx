@@ -13,7 +13,7 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/market_place/v1/auth/signup', {
+      const response = await fetch('https://localhost:3000/market_place/v1/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

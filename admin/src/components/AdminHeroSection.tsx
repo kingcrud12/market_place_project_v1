@@ -17,7 +17,7 @@ const AdminHeroSection: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/market_place/v1/shop/products");
+        const response = await axios.get("https://localhost:3000/market_place/v1/shop/products");
         setProducts(response.data.products);
       } catch (error) {
         setError("Erreur lors de la récupération des produits");

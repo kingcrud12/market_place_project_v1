@@ -319,3 +319,5 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 
 ### `isAdmin`
 - **Description** : Vérifie si l'utilisateur est un administrateur avant d'autoriser l'accès à certaines routes.
+
+

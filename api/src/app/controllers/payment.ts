@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import Stripe from 'stripe';
-import { EndpointSecret, JWT_SECRET, STRIPE_SECRET_KEY, } from '../../secret';
+import { BACKEND_URL, EndpointSecret, JWT_SECRET, STRIPE_SECRET_KEY, } from '../../secret';
 import { prismaClient } from '../../start/start';
 import { error } from 'console';
 
@@ -77,7 +77,7 @@ export const createPaymentSession = async (req: Request, res: Response) => {
     });
 
     // Retourner l'URL de la session de paiement
-    return res.status(200).json({ url: session.url, session });
+    return res.status(200).json({ url: session.url, session, BACKEND_URL });
   } catch (error) {
     console.error('Erreur lors de la création de la session de paiement :', error);
     return res.status(500).json({ message: 'Erreur interne du serveur', error });

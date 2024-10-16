@@ -22,7 +22,7 @@ const AdminUsers: React.FC = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/market_place/v1/admin/users', {
+        const response = await fetch('https://localhost:3000/market_place/v1/admin/users', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -54,7 +54,7 @@ const AdminUsers: React.FC = () => {
 
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
       try {
-        const response = await fetch(`http://localhost:3000/market_place/v1/admin/user/${id}`, {
+        const response = await fetch(`https://localhost:3000/market_place/v1/admin/user/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
