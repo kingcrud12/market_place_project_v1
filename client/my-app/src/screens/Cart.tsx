@@ -67,7 +67,7 @@ const CartPage: React.FC = () => {
   const handleAddProduct = async (cartId: number, productId: number) => {
     try {
       await axios.put(
-        `https://localhost:3000/market_place/v1/shop/user/cart`,
+        `https://localhost:3000/market_place/v1/shop/user/cart/${cartId}/${productId}`,
         {
           products: [{ id: productId, quantity: 1 }],
         },
@@ -118,7 +118,7 @@ const CartPage: React.FC = () => {
       navigate(`/order-details/${newOrderId}/${cartId}`); 
     } catch (error) {
       console.error('Error creating order:', error);
-      setErrorMessage('Erreur lors de la création de la commande.');
+      alert('veuillez confirmer votre compte avant de passer une commande');
     }
   };
 

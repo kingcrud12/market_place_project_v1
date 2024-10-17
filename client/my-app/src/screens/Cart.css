@@ -38,8 +38,8 @@
 }
 
 .panier-image-container {
-  width: 150px;
-  height: 150px;
+  width: 200px; /* Augmentation de la taille de l'image */
+  height: 200px; /* Ajustement de la hauteur pour correspondre à la largeur */
   overflow: hidden;
   border-radius: 10px;
   margin-right: 15px;
@@ -48,7 +48,7 @@
 .panier-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover; /* Ajuste l'image pour remplir l'espace tout en respectant son ratio */
 }
 
 .panier-info {

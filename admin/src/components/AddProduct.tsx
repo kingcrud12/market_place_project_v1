@@ -6,6 +6,7 @@ const AddProduct: React.FC = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const AddProduct: React.FC = () => {
     formData.append('name', name);
     formData.append('description', description);
     formData.append('price', price.toString());
+    formData.append('stock', stock.toString());
     formData.append('image', image);
 
     try {
@@ -76,6 +78,17 @@ const AddProduct: React.FC = () => {
             type="number"
             value={price}
             onChange={(e) => setPrice(parseFloat(e.target.value))}
+            required
+            className="input-field"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Stock:</label>
+          <input
+            type="number"
+            value={stock}
+            onChange={(e) => setStock(parseFloat(e.target.value))}
             required
             className="input-field"
           />
