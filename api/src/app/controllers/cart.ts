@@ -167,26 +167,35 @@ export const addItemToCart = async (req: Request, res: Response) => {
         return res.status(400).json({ message: `Insufficient stock for product ${id}. Available stock: ${product.stock}` });
       }
 
-      // Mise à jour du stock dans la base de données
-      await prismaClient.product.update({
-        where: { id },
-        data: {
-          stock: product.stock - quantity,
+      // Vérifier si le produit est déjà dans le panier
+      const existingCartProduct = await prismaClient.cartProduct.findFirst({
+        where: {
+          cartId: parseInt(cartId),
+          productId: id,
         },
       });
 
-      // Ajout du produit au panier
-      for (let i = 0; i < quantity; i++) {
+      if (existingCartProduct) {
+        // Si le produit existe déjà dans le panier, on augmente la quantité
+        await prismaClient.cartProduct.update({
+          where: { id: existingCartProduct.id },
+          data: {
+            quantity: existingCartProduct.quantity + quantity,
+          },
+        });
+      } else {
+        // Si le produit n'est pas dans le panier, on l'ajoute
         await prismaClient.cartProduct.create({
           data: {
             cartId: parseInt(cartId),
-            productId: id
-          }
+            productId: id,
+            quantity: quantity,
+          },
         });
       }
     }
 
-    // je récupère le panier mis à jour
+    // Récupérer le panier mis à jour
     const updatedCart = await prismaClient.cart.findUnique({
       where: { id: parseInt(cartId) },
       select: {
@@ -194,6 +203,7 @@ export const addItemToCart = async (req: Request, res: Response) => {
         products: {
           select: {
             id: true,
+            quantity: true,
             product: {
               select: {
                 id: true,
@@ -214,6 +224,7 @@ export const addItemToCart = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 
 
 
@@ -243,23 +254,50 @@ export const removeItemToCart = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'A valid quantity is required' });
     }
 
-    // suppression des produits du paniers
-    for (let i = 0; i < quantity; i++) {
-      const cartProduct = await prismaClient.cartProduct.findFirst({
-        where: {
-          cartId: parseInt(cartId),
-          productId: parseInt(productId)
-        }
-      });
-
-      if (cartProduct) {
-        await prismaClient.cartProduct.delete({
-          where: { id: cartProduct.id }
-        });
+    // Récupérer le produit du panier
+    const cartProduct = await prismaClient.cartProduct.findFirst({
+      where: {
+        cartId: parseInt(cartId),
+        productId: parseInt(productId)
       }
+    });
+
+    if (!cartProduct) {
+      return res.status(404).json({ message: 'Product not found in cart' });
     }
 
-    // je récupère le panier mis à jour
+    // Vérifier si la quantité à retirer est inférieure à celle dans le panier
+    if (cartProduct.quantity > quantity) {
+      // Réduire la quantité
+      await prismaClient.cartProduct.update({
+        where: { id: cartProduct.id },
+        data: {
+          quantity: cartProduct.quantity - quantity
+        }
+      });
+    } else {
+      // Supprimer le produit du panier s'il ne reste plus d'unités
+      await prismaClient.cartProduct.delete({
+        where: { id: cartProduct.id }
+      });
+    }
+
+    // Vérifier si le panier est vide après suppression
+    const remainingProducts = await prismaClient.cartProduct.findMany({
+      where: {
+        cartId: parseInt(cartId)
+      }
+    });
+
+    if (remainingProducts.length === 0) {
+      // Supprimer le panier s'il est vide
+      await prismaClient.cart.delete({
+        where: { id: parseInt(cartId) }
+      });
+      return res.status(200).json({ message: 'Cart has been deleted as it was empty' });
+    }
+
+    // Récupérer le panier mis à jour
     const updatedCart = await prismaClient.cart.findUnique({
       where: { id: parseInt(cartId) },
       select: {
@@ -287,6 +325,8 @@ export const removeItemToCart = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+
 
 
 // controller permettant d'afficher un panier

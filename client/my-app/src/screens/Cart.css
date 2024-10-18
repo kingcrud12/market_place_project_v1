@@ -174,3 +174,8 @@
   color: red;
   margin: 20px 0;
 }
+
+.custom-add-to-cart-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

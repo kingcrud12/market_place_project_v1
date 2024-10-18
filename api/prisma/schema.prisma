@@ -41,11 +41,12 @@ model Order {
   id          Int      @id @default(autoincrement())
   consummerId Int
   cartId      Int
-  price       Int
+  price       Float    // Modifier ici de Int à Float
   status      STATUS   @default(UNPAID)
-  productIds  String
+  productIds  String   // Chaîne avec les IDs des produits, à séparer plus tard
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  cart        Cart     @relation(fields: [cartId], references: [id]) // Ajouter la relation vers le panier
 
   @@map("orders")
 }
@@ -65,9 +66,10 @@ model Cart {
   consummerId Int
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  products    CartProduct[]
-
-  @@map("Carts")
+  products    CartProduct[] // Relation vers les produits dans le panier
+  orders      Order[]       // Relation inverse vers les commandes
+  
+  @@map("carts")
 }
 
 model CartProduct {

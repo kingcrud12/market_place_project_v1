@@ -4,7 +4,6 @@ services:
     build: .
     container_name: marketplace_api
     ports:
-      - "200:200"
       - "3000:3000"
     environment:
       - DATABASE_URL=${DATABASE_URL}  # Utilise la variable d'environnement du fichier .env

@@ -92,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
           {showUserMenu && (
             <div className="user-menu-dropdown">
               <button onClick={handleProfile}>Profile</button>
-              <button onClick={handleSettings}>Settings</button>
+              <button onClick={handleSettings}>Mes commandes</button>
               {isLoggedIn ? (
                 <button onClick={handleLogout}>Logout</button>
               ) : (
