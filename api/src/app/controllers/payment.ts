@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import Stripe from 'stripe';
-import { EndpointSecret, JWT_SECRET, STRIPE_SECRET_KEY, } from '../../secret';
+import { BACKEND_URL, EndpointSecret, JWT_SECRET, STRIPE_SECRET_KEY, } from '../../secret';
 import { prismaClient } from '../../start/start';
 import { error } from 'console';
 
@@ -77,7 +77,7 @@ export const createPaymentSession = async (req: Request, res: Response) => {
     });
 
     // Retourner l'URL de la session de paiement
-    return res.status(200).json({ url: session.url, session });
+    return res.status(200).json({ url: session.url, session, BACKEND_URL });
   } catch (error) {
     console.error('Erreur lors de la création de la session de paiement :', error);
     return res.status(500).json({ message: 'Erreur interne du serveur', error });
@@ -87,53 +87,107 @@ export const createPaymentSession = async (req: Request, res: Response) => {
 // je gère les webhooks Stripe pour mettre à jour le statut de la commande
 export const handleStripeWebhook = async (req: Request, res: Response) => {
   const sig = req.headers['stripe-signature'] as string;
-  const endpointSecret = EndpointSecret as string;
+  const endpointSecret = EndpointSecret;
 
   if (!sig) {
     console.error('Signature du webhook Stripe manquante.');
     return res.status(400).send('Signature du webhook manquante.');
   }
 
-  let event;
+  let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
-    console.error('Erreur de signature du webhook Stripe:', error);
-    return res.status(400).send(`Webhook Error: ${error}`);
+    console.error('Erreur de signature du webhook Stripe:', err);
+    return res.status(400).send(`Webhook Error: ${err}`);
   }
 
-  // je gère l'événement
+  // Gestion des événements Stripe
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
-    const orderId = session.metadata!.orderId;
+    const orderId = session.metadata?.orderId;
 
-    // Je mets à jour le statut de la commande en 'PAID'
-    await prisma.order.update({
-      where: { id: parseInt(orderId) },
-      data: { status: 'PAID' },
-    });
+    if (!orderId) {
+      console.error('orderId manquant dans les métadonnées de la session.');
+      return res.status(400).send('orderId manquant dans les métadonnées.');
+    }
+
+    try {
+      // Mettre à jour le statut de la commande à 'PAID'
+      await prisma.order.update({
+        where: { id: parseInt(orderId) },
+        data: { status: 'PAID' },
+      });
+
+      console.log(`Commande ${orderId} marquée comme PAYÉE.`);
+
+      // Récupérer les produits associés au panier
+      const order = await prisma.order.findUnique({
+        where: { id: parseInt(orderId) },
+        include: {
+          cart: {
+            include: {
+              products: {
+                include: {
+                  product: true, // Récupérer les informations des produits
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!order) {
+        console.error(`Commande avec l'ID ${orderId} non trouvée.`);
+        return res.status(404).send('Commande non trouvée.');
+      }
+
+      // Mettre à jour le stock des produits après paiement
+      for (const cartProduct of order.cart.products) {
+        const updatedStock = cartProduct.product.stock - cartProduct.quantity;
+        
+        if (updatedStock < 0) {
+          console.error(`Stock insuffisant pour le produit ${cartProduct.product.id}.`);
+          return res.status(400).send(`Stock insuffisant pour le produit ${cartProduct.product.name}.`);
+        }
+
+        await prisma.product.update({
+          where: { id: cartProduct.productId },
+          data: { stock: updatedStock },
+        });
+
+        console.log(`Stock du produit ${cartProduct.product.name} mis à jour: ${updatedStock}`);
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de la commande ou du stock :', error);
+      return res.status(500).send('Erreur interne du serveur.');
+    }
+
   } else if (event.type === 'checkout.session.async_payment_failed') {
     const session = event.data.object as Stripe.Checkout.Session;
-    const orderId = session.metadata!.orderId;
+    const orderId = session.metadata?.orderId;
 
-    // Je mets à jour le statut de la commande en 'UNPAID'
-    await prisma.order.update({
-      where: { id: parseInt(orderId) },
-      data: { status: 'UNPAID' },
-    });
-  } else if (event.type === 'checkout.session.async_payment_succeeded') {
-    const session = event.data.object as Stripe.Checkout.Session;
-    const orderId = session.metadata!.orderId;
+    if (!orderId) {
+      console.error('orderId manquant dans les métadonnées de la session.');
+      return res.status(400).send('orderId manquant dans les métadonnées.');
+    }
 
-    // Je mets à jour le statut de la commande en 'PAID'
-    await prisma.order.update({
-      where: { id: parseInt(orderId) },
-      data: { status: 'PAID' },
-    });
+    try {
+      // Mise à jour du statut de la commande à 'UNPAID'
+      await prisma.order.update({
+        where: { id: parseInt(orderId) },
+        data: { status: 'UNPAID' },
+      });
+      console.log(`Commande ${orderId} marquée comme NON PAYÉE.`);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de la commande :', error);
+      return res.status(500).send('Erreur interne du serveur.');
+    }
   }
 
-  res.status(201).send('Received Stripe webhook event');
+  res.status(201).send('Événement Stripe traité avec succès');
 };
 // Endpoints pour success et cancel
 export const paymentSuccess = async (req: Request, res: Response) => {

@@ -121,9 +121,10 @@ export const addToCart = async (req: Request, res: Response) => {
   }
 };
 
+
 export const addItemToCart = async (req: Request, res: Response) => {
   try {
-    const { cartId } = req.params; 
+    const { cartId } = req.params;
     const { products } = req.body;
     const token = req.headers.authorization?.split(' ')[1];
 
@@ -151,30 +152,50 @@ export const addItemToCart = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Products are required in the request body' });
     }
 
-    //récupération des produits depuis la bdd
-    const productIds = products.map(product => product.id);
-    const fetchedProducts = await prismaClient.product.findMany({
-      where: { id: { in: productIds } },
-      select: { id: true, price: true }
-    });
-
-    if (fetchedProducts.length !== productIds.length) {
-      return res.status(400).json({ message: 'Some products do not exist' });
-    }
-
-    // J'ajoute les produits au panier
+    // Vérification du stock pour chaque produit
     for (const { id, quantity } of products) {
-      for (let i = 0; i < quantity; i++) {
+      const product = await prismaClient.product.findUnique({
+        where: { id },
+        select: { stock: true },
+      });
+
+      if (!product) {
+        return res.status(404).json({ message: `Product with id ${id} not found` });
+      }
+
+      if (product.stock < quantity) {
+        return res.status(400).json({ message: `Insufficient stock for product ${id}. Available stock: ${product.stock}` });
+      }
+
+      // Vérifier si le produit est déjà dans le panier
+      const existingCartProduct = await prismaClient.cartProduct.findFirst({
+        where: {
+          cartId: parseInt(cartId),
+          productId: id,
+        },
+      });
+
+      if (existingCartProduct) {
+        // Si le produit existe déjà dans le panier, on augmente la quantité
+        await prismaClient.cartProduct.update({
+          where: { id: existingCartProduct.id },
+          data: {
+            quantity: existingCartProduct.quantity + quantity,
+          },
+        });
+      } else {
+        // Si le produit n'est pas dans le panier, on l'ajoute
         await prismaClient.cartProduct.create({
           data: {
             cartId: parseInt(cartId),
-            productId: id
-          }
+            productId: id,
+            quantity: quantity,
+          },
         });
       }
     }
 
-    // je récupère le panier mis à jour
+    // Récupérer le panier mis à jour
     const updatedCart = await prismaClient.cart.findUnique({
       where: { id: parseInt(cartId) },
       select: {
@@ -182,6 +203,7 @@ export const addItemToCart = async (req: Request, res: Response) => {
         products: {
           select: {
             id: true,
+            quantity: true,
             product: {
               select: {
                 id: true,
@@ -202,6 +224,8 @@ export const addItemToCart = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+
 
 
 // controller permettant de supprimer les articles du panier
@@ -230,23 +254,50 @@ export const removeItemToCart = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'A valid quantity is required' });
     }
 
-    // suppression des produits du paniers
-    for (let i = 0; i < quantity; i++) {
-      const cartProduct = await prismaClient.cartProduct.findFirst({
-        where: {
-          cartId: parseInt(cartId),
-          productId: parseInt(productId)
-        }
-      });
-
-      if (cartProduct) {
-        await prismaClient.cartProduct.delete({
-          where: { id: cartProduct.id }
-        });
+    // Récupérer le produit du panier
+    const cartProduct = await prismaClient.cartProduct.findFirst({
+      where: {
+        cartId: parseInt(cartId),
+        productId: parseInt(productId)
       }
+    });
+
+    if (!cartProduct) {
+      return res.status(404).json({ message: 'Product not found in cart' });
     }
 
-    // je récupère le panier mis à jour
+    // Vérifier si la quantité à retirer est inférieure à celle dans le panier
+    if (cartProduct.quantity > quantity) {
+      // Réduire la quantité
+      await prismaClient.cartProduct.update({
+        where: { id: cartProduct.id },
+        data: {
+          quantity: cartProduct.quantity - quantity
+        }
+      });
+    } else {
+      // Supprimer le produit du panier s'il ne reste plus d'unités
+      await prismaClient.cartProduct.delete({
+        where: { id: cartProduct.id }
+      });
+    }
+
+    // Vérifier si le panier est vide après suppression
+    const remainingProducts = await prismaClient.cartProduct.findMany({
+      where: {
+        cartId: parseInt(cartId)
+      }
+    });
+
+    if (remainingProducts.length === 0) {
+      // Supprimer le panier s'il est vide
+      await prismaClient.cart.delete({
+        where: { id: parseInt(cartId) }
+      });
+      return res.status(200).json({ message: 'Cart has been deleted as it was empty' });
+    }
+
+    // Récupérer le panier mis à jour
     const updatedCart = await prismaClient.cart.findUnique({
       where: { id: parseInt(cartId) },
       select: {
@@ -274,6 +325,8 @@ export const removeItemToCart = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+
 
 
 // controller permettant d'afficher un panier
@@ -310,12 +363,14 @@ export const getCart = async (req: Request, res: Response) => {
         products: {
           select: {
             id: true,
+            productId: true,
+            quantity:true,
             product: {
               select: {
                 id: true,
                 name: true,
                 price: true,
-              }
+              },
             }
           }
         },
@@ -327,6 +382,48 @@ export const getCart = async (req: Request, res: Response) => {
     return res.status(200).json(cart);
   } catch (error) {
     console.error('Error fetching cart:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+export const getAllCarts = async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ error: "Token not provided. You must be authenticated to perform this operation." });
+    }
+
+    const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: number }; // Décode le token pour obtenir l'id utilisateur
+    const userId = decodedToken.userId;
+
+    // Récupère tous les paniers de l'utilisateur
+    const carts = await prismaClient.cart.findMany({
+      where: { consummerId: userId },
+      select: {
+        id: true,
+        products: {
+          select: {
+            id: true,
+            productId: true,
+            quantity: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+                imageUrl: true
+              },
+            },
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return res.status(200).json(carts);
+  } catch (error) {
+    console.error('Error fetching all carts:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };

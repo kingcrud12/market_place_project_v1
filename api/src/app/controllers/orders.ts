@@ -183,6 +183,7 @@ export const getMyOrderDetails = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization?.split(' ')[1] // J'obtiens le token a partir du header
     const {id} = req.params; // Récupérer l'ID de la commande à partir des paramètres de la requête
+    const { cartId } = req.params;
     
 
     //  je récupère  les détails de la commande à partir de la base de données
@@ -218,26 +219,32 @@ export const getMyOrderDetails = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Désolé, vous ne pouvez pas accéder à cette ressource.' });
     }
 
-
-    //  je récupère  la chaîne productIds de la commande
-    const productIdsString = order.productIds;
-
-    // je divise  la chaîne productIds en un tableau d'IDs individuels
-    const productIds = productIdsString.split(',').map(id => parseInt(id));
-
-    //  je récupère  les informations sur les produits correspondants depuis la base de données
-    const products = await prismaClient.product.findMany({
-      where: { id: { in: productIds } },
-      select:{
-        id: true,
-        name: true,
-        description: true,
-        price: true,
-      }
-    });
+      // je récupère le panier mis à jour
+      const cart = await prismaClient.cart.findUnique({
+        where: { id: parseInt(cartId) },
+        select: {
+          id: true,
+          products: {
+            select: {
+              id: true,
+              productId:true,
+              quantity: true,
+              product: {
+                select: {
+                  id: true,
+                  name: true,
+                  price: true,
+                }
+              }
+            }
+          },
+          createdAt: true,
+          updatedAt: true
+        }
+      });
 
     // Je retourne  les détails de la commande avec les informations sur les produits
-    return res.status(200).json({ order, products });
+    return res.status(200).json({ order, cart });
   } catch (error) {
     console.error('Error fetching order details:', error);
     return res.status(500).json({ message: 'Internal Server Error' });

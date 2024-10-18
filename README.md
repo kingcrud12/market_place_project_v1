@@ -319,3 +319,72 @@ BACKEND_URL = http://localhost:3000/api/market_place/v1/bills/ (url utile pour l
 
 ### `isAdmin`
 - **Description** : Vérifie si l'utilisateur est un administrateur avant d'autoriser l'accès à certaines routes.
+
+
+## Branch Naming Convention
+
+### Branch Types
+
+Les types de branches doivent être parmi les suivants :
+
+- **feature**: Branches pour le développement de nouvelles fonctionnalités.
+- **bugfix**: Branches pour les corrections de bugs.
+- **hotfix**: Branches pour les corrections urgentes en production.
+- **release**: Branches pour préparer une nouvelle version.
+- **chore**: Branches pour des tâches de maintenance ou des mises à jour de configuration.
+- **docs**: Branches pour la mise à jour de la documentation.
+- **experiment**: Branches pour des expériences ou des prototypes.
+
+### Branch Naming Examples
+
+- **Développement d'une nouvelle fonctionnalité**: `feature/auth-login-page`
+- **Correction d'un bug**: `bugfix/user-profile-update`
+- **Correction urgente en production**: `hotfix/payment-gateway-error`
+- **Préparation d'une nouvelle version**: `release/v1.2.0`
+- **Tâche de maintenance ou de configuration**: `chore/update-dependencies`
+- **Mise à jour de la documentation**: `docs/add-installation-guide`
+- **Expérience ou prototype**: `experiment/new-ui-design`
+
+## Commit Convention
+
+### Commit Types
+
+Les types de commit doivent être parmi les suivants :
+
+- **feat**: Ajout d'une nouvelle fonctionnalité.
+- **fix**: Correction d'un bug.
+- **docs**: Modifications de documentation.
+- **style**: Changements de formatage de code (espacement, formatage, points-virgules manquants, etc.).
+- **refactor**: Refactoring de code sans ajout de nouvelles fonctionnalités ou corrections de bugs.
+- **perf**: Améliorations des performances.
+- **test**: Ajout ou modification de tests.
+- **chore**: Changements de configuration, outils de construction ou tâches de maintenance.
+- **revert**: Annulation d'un commit précédent.
+
+### Subject and Description
+
+Le sujet doit être une phrase concise et descriptive expliquant ce que fait le commit. Il doit être écrit en minuscules et sans point à la fin.
+
+#### Exemples
+
+- **Ajout d'une nouvelle fonctionnalité**:
+  - `feat(auth): add login functionality`
+  - Ajout d'une nouvelle page de connexion avec validation des champs.
+
+- **Correction d'un bug**:
+  - `fix(user): fix profile update bug`
+  - Le bug empêchait la mise à jour des informations de l'utilisateur.
+
+- **Mise à jour de la documentation**:
+  - `docs(readme): update project documentation`
+  - Ajout d'une section sur l'installation et la configuration.
+
+- **Refactoring du code**:
+  - `refactor(dashboard): refactor dashboard component`
+  - Simplification du code et amélioration de la lisibilité.
+
+## Contributions
+
+Les contributions ont été apportées par :
+
+- Yann DIPITA
