@@ -19,7 +19,7 @@ export const createProduct = [
       const decodedToken = jwt.verify(token, JWT_SECRET) as { userId: string };
       const userId = decodedToken.userId;
 
-      const imageUrl = req.file ? `https://localhost:3000/uploads/${req.file.filename}` : null;
+      const imageUrl = req.file ? `https://fruits-eshop-api-de2dff9b40e9.herokuapp.com/uploads/${req.file.filename}` : null;
 
       if (!name || !description || !price || !imageUrl || !stock) {
         return res.status(400).json({ message: 'Erreur, propriétés manquantes ou image non fournie' });
@@ -58,7 +58,7 @@ export const updateProduct = [
     const { name, description, price, stock } = req.body;
 
     try {
-      const imageUrl = req.file ? `https://localhost:3000/uploads/${req.file.filename}` : null;
+      const imageUrl = req.file ? `https://fruits-eshop-api-de2dff9b40e9.herokuapp.com/uploads/${req.file.filename}` : null;
 
       const dataToUpdate: any = {
         name,

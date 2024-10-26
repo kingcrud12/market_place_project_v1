@@ -4,8 +4,9 @@ services:
     build: .
     container_name: marketplace_api
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     environment:
+      - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL}  # Utilise la variable d'environnement du fichier .env
       - JWT_SECRET=${JWT_SECRET}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
@@ -14,11 +15,14 @@ services:
       - resetTokenSecret=${resetTokenSecret}
       - user_mail=${user_mail}
       - mdp_mail=${mdp_mail}
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS}
+    env_file:
+      - .env  # Charger les variables depuis le fichier .env
+    volumes:
+      - ./uploads:/app/uploads  # Monter le répertoire local uploads dans le conteneur
     networks:
       - marketplace_network
-    volumes:
-      - .:/app
 
 networks:
   marketplace_network:
-    driver: bridge
+    external: true  # Utilise le réseau externe personnalisé 'marketplace_network'

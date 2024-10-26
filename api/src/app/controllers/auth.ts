@@ -34,7 +34,7 @@ export const signup = async (req: Request, res: Response) =>{
   })
 
 
-    const confirmationLink = `https://localhost:3000/market_place/v1/auth/confirm-email?token=${token}`;
+    const confirmationLink = `https://fruits-eshop-api-de2dff9b40e9.herokuapp.com/market_place/v1/auth/confirm-email?token=${token}`;
     await sendConfirmationEmail(email, 'Confirm your account', `Please confirm your account by clicking the following link: ${confirmationLink}`);
 
 
@@ -73,7 +73,7 @@ export const askconfirmationLink = async (req: Request, res: Response) =>{
     }
     });
 
-    const confirmationLink = `https://localhost:3000/market_place/v1/auth/confirm-email?token=${token}`;
+    const confirmationLink = `https://fruits-eshop-api-de2dff9b40e9.herokuapp.com/market_place/v1/auth/confirm-email?token=${token}`;
     await sendConfirmationEmail(email, 'Confirm your account', `Please confirm your account by clicking the following link: ${confirmationLink}`);
 
     res.status(201).json({message : "lien envoyé"});
@@ -227,7 +227,7 @@ export const getUser = async (req: Request, res: Response) => {
       const resetToken = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
   
       // Envoi de l'e-mail avec le lien de réinitialisation
-      const resetLink = `http://localhost:3001/reset-password/${user.id}?token=${resetToken}`;
+      const resetLink = `https://fruits-eshop.netlify.app/reset-password/${user.id}?token=${resetToken}`;
       await sendConfirmationEmail(user.email, 'Réinitialisation du mot de passe', `Cliquez ici pour réinitialiser votre mot de passe: ${resetLink}`);
   
       return res.status(200).json({ message: 'Un e-mail de réinitialisation a été envoyé.' });

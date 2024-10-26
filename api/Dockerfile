@@ -13,6 +13,12 @@ RUN npm install
 # Copier tout le reste du code source dans le conteneur
 COPY . .
 
+# Compiler le TypeScript en JavaScript
+RUN npx tsc
+
+# Créer le répertoire pour les uploads
+RUN mkdir -p /app/uploads
+
 # Étape 2: Créer une image finale minimale
 FROM node:20-slim
 
@@ -24,14 +30,21 @@ COPY --from=build /app/package.json /app/
 COPY --from=build /app/package-lock.json /app/
 
 # Copier le code source et les modules node depuis l'étape de build
-COPY --from=build /app/src /app/src
 COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/build /app/build
+COPY --from=build /app/uploads /app/uploads
+COPY --from=build /app/prisma /app/prisma
+COPY --from=build /app/certs /app/certs
+COPY --from=build /app/start.sh /app/start.sh
 
 # Installer OpenSSL
 RUN apt-get update -y && apt-get install -y openssl
 
+# Rendre le script de démarrage exécutable
+RUN chmod +x /app/start.sh
+
 # Exposer le port de l'API
-EXPOSE 3000
+EXPOSE $PORT
 
 # Commande de démarrage de l'application
-CMD ["npx", "ts-node", "src/start/start.ts", "prisma migrate deploy"]
+CMD ["/app/start.sh"]
