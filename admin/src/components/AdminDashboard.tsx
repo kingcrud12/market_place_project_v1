@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminDashboard.css'; // Importer le fichier de styles
+import { API_URL } from "../secret";
 
 
 interface Product {
@@ -26,7 +27,7 @@ const AdminDashboard: React.FC = () => {
       }
 
       try {
-        const response = await fetch('https://localhost:3000/market_place/v1/admin/products', {
+        const response = await fetch(`${API_URL}/admin/products`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -58,7 +59,7 @@ const AdminDashboard: React.FC = () => {
 
     if (window.confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
       try {
-        const response = await fetch(`https://localhost:3000/market_place/v1/admin/product/${id}`, {
+        const response = await fetch(`${API_URL}/admin/product/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -83,7 +84,7 @@ const AdminDashboard: React.FC = () => {
       <h1>Catalogue de Boissons</h1>
       <div className="actions-container">
         <Link to="/admin/products/add" className="add-product-link">Ajouter un nouveau produit</Link>
-        <a href="/adminhome" className="dashboard-return-button">Retour à l'accueil</a>
+        <Link to="/adminhome" className="dashboard-return-button">Retour à l'accueil</Link>
       </div>
       <div className="table-container">
         <table className="products-table">

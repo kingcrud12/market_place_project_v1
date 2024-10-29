@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import './ResetPassword.css';
+import { API_URL } from "../secret";
 
 const ResetPassword: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Récupère l'ID de l'URL
@@ -20,7 +21,7 @@ const ResetPassword: React.FC = () => {
 
     try {
       const token = searchParams.get('token');
-      const response = await fetch(`https://localhost:3000/market_place/v1/user/reset-password/${id}`, {
+      const response = await fetch(`${API_URL}/user/reset-password/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

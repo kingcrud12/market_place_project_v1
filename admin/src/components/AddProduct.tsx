@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AddProduct.css'; // Importer le fichier CSS pour les styles
+import { API_URL } from "../secret";
 
 const AddProduct: React.FC = () => {
   const [name, setName] = useState('');
@@ -28,7 +29,7 @@ const AddProduct: React.FC = () => {
     formData.append('image', image);
 
     try {
-      const response = await fetch('https://localhost:3000/market_place/v1/admin/product', {
+      const response = await fetch(`${API_URL}/admin/product`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,

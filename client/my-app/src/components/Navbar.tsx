@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import './Navbar.css';
 import ImageSVG from '../assets/ImageS.svg';
+import { API_URL } from "../secret";
 
 interface NavbarProps {
   cartCount?: number;
@@ -29,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
     }
 
     try {
-      const response = await fetch('https://localhost:3000/market_place/v1/auth/logout', {
+      const response = await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './SignIn.css';
+import { API_URL } from "../secret";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const SignIn: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://localhost:3000/market_place/v1/admin/login', {
+      const response = await fetch(`${API_URL}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const SignIn: React.FC = () => {
   // Fonction pour demander la réinitialisation du mot de passe
   const requestPasswordReset = async () => {
     try {
-      const response = await fetch(`https://localhost:3000/market_place/v1/user/reset-password`, {
+      const response = await fetch(`${API_URL}/user/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

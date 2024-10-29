@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminOrders.css'; // Importer le fichier de styles
+import { API_URL } from "../secret";
 
 interface Order {
   id: number;
@@ -26,7 +27,7 @@ const AdminOrders: React.FC = () => {
       }
 
       try {
-        const response = await fetch('https://localhost:3000/market_place/v1/admin/orders', {
+        const response = await fetch(`${API_URL}/admin/orders`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EditProduct.css'; // Assurez-vous de créer ce fichier CSS
+import { API_URL } from "../secret";
 
 const EditProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +17,7 @@ const EditProduct: React.FC = () => {
     const fetchProduct = async () => {
       try {
         const token = localStorage.getItem('adminToken');
-        const response = await fetch(`https://localhost:3000/market_place/v1/admin/product/${id}`, {
+        const response = await fetch(`${API_URL}/admin/product/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`, // Inclure le token dans le header
           },
@@ -57,7 +58,7 @@ const EditProduct: React.FC = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`https://localhost:3000/market_place/v1/admin/product/${id}`, {
+      const response = await fetch(`${API_URL}/admin/product/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`, // Inclure le token dans le header

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaShoppingCart } from "react-icons/fa";
 import "./HeroSection.css";
+import { API_URL } from "../secret";
+
 
 interface Product {
   id: number;
@@ -28,7 +30,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://localhost:3000/market_place/v1/shop/products");
+      const response = await axios.get(`${API_URL}/shop/products`);
       setProducts(response.data.products);
     } catch (error) {
       setError("Erreur lors de la récupération des produits");
@@ -41,7 +43,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
       if (!token) return;
 
       // Récupère le panier actif de l'utilisateur
-      const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
+      const response = await axios.get(`${API_URL}/shop/user/carts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -70,7 +72,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
       let activeCartId = cartId;
 
       if (!activeCartId) {
-        const response = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
+        const response = await axios.get(`${API_URL}/shop/user/carts`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -79,7 +81,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
           setCartId(activeCartId);
         } else {
           const createCartResponse = await axios.post(
-            'https://localhost:3000/market_place/v1/shop/user/cart',
+            `${API_URL}/shop/user/cart`,
             {
               products: [{ id: product.id, quantity: 1 }],
             },
@@ -98,7 +100,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
       }
 
       await axios.put(
-        `https://localhost:3000/market_place/v1/shop/user/cart/${activeCartId}/${product.id}`,
+        `${API_URL}/shop/user/cart/${activeCartId}/${product.id}`,
         {
           products: [{ id: product.id, quantity: 1 }],
         },
@@ -112,7 +114,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
 
       alert('Produit ajouté au panier!');
 
-      const cartResponse = await axios.get('https://localhost:3000/market_place/v1/shop/user/carts', {
+      const cartResponse = await axios.get(`${API_URL}/shop/user/carts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
