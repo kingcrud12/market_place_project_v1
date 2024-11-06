@@ -1,25 +1,31 @@
   .top-widget {
     display: flex;
-    width: 100%;
+    align-items: center;
+    width: 100vw;
+    margin: 0 ;
     background: var(--Gray-900, #191C1F);
     justify-content: center;
     position: relative; 
-    padding: 10px 0;
+    padding: 10px;
     font-family: 'public sans';
+    box-sizing: border-box;
     
   }
   
   .centered-container {
-    max-width: 1920px;
+    display: flex;
+    max-width: 1320px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
+    box-sizing: border-box;
 }
 
 
   .black-global {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 10px;
   }
@@ -47,8 +53,7 @@
   }
 
   .global-text {
-    display: inline-flex;
-    justify-content: center;
+    display: flex;
     align-items: center;
     gap: 8px; 
   }
@@ -81,7 +86,7 @@
   
   
 .shop-button {
-    display: inline-flex;
+    display: flex;
     padding: 0px 24px;
     justify-content: center;
     align-items: center;
@@ -133,6 +138,37 @@
     width: 16px;
     height: 16px;
 
+}
+
+/* Media queries pour le Topwidget */
+@media (max-width: 1024px) {
+  .centered-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+  }
+  
+  .black-global, .global-text, .shop-button {
+      justify-content: center;
+      text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-widget {
+      padding: 8px 10px;
+  }
+
+  .centered-container {
+      padding: 0 10px;
+  }
+
+  .black-global .black-icone, 
+  .global-text .Up-text, 
+  .pourcent-text, 
+  .off-text {
+      font-size: 14px;
+  }
 }
   
   

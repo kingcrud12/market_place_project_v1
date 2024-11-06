@@ -10,21 +10,21 @@
 }
 .header-widgets {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap; /* Permet aux widgets de passer à la ligne si nécessaire */
     justify-content: center;
-    align-items: center;
-    gap: 24px;
+    gap: 24px;   
 }
 
 .bar-widget {
     display: flex;
+    flex-wrap: wrap;
     padding: 16px;
     justify-content: center;
     align-items: center;
     gap: 28px;   
     border-radius: 6px;
     border: 1px solid var(--Gray-100, #E4E7E9);
-    background: var(--Gray-00, #FFF); 
+    background: var(--Gray-00, #FFF);        
 }
 
 .feature-un {
@@ -74,4 +74,20 @@
     background: #E4E7E9;    
 }
 
-  
+/* Media queries pour le Header */
+@media (max-width: 1024px) {
+    .header-widgets, .bar-widget {
+        flex-direction: column;
+        align-items: center;
+    }
+} 
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 10px;
+    }
+    
+    .bar-widget {
+        gap: 16px;
+    }
+}
