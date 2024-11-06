@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
     }
 
     try {
-      const response = await fetch('https://localhost:3000/market_place/v1/auth/logout', {
+      const response = await fetch('http://localhost:3000/market_place/v1/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

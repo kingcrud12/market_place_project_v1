@@ -1,0 +1,109 @@
+/* Style de la page des détails de la commande */
+.order-details-page {
+    padding: 40px 20px; /* Ajout de padding en haut pour éloigner le titre */
+    background-color: #f9f9f9; /* Fond légèrement gris */
+    min-height: 100vh; /* S'assurer que la page prend toute la hauteur de l'écran */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligner le contenu en haut */
+}
+
+/* Titre principal de la page */
+.order-details-page h1 {
+    font-size: 32px;
+    margin-bottom: 40px; /* Espace plus important entre le h1 et la carte */
+    color: #333;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Carte principale de la commande */
+.order-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre subtile pour la carte */
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+/* Titre de la commande */
+.order-card h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Informations générales de la commande */
+.order-card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Liste des produits dans la commande */
+.order-products {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Chaque produit dans la commande */
+.order-product {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+}
+
+/* Nom du produit */
+.order-product h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Prix et quantité du produit */
+.order-product p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Total de la commande */
+.order-card h3 {
+    font-size: 22px;
+    color: #333;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+/* Bouton de paiement */
+.checkout-button {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    width: 100%; /* Bouton pleine largeur */
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #218838;
+}
+
+/* Message d'erreur */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}

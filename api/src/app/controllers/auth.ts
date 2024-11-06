@@ -34,7 +34,7 @@ export const signup = async (req: Request, res: Response) =>{
   })
 
 
-    const confirmationLink = `https://localhost:3000/market_place/v1/auth/confirm-email?token=${token}`;
+    const confirmationLink = `http://localhost:3000/market_place/v1/auth/confirm-email?token=${token}`;
     await sendConfirmationEmail(email, 'Confirm your account', `Please confirm your account by clicking the following link: ${confirmationLink}`);
 
 
@@ -73,7 +73,7 @@ export const askconfirmationLink = async (req: Request, res: Response) =>{
     }
     });
 
-    const confirmationLink = `https://localhost:3000/market_place/v1/auth/confirm-email?token=${token}`;
+    const confirmationLink = `http://localhost:3000/market_place/v1/auth/confirm-email?token=${token}`;
     await sendConfirmationEmail(email, 'Confirm your account', `Please confirm your account by clicking the following link: ${confirmationLink}`);
 
     res.status(201).json({message : "lien envoyé"});
