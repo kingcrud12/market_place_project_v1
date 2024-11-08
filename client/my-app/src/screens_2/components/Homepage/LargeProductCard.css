@@ -1,0 +1,204 @@
+.large-product-card {
+    width: 328px;
+    height: 592px;
+    flex-shrink: 0;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);
+    box-sizing: border-box;
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    padding-right: 24px;
+    padding-left: 24px;
+    position: relative;
+    padding-top: 16px;
+    padding-bottom: 24px;
+}
+
+.large-product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;   
+}
+
+.large-image {
+    width: 280px;
+    height: 268px;
+    flex-shrink: 0;
+         
+}
+
+.large-sold-out-badge {
+    display: inline-flex;
+    padding: 5px 10px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Gray-400, #929FA5);
+    color: var(--Gray-00, #FFF);
+
+    /* Body/Tiny/600 */
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 133.333% */        
+}
+
+.large-discount {
+    display: flex;
+    padding: 5px 10px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Warning-400, #EFD33D); 
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Tiny/600 */
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 133.333% */       
+}
+
+.large-hot-badge {
+    display: flex;
+    padding: 5px 10px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Danger-500, #EE5858);
+    color: var(--Gray-00, #FFF);
+
+    /* Body/Tiny/600 */
+    font-family: "Public Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 133.333% */            
+}
+
+.large-product-info {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px;      
+}
+
+.large-content-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    gap: 6px;  
+}
+
+.large-rating {
+color: #EBC80C;    
+}
+
+.large-reviews {
+    color: var(--Gray-500, #77878F);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */    
+}
+
+.large-name {
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Medium/400 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */        
+}
+    
+.large-original-price {
+    color: var(--Gray-300, #ADB7BC);
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    text-decoration-line:line-through;    
+}
+
+.large-current-price {
+    color: var(--Secondary-500, #2DA5F3);
+
+    /* Body/Large/600 */
+    font-family: "Public Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 133.333% */    
+}
+
+.large-description {
+    width: 280px;
+    color: var(--Gray-600, #5F6C72);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */        
+}
+
+.large-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+       
+}
+
+.large-icon {
+    display: flex;
+    padding: 12px;
+    align-items: flex-start;
+    gap: 12px;
+    border-radius: 2px;
+    background: var(--Primary-100, #FFE7D6);    
+}
+
+.large-add-to-cart-button {
+    display: flex;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    background: var(--Primary-500, #FA8232);  
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/07 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 342.857% */
+    letter-spacing: 0.168px;
+    text-transform: uppercase;
+    border: none; 
+    cursor: pointer;   
+}
+
+.large-add-to-cart-button:hover {
+    background-color: #ffa500;
+}
+
+
