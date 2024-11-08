@@ -337,6 +337,7 @@
     }
 
     .card-principal {
+        
         width: 100%;
         max-width: 100%;
     }
@@ -349,6 +350,7 @@
 
 @media (max-width: 768px) {
     .card-objet, .card-principal, .small-widget {
+        flex-direction: column;
         padding: 0 10px;
     }
 }

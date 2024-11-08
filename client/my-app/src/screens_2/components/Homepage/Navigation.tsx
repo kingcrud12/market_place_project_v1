@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import './Navigation.css';
 import Twitter from '../../../assets_2/icons/Twitter.svg';
 import Facebook from '../../../assets_2/icons/Facebook.svg'
@@ -22,9 +22,17 @@ import Vectorpoint from '../../../assets_2/icons/Vectorpoint.svg'
 
 function Navigation ()  {
 
+  const [ cartCount, setCartCount] = useState(0);
+
+  const addToCart = () => {
+    setCartCount (cartCount + 1);
+  }
+
   const handleSearch = () => {
     console.log("Icône de recherche cliquée !");
   };
+
+
   
   return (
     <div className="navigation">
@@ -101,7 +109,7 @@ function Navigation ()  {
             <img src={Cart} alt='cart' className= 'cart-icon' />
             <img src={Vectorpoint} alt='cart' className= 'point-1'/>
             <img src={Vectorpoint} alt= 'cart' className= 'point-2'/>
-              <span className='text-cart'>2</span>
+              <span className='text-cart'>{cartCount}</span>
             </div>
           
           <img src={Heart} alt='Heart' className= 'heart-icon' />
@@ -143,6 +151,7 @@ function Navigation ()  {
         </div>
       
       </div>
+      <button onClick={addToCart}>Ajout panier</button>
     </div>
   );
 }

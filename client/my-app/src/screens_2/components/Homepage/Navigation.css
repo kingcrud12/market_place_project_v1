@@ -276,6 +276,7 @@
     gap: 8px;
     border-radius: 2px;
     background: var(--Gray-50, #F2F4F5);
+    border: none;
   }
   .category-text {
     color: var(--Gray-900, #191C1F);
@@ -296,6 +297,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
   }
 
   .track-order {
@@ -313,6 +315,7 @@
     display: flex;
     align-items: center;
     gap: 6px;    
+    text-decoration: none;
   }
 
   .compare {
@@ -330,6 +333,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
   }
 
   .customer-support {
@@ -346,7 +350,8 @@
   .nav-help {
     display: flex;
     align-items: center;
-    gap: 6px;    
+    gap: 6px; 
+    text-decoration: none;   
   }
 
   .need-help {
@@ -363,7 +368,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;    
+    gap: 8px; 
+    text-decoration: none;   
   }
 
   .numero {

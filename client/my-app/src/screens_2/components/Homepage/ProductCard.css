@@ -1,0 +1,45 @@
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+.sold-out-badge, .discount, .hot-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.discount {
+    background-color: #ffd700;
+    top: 40px;
+}
+
+.hot-badge {
+    background-color: #ff4500;
+}
+
+.sold-out-badge {
+    background-color: #808080;
+    top: 8px;
+    right: 8px;
+}
+
+.add-to-cart-button {
+    background-color: #ff8c00;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.add-to-cart-button:hover {
+    background-color: #ffa500;
+}

@@ -1,0 +1,131 @@
+
+.today-best-deals {
+    display: flex;
+    padding: 72px 300px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;    
+}
+
+.best-deals {
+    display: flex;
+    width: 1320px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.content-best {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;    
+}  
+
+
+
+.best-deals-title {
+    color: var(--Gray-900, #191C1F);
+
+    /* Heading/03 */
+    font-family: "Public Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 133.333% */    
+} 
+
+.deals-time {
+    display: flex;
+    align-items: center;
+    gap: 12px;    
+}
+
+  
+
+.Deals-end-in {
+    color: #000;
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}
+
+.time {
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 6px;
+    border-radius: 2px;
+    background: var(--Warning-300, #F3DE6D);
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Medium/400 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
+.button-browser {
+    display: flex;
+    padding: 6px 0px;
+    align-items: center;
+    gap: 8px;
+    background: var(--Gray-00, #FFF);
+    border: none;    
+}
+
+.browse-product {
+    color: var(--Secondary-500, #2DA5F3);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */           
+}
+
+.product-layout {
+    display: flex;
+    gap: 16px;
+    width: 1320px;
+}
+
+.first-product-card {
+    flex: 1;
+    max-width: 328px; 
+    
+}
+
+.other-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    flex: 3;
+    
+}
+
+/* Styles pour ajuster l'apparence de chaque produit dans la grille */
+.best-deal-product {
+    width: 100%;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+}
+
+
+
+
+
+
+
+
