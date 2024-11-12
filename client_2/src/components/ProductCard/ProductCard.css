@@ -1,0 +1,25 @@
+.product-card {
+    width: 200px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    background-color: #F2F4F5;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .product-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 8px 0;
+  }
+  
+  .product-price {
+    color: #2DA5F3;
+    font-weight: 500;
+  }
+  

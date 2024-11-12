@@ -1,0 +1,25 @@
+.info-card {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #E4E7E9;
+  }
+  
+  .icon-placeholder {
+    width: 40px;
+    height: 40px;
+    background: #e0e0e0;
+    margin-right: 16px;
+  }
+  
+  .info-title {
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  .info-description {
+    color: #5F6C72;
+  }
+  

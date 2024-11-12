@@ -1,0 +1,46 @@
+/* src/components/Footer/Footer.css */
+.footer {
+    background-color: #191C1F;
+    color: #ffffff;
+    padding: 16px 0;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .social-icons span {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: brightness(0) invert(1);
+  }
+  
+  .icon.facebook {
+    background-image: url('/Users/Hugotestas/Desktop/Dvpt web/market_place_project_v1/client_2/src/assets/icons/Facebook.svg');
+  }
+  
+  .icon.twitter {
+    background-image: url('/Users/Hugotestas/Desktop/Dvpt web/market_place_project_v1/client_2/src/assets/icons/Twitter.svg');
+  }
+  
+  .icon.instagram {
+    background-image: url('/Users/Hugotestas/Desktop/Dvpt web/market_place_project_v1/client_2/src/assets/icons/Instagram.svg');
+  }
+  

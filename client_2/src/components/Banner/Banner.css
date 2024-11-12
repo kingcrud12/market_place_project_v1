@@ -1,0 +1,105 @@
+/* Banner.css */
+
+.banner {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.banner-top {
+  width: 1920px;
+  height: 80px;
+  position: relative;
+  background: #191C1F;
+}
+
+.banner-highlight {
+  padding: 6px 10px;
+  position: absolute;
+  top: 22px;
+  left: 299px;
+  transform: rotate(-3deg);
+  background: #F3DE6D;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.banner-highlight-text {
+  color: #191C1F;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.banner-title {
+  position: absolute;
+  top: 25px;
+  left: 387px;
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.banner-offer {
+  position: absolute;
+  top: 16px;
+  left: 870px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.banner-offer-text {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.banner-discount {
+  color: #EBC80C;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48px;
+}
+
+.banner-shop-now {
+  position: absolute;
+  top: 16px;
+  left: 1464.5px;
+  padding: 8px 24px;
+  background: #EBC80C;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.banner-shop-now-text {
+  color: #191C1F;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 48px;
+  letter-spacing: 0.17px;
+}
+
+.banner-icon-container {
+  position: absolute;
+  top: 24px;
+  left: 1864px;
+  padding: 8px;
+  background: #303639;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}

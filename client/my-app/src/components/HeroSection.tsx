@@ -11,7 +11,7 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
-  stock: number; // Gestion de stock
+  stock: number;
 }
 
 interface HeroSectionProps {
@@ -24,8 +24,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
   const [cartId, setCartId] = useState<number | null>(null);
 
   useEffect(() => {
-    fetchProducts(); // Récupère les produits lors du chargement initial
-    fetchActiveCart(); // Récupère le panier actif
+    fetchProducts();
+    fetchActiveCart();
   }, []);
 
   const fetchProducts = async () => {
@@ -42,13 +42,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      // Récupère le panier actif de l'utilisateur
       const response = await axios.get(`${API_URL}/shop/user/carts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.data && response.data.cartId) {
-        setCartId(response.data.cartId); // Stocke l'ID du panier actif
+        setCartId(response.data.cartId);
       }
     } catch (error) {
       console.error('Erreur lors de la récupération du panier actif:', error);
@@ -57,10 +56,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ updateCartCount }) => {
 
   const handleAddToCart = async (product: Product) => {
     if (product.stock <= 0) {
-      // Affiche l'alerte si le produit n'est pas en stock
       alert(`Le produit ${product.name} est en rupture de stock.`);
-
-      // Relance l'appel pour récupérer les produits lorsque l'utilisateur clique sur "OK"
       fetchProducts();
       return;
     }
