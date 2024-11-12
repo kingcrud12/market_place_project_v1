@@ -2,6 +2,8 @@ import React from 'react';
 import Header from '../components/Homepage/Header';
 import Topwidget from '../components/Homepage/Topwidget';
 import BestDeals from '../components/Homepage/BestDeals';
+import Category from '../components/Homepage/Category';
+import FeaturedProduct from '../components/Homepage/FeaturedProduct';
 import './Homepage.css';
 
 function Homepage () {
@@ -11,6 +13,8 @@ function Homepage () {
         <Topwidget />
         <Header />
         <BestDeals /> 
+        <Category />
+        <FeaturedProduct />
         
       <main>
         <h1>Bienvenue sur la page d'accueil !</h1>

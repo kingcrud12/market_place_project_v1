@@ -1,4 +1,3 @@
-// CardProduct.tsx
 import React from 'react';
 import './CardProduct.css';
 import shopIcon from '../../../assets_2/icons/Regular/Multi-Currency/Regular/ArrowRight.svg'

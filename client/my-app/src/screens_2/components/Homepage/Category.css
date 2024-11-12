@@ -1,0 +1,109 @@
+.category-value {
+    display: flex;
+    padding: 0px 300px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;    
+}
+
+.title-category {
+    width: 1320px;
+    color: var(--Gray-900, #191C1F);
+    text-align: center;
+    
+    /* Heading/01 */
+    font-family: "Public Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */    
+}
+
+.category-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .category {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 18px;  
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    padding: 0 50px;
+    width: 1320px;
+  }
+  
+  .category-item {
+    display: flex;
+    padding: 24px 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;  
+    border-radius: 4px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);
+    min-width: 180px;
+  }
+  
+  .category-image {
+    width: 148px;
+    height: auto;
+  }
+  
+  .category-name {
+    width: 181px;
+    color: var(--Gray-900, #191C1F);
+    text-align: center;
+    
+    /* Body/Medium/500 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */  
+  }
+
+
+  .button-category {
+    position: absolute; /* Positionne les flèches au-dessus de .category */
+    top: 40%; /* Centré verticalement */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%); /* Ajuste le centrage */
+    pointer-events: none; /* Permet de cliquer sur la catégorie à travers les flèches */
+  }   
+  
+  
+  .scroll-button {
+    display: flex;
+    height: 48px;
+    padding: 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 100px;
+    background: var(--Primary-500, #FA8232);   
+    border: none; 
+    cursor: pointer;
+    pointer-events: all;
+    z-index: 1;
+  }
+
+  .scroll-button.left {
+    position: absolute;
+    left: 0px; /* Ajuster cette valeur pour qu'il chevauche la première image */
+    transform: translateX(50%); /* Décalage pour commencer à la moitié du premier élément */
+  }
+
+  .scroll-button.right {
+    position: absolute;
+    right: 0px; /* Ajuster cette valeur pour qu'il chevauche la dernière image */
+    transform: translateX(-50%); /* Décalage pour commencer à la moitié du dernier élément */
+  }
+
+
+ 

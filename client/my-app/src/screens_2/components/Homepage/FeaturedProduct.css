@@ -1,0 +1,105 @@
+.other-featuredproduct {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex: 3; 
+    gap: 16px;
+    align-items: start;  
+    
+}
+
+.general-featured {
+    display: flex;
+    padding: 72px 300px;
+    align-items: flex-start;
+    gap: 24px;    
+}
+
+.bgbanner {
+    width: 312px;
+    height: 716px;
+    flex-shrink: 0;
+    border-radius: 3px;
+    background: var(--Warning-300, #F3DE6D);    
+}
+
+.featured-global {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.top-featured {
+    display: flex;
+    width: 984px;
+    justify-content: space-between;
+    align-items: center;    
+}
+
+.title-featured {
+    color: var(--Gray-900, #191C1F);
+
+    /* Heading/03 */
+    font-family: "Public Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 133.333% */    
+}
+
+.featured-category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;    
+}
+
+.category-featured-product {
+    display: flex;
+    padding: 8px;
+    align-items: flex-start;
+     
+}
+
+.featured-all-products {
+    padding: 8px;
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
+    background: var(--Gray-00, #FFF);
+    box-shadow: 0px -2px 0px 0px #FA8232 inset;    
+}
+
+.featured-other-product {
+    padding: 8px;
+    color: var(--Gray-600, #5F6C72);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */    
+}
+
+.button-featured {
+    color: var(--Primary-500, #FA8232);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */    
+    border:none;
+    background:none;
+    display: flex;
+    padding: 6px 0px;
+    align-items: center;
+    gap: 8px;
+}

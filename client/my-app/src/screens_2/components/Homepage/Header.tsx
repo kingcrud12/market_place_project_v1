@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './Navigation';
 import CardProduct from './CardProduct';
 import Xbox from '../../../assets_2/image/Image_xbox.svg'
@@ -42,6 +42,14 @@ const Header: React.FC = () => {
       imageUrl: Xbox
     },
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCard((prevCard) => (prevCard + 1) % products.length);
+    }, 10000);
+  
+    return () => clearInterval(interval);
+  }, [products.length]);
 
   const handleDotClick = (index: number) => {
     setCurrentCard(index);
