@@ -12,15 +12,151 @@
     padding: 72px 300px;
     align-items: flex-start;
     gap: 24px;    
+    
 }
 
 .bgbanner {
+    text-align: center;
     width: 312px;
     height: 716px;
     flex-shrink: 0;
     border-radius: 3px;
-    background: var(--Warning-300, #F3DE6D);    
+    background: var(--Warning-300, #F3DE6D);     
 }
+
+
+.banner-content-general {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px; 
+       
+}
+
+.banner-full-titre {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px; 
+    margin-top: 32px;
+  
+}
+
+.banner-titre-general {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;    
+}
+
+
+
+.titre-banner-featured{
+    width: 248px;
+    color: var(--Danger-600, #BE4646);
+    text-align: center;
+    
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
+    margin-top: px;    
+}
+
+.discount-banner-featured {
+    width: 248px;
+    color: var(--Gray-900, #191C1F);
+    text-align: center;
+
+    /* Heading/01 */
+    font-family: "Public Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */    
+}
+
+.sous-titre-banner {
+    width: 248px;
+    color: var(--Gray-700, #475156);
+    text-align: center;
+    
+    /* Body/Medium/400 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */        
+}
+
+.banner-offers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.banner-offers-ends {
+
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/500 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+}
+
+.badge-offers {
+    display: flex;
+    padding: 6px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Gray-00, #FFF);
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */        
+}
+
+.shop-now-banner {
+    display: inline-flex;
+    padding: 0px 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border-radius: 3px;
+    background: var(--Primary-500, #FA8232); 
+    border: none;
+    
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/06 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 56px; /* 350% */
+    letter-spacing: 0.192px;
+    text-transform: uppercase;  
+    margin-top: 47px;
+}
+
+.image-banner-bg {
+    width: 312px;
+    height: 428px;
+    flex-shrink: 0;    
+}   
+
 
 .featured-global {
     display: flex;
@@ -56,35 +192,39 @@
 
 .category-featured-product {
     display: flex;
-    padding: 8px;
+    padding: px;
     align-items: flex-start;
      
 }
 
-.featured-all-products {
-    padding: 8px;
-    color: var(--Gray-900, #191C1F);
 
-    /* Body/Small/600 */
-    font-family: "Public Sans";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px; /* 142.857% */
-    background: var(--Gray-00, #FFF);
-    box-shadow: 0px -2px 0px 0px #FA8232 inset;    
-}
 
 .featured-other-product {
-    padding: 8px;
     color: var(--Gray-600, #5F6C72);
-
-    /* Body/Small/400 */
     font-family: "Public Sans";
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */    
+    font-weight: 400; 
+    line-height: 20px;
+    padding: 8px; 
+    background: var(--Gray-00, #FFF);
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.featured-other-product:hover {
+    box-shadow: 0px -2px 0px 0px #090706 inset; /* Soulignement orange */
+    color: var(--Gray-900, #191C1F);
+}
+
+
+.featured-other-product.active {
+    box-shadow: 0px -2px 0px 0px #FA8232 inset;
+    color: var(--Gray-900, #191C1F); /* Couleur active */
+    padding: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .button-featured {

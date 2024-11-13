@@ -1,0 +1,83 @@
+.large-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    background-color: #F5F5F5; /* Couleur de fond */
+    border-radius: 8px;
+    justify-content: space-between;
+    color: #191C1F;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.large-banner-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: #FFDA3A; /* Couleur du badge */
+    color: #1A1A1A;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.large-banner-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 60%; /* Limite la largeur pour éviter que le texte n'empiète sur l'image */
+}
+
+.large-banner-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1A1A1A;
+}
+
+.large-banner-subtitle {
+    color: #6B7280;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.large-banner-description {
+    font-size: 16px;
+    color: #5F6C72;
+}
+
+.large-banner-button {
+    padding: 12px 24px;
+    background-color: #FA8232;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.large-banner-image-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.large-banner-image {
+    width: 180px;
+    height: auto;
+}
+
+.large-banner-price {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #FFF;
+    color: #191C1F;
+    padding: 8px 16px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import HeartIcon from '../../../assets_2/icons/Heartwhite.svg';
 import CartIcon from '../../../assets_2/icons/ShoppingCartSimple3.svg';
 import EyeIcon from '../../../assets_2/icons/Regular/Eye.svg';
@@ -15,6 +15,8 @@ interface Product {
     reviews?: number;
     isHot?: boolean;
     isSoldOut?: boolean;
+    isSale?: boolean;
+    isBestDeal?: boolean;
     imageUrl: string;
     description?: string;
     inStock?: boolean;
@@ -25,13 +27,22 @@ interface Product {
   }
 
   const GeneralProducts: React.FC<GeneralProductsProps> = ({ product }) => {
+    const [isSelected, setIsSelected] = useState(false);
+
+    const handleCardClick = () => {
+      setIsSelected(!isSelected);
+    };
     return (
-        <div className='general-product'>
+        <div 
+        className={`general-product ${isSelected ? 'selected' : ''}`}
+        onClick={handleCardClick}>
         <div className={`general-product-card ${product.isSoldOut ? 'sold-out' : ''}`}>
           <div className="general-product-badge">
             {product.isSoldOut && <span className="general-sold-out-badge">SOLD OUT</span>}
             {product.discount && <span className="general-discount">{product.discount}</span>}
             {product.isHot && <span className="general-hot-badge">HOT</span>} 
+            {product.isSale && <span className="general-sale-badge">SALE</span>}
+            {product.isBestDeal && <span className="general-bestdeal-badge">BEST DEALS</span>}
           </div>
           <div className='general-image-grid'>
           <img src={product.imageUrl} alt={product.name} />
@@ -48,19 +59,22 @@ interface Product {
                 </div>
               </div>
           </div>
+         
           <div className="general-product-info">
+            
             <div className="general-content-info">
+            {product.rating && (
+              <div className="general-rating">
+                {'★'.repeat(Math.floor(product.rating))} <span className='general-reviews'>({product.reviews})</span>
+              </div>
+            )}
                 <span className="general-name-grid">{product.name}</span>
                 <span className="price">
                     {product.originalPrice && <span className="general-original-price">${product.originalPrice.toFixed(2)}</span>}
                     <span className="general-current-price">${product.price.toFixed(2)}</span>
                 </span>
             </div>
-            {product.rating && (
-              <div className="general-rating">
-                {'★'.repeat(Math.floor(product.rating))} <span className='general-reviews'>({product.reviews})</span>
-              </div>
-            )}
+            
             <span>{product.description}</span>
           </div>
     

@@ -8,8 +8,16 @@
     box-sizing: border-box;   
     display: flex;
     flex-direction: column;   
-    align-items: center;       
+    align-items: center; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;      
 }
+
+.general-product:hover {
+    transform: scale(1.05); /* Agrandit légèrement la carte */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée pour l'effet de flottement */
+    z-index: 10; /* Assure que la carte sélectionnée est au-dessus des autres */
+}    
+
 
 .general-product-card:hover .general-action-buttons {
     opacity: 1;  
@@ -87,9 +95,43 @@
    line-height: 16px; /* 133.333% */  
 }
 
+.general-sale-badge {
+    display: flex;
+    padding: 5px 10px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Success-500, #2DB224);
+    color: var(--Gray-00, #FFF);
+
+   /* Body/Tiny/600 */
+   font-family: "Public Sans";
+   font-size: 12px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: 16px; /* 133.333% */  
+}
+
+.general-bestdeal-badge {
+    display: flex;
+    padding: 5px 10px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Secondary-500, #2DA5F3);;
+    color: var(--Gray-00, #FFF);
+
+   /* Body/Tiny/600 */
+   font-family: "Public Sans";
+   font-size: 12px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: 16px; /* 133.333% */  
+}
+
 .general-image-grid {
-    width: 216px;
-    height: 188px;
+    width: 202px;
+    height: 172px;
     position: relative;
     flex-shrink: 0;  
     overflow: hidden;  
@@ -134,18 +176,19 @@
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;    
+    gap: 0px;    
 }
 
 .general-content-info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;    
+    gap: 8px;   
+    margin-top: 24px; 
 }
 
 .general-name-grid {
-    width: 216px;
+    width: 204px;
     color: var(--Gray-900, #191C1F);
 
     /* Body/Small/400 */
@@ -178,7 +221,7 @@
 }
 
 .general-rating {
-    color: #EBC80C;    
+    color: #FA8232;    
 }
 
 .general-reviews {

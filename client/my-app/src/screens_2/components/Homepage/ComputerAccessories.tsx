@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import './FeaturedProduct.css';
-import PS5Image from '../../../assets_2/image/Image_ps5.png';
+import './ComputerAccessories.css';
 import Drone from '../../../assets_2/image/Drone.svg';
+import PS5Image from '../../../assets_2/image/Image_ps5.png';
 import Tel2 from '../../../assets_2/products/tel2.png';
 import Manette4 from '../../../assets_2/products/manette4.png';
 import Ecouteur5 from '../../../assets_2/products/ecouteur5.png';
 import Portable6 from '../../../assets_2/products/portable6.png';
 import Drone7 from '../../../assets_2/products/drone7.png';
 import Pc8 from '../../../assets_2/products/pc8.png';
-import Webcam9 from '../../../assets_2/products/webcam9.png';
 import ArrowRight from '../../../assets_2/icons/Regular/Regular/Regular/ArrowRight.svg';
-import ArrowRightWhite from '../../../assets_2/icons/Regular/Regular/ArrowRight.svg';
-import BannerBg from '../../../assets_2/image/Image-bannerbg.svg'
+import Webcam9 from '../../../assets_2/products/webcam9.png';
 import GeneralProducts from './GeneralProducts';
 
 const products = [
@@ -126,45 +124,26 @@ const products = [
 
     ];
 
-    function FeaturedProduct () {
-        const [selectedCategory, setSelectCategory] = useState ("All Product");
 
-        const categories: string[] = ["All Product", "Smart Phone", "Laptop", "HeadPhone", "TV"];
+function ComputerAccessories() {
 
+    const [selectedCategory, setSelectCategory] = useState ("All Product");
 
-        const handleCategoryClick = (category: string) => {
-          setSelectCategory(category);
+    const categories: string[] = ["All Product", "Keyboard & Mouse", "Laptop", "HeadPhone", "TV"];
 
 
-        }
-      
-        return (
-         
-         <div className='general-featured'>
-          <div className ='bgbanner'>
-            <div className='banner-content-general'>
-              <div className='banner-full-titre'>
-                <div className='banner-titre-general'>
-                  <span className='titre-banner-featured'>COMPUTER & ACCESSORIES</span>
-                  <span className='discount-banner-featured'>32% Discount</span>
-                </div>
-                <span className='sous-titre-banner'>For all ellectronics products</span>
-              </div>
-              <div className='banner-offers'>
-                <span className='banner-offers-ends'>Offers ends in:</span>
-                <span className='badge-offers'>ENDS OF CHRISTMAS</span>
-              </div>
-            </div>
-              <button className='shop-now-banner'>
-                Shop now 
-                <img src={ArrowRightWhite} alt='' />
-              </button>
-              <img src={BannerBg} alt='' className='image-banner-bg' />
-            
-          </div>
+    const handleCategoryClick = (category: string) => {
+      setSelectCategory(category);
+
+
+    }
+
+    return (
+        <div className='computer-general'>
+
           <div className = 'featured-global'>
             <div className = 'top-featured'>
-              <span className = 'title-featured'>Featured Products</span>
+              <span className = 'title-featured'>Computer Accessories</span>
               <div className = 'featured-category'>
                 <div className = 'category-featured-product'>
                   {categories.map((category) => (
@@ -179,15 +158,16 @@ const products = [
                   </button>
               </div>
             </div>
-
             <div className="other-featuredproduct">
                     {products.slice(1).map(product => (
                         <GeneralProducts key={product.id} product={product} />
                     ))}
             </div>
-          </div>
+           
+        </div>
       </div>
+        
     );
-};
 
-export default FeaturedProduct;              
+};
+export default ComputerAccessories;

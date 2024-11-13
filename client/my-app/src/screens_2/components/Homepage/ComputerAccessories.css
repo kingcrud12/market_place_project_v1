@@ -1,0 +1,8 @@
+.computer-general {
+    display: flex;
+    padding: 72px 300px;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;    
+}
+

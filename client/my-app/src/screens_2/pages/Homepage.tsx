@@ -4,7 +4,10 @@ import Topwidget from '../components/Homepage/Topwidget';
 import BestDeals from '../components/Homepage/BestDeals';
 import Category from '../components/Homepage/Category';
 import FeaturedProduct from '../components/Homepage/FeaturedProduct';
+import SmallBanner from '../components/Homepage/SmallBanner'
+import LargeBanner from '../components/Homepage/LargeBanner';
 import './Homepage.css';
+import ComputerAccessories from '../components/Homepage/ComputerAccessories';
 
 function Homepage () {
   return (
@@ -15,6 +18,9 @@ function Homepage () {
         <BestDeals /> 
         <Category />
         <FeaturedProduct />
+        <SmallBanner />
+        <ComputerAccessories />
+        <LargeBanner />
         
       <main>
         <h1>Bienvenue sur la page d'accueil !</h1>

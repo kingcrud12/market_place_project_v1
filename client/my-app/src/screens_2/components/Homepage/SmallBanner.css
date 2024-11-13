@@ -1,0 +1,4 @@
+.small-banner-row {
+    display: flex;
+    gap: 16px; /* Espace entre les deux petites bannières */
+}
