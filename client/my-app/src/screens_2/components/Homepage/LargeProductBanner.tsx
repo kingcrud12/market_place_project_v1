@@ -18,7 +18,7 @@ const LargeProductBanner: React.FC<LargeProductBannerProps> = ({ title, subtitle
             <div className="large-banner-content">
                 <span className="large-banner-title">{title}</span>
                 <span className="large-banner-subtitle">{subtitle}</span>
-                <p className="large-banner-description">{description}</p>
+                <span className="large-banner-description">{description}</span>
                 <button className="large-banner-button">{buttonText}</button>
             </div>
             <div className="large-banner-image-wrapper">

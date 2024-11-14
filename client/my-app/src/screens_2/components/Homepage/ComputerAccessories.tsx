@@ -9,7 +9,9 @@ import Portable6 from '../../../assets_2/products/portable6.png';
 import Drone7 from '../../../assets_2/products/drone7.png';
 import Pc8 from '../../../assets_2/products/pc8.png';
 import ArrowRight from '../../../assets_2/icons/Regular/Regular/Regular/ArrowRight.svg';
+import ArrowRightWhite from '../../../assets_2/icons/Regular/Regular/ArrowRight.svg';
 import Webcam9 from '../../../assets_2/products/webcam9.png';
+import CompBuds from '../../../assets_2/products/Image_computer_airbuds.png'
 import GeneralProducts from './GeneralProducts';
 
 const products = [
@@ -165,6 +167,52 @@ function ComputerAccessories() {
             </div>
            
         </div>
+
+        <div className= 'banner-global-computer'>
+          <div className= 'first-banner-computer'>
+            <div className= 'first-content-computer'>
+              <img src={CompBuds} alt='' className='image-compbuds' />
+              <div className='first-second-content'>
+                <span className='title-firts-banner-computer'>
+                Xiaomi True Wireless Earbuds
+                </span>
+                <span className='subtitle-firts-banner-computer'>
+                Escape the noise, It’s time to hear the magic with Xiaomi Earbuds.
+                </span>
+              </div>
+              <div className='computer-banner-price'>
+                <span className='computer-name-price'>
+                Only for:
+                </span>
+                <span className='computer-badge-price'>
+                $299 USD
+                </span>
+
+              </div>
+            </div>
+            <button className= 'button-first-computer'>
+              Shop now
+              <img src={ArrowRightWhite} alt='' />
+              </button>
+
+          </div>
+          <div className= 'second-banner-computer'>
+            <div className='second-content-computer'>
+              <span className='summer-sale'>SUMMER SALES</span>
+              <span className='discount-computer'>37% DISCOUNT</span>
+              <span className='text-second-banner'>
+                only for <span className='smartphone-computer'>SmartPhone</span> product.
+                </span>
+            </div>
+            <button className= 'button-second-computer'>
+              Shop now
+              <img src={ArrowRightWhite} alt='' />
+              </button>
+            
+
+          </div>
+        </div>
+
       </div>
         
     );

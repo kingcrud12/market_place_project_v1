@@ -1,4 +1,197 @@
 .small-banner-row {
     display: flex;
-    gap: 16px; /* Espace entre les deux petites bannières */
+    padding: 0px;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.first-banner {
+    display: flex;
+    padding: 44px;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
+    border-radius: 4px;
+    background: var(--Gray-50, #F2F4F5);     
+}
+
+.first-banner .small-banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;    
+}
+
+.first-banner .small-banner-badge {
+    display: flex;
+    padding: 6px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Secondary-500, #2DA5F3);  
+    color: var(--Gray-00, #FFF);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */  
+}
+
+.first-banner .small-banner-title {
+    width: 280px;
+    color: var(--Gray-900, #191C1F);
+
+    /* Heading/01 */
+    font-family: "Public Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */        
+}
+
+.first-banner .small-banner-subtitle {
+    width: 280px;
+    color: var(--Gray-700, #475156);
+
+    /* Body/Medium/400 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */        
+}
+
+.first-banner .small-banner-button {
+    display: flex;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    background: var(--Primary-500, #FA8232); 
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/07 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 342.857% */
+    letter-spacing: 0.168px;
+    text-transform: uppercase;
+    border: none;       
+}
+
+.second-banner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 648px;
+    height: 356px;  
+    border-radius: 4px;
+    background: var(--Gray-900, #191C1F);
+    position: relative; 
+            
+}
+
+.second-banner .small-banner-content {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;  
+    margin: 44px   
+}
+
+.second-banner .small-banner-badge {
+    display: flex;
+    padding: 6px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 2px;
+    background: var(--Warning-400, #EFD33D);
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */         
+}
+
+.second-banner .small-banner-title {
+    width: 280px;
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/01 */
+    font-family: "Public Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */          
+}
+
+.second-banner .small-banner-subtitle {
+    width: 280px;
+    color: var(--Gray-300, #ADB7BC);
+
+    /* Body/Medium/400 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */          
+}
+
+.second-banner .small-banner-button {
+    display: flex;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    background: var(--Primary-500, #FA8232); 
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/07 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 342.857% */
+    letter-spacing: 0.168px;
+    text-transform: uppercase;
+    border: none;       
+}
+
+.second-banner img.small-banner-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 312px;
+    height: auto;
+    object-fit: contain;     
+}
+
+.second-banner .small-banner-price {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: inline-flex;
+    padding: 30px 18px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 1000px;
+    background: var(--Secondary-500, #2DA5F3);
+    color: var(--Gray-00, #FFF);
+
+    /* Body/XL/600 */
+    font-family: "Public Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px; /* 140% */  
+    z-index: 1;              
 }

@@ -1,0 +1,7 @@
+.Large-banner {
+    display: flex;
+    align-items: flex-start;
+    width: 1438px;
+    height: 424px;
+    background: var(--Primary-100, #FFE7D6);
+}

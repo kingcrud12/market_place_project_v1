@@ -5,7 +5,7 @@ import './LargeBanner.css';
 
 function LargeBanner() {
     return (
-        <div>
+        <div className='Large-banner'>
             
 
             {/* Large single product banner */}

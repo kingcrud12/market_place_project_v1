@@ -10,19 +10,19 @@ function SmallBanner() {
             {/* Row with two small product banners */}
             <div className="small-banner-row">
                 <SmallProductBanner
+                    className="first-banner"
                     title="New Apple Homepod Mini"
                     subtitle="Jam-packed with innovation, HomePod mini delivers unexpectedly."
                     imageSrc={HomePode}
                     buttonText="Shop Now"
-                    bgColor="#F0F5F9"
                     badgeText="Introducing"
                 />
                 <SmallProductBanner
+                    className="second-banner"
                     title="Xiaomi Mi 11 Ultra 12GB+256GB"
                     subtitle="Data provided by internal laboratories. Industry measurement."
                     imageSrc={XiaomiPhone}
                     buttonText="Shop Now"
-                    bgColor="#2D2D2D"
                     price="$590"
                     badgeText="Introducing New"
                 />
