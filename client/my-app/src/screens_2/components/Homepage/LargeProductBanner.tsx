@@ -1,4 +1,5 @@
 import React from 'react';
+import ArrowRightWhite from '../../../assets_2/icons/Regular/Regular/ArrowRight.svg';
 import './LargeProductBanner.css';
 
 interface LargeProductBannerProps {
@@ -14,16 +15,20 @@ interface LargeProductBannerProps {
 const LargeProductBanner: React.FC<LargeProductBannerProps> = ({ title, subtitle, description, imageSrc, price, buttonText, badgeText }) => {
     return (
         <div className="large-banner">
-            {badgeText && <span className="large-banner-badge">{badgeText}</span>}
             <div className="large-banner-content">
+            {badgeText && <span className="large-banner-badge">{badgeText}</span>}
                 <span className="large-banner-title">{title}</span>
                 <span className="large-banner-subtitle">{subtitle}</span>
                 <span className="large-banner-description">{description}</span>
-                <button className="large-banner-button">{buttonText}</button>
+                <button className="large-banner-button">{buttonText}
+                  <img src={ArrowRightWhite } alt='' />
+                </button>
             </div>
+            
+            <span className="large-banner-price">{price}</span>
+            
             <div className="large-banner-image-wrapper">
                 <img src={imageSrc} alt={title} className="large-banner-image" />
-                <span className="large-banner-price">{price}</span>
             </div>
         </div>
     );

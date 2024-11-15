@@ -15,7 +15,7 @@ function LargeBanner() {
                 imageSrc= {MacBook}
                 buttonText="Shop Now"
                 price="$1999"
-                badgeText="Limited Time Offer"
+                badgeText="SAVE UP TO $200.00"
             />
         </div>
     );

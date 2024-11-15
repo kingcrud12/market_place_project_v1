@@ -1,0 +1,102 @@
+.newsletter-general {
+    display: flex;
+    padding: 72px 300px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    background: var(--Secondary-700, #1B6392);        
+}
+
+.newsletter-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;    
+}
+.newsletter-title {
+    width: 1320px;
+    color: var(--Gray-00, #FFF);
+    text-align: center;
+    
+    /* Heading/01 */
+    font-family: "Public Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */        
+}
+
+.newsletter-substitle {
+    width: 536px;
+    color: var(--Gray-00, #FFF);
+    text-align: center;
+    
+    /* Body/Medium/400 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    opacity: 0.7;    
+}
+
+.newsletter-search {
+    display: flex;
+    padding: 12px;
+    align-items: center;
+    gap: 16px;
+    border-radius: 3px;
+    background: #FFF;
+    box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.12); 
+    
+  }
+
+  .newsletter-input-search {
+    width: 578px;
+    color: var(--Gray-500, #77878F);
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+    border: none;
+    outline: none;
+  }
+
+  .newsletter-search-button {
+    display: flex;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    background: var(--Primary-500, #FA8232);
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/07 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 342.857% */
+    letter-spacing: 0.168px;
+    text-transform: uppercase;
+    border: none;    
+  }
+
+  .newsletter-line {
+    width: 424px;
+    height: 1px;
+    opacity: 0.12;
+    background: #FFF;    
+  }
+
+  .newsletter-logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    opacity: 0.6;
+  }  

@@ -8,6 +8,7 @@ import SmallBanner from '../components/Homepage/SmallBanner'
 import LargeBanner from '../components/Homepage/LargeBanner';
 import './Homepage.css';
 import ComputerAccessories from '../components/Homepage/ComputerAccessories';
+import Newsletter from '../components/Homepage/Newsletter';
 
 function Homepage () {
   return (
@@ -21,6 +22,7 @@ function Homepage () {
         <SmallBanner />
         <ComputerAccessories />
         <LargeBanner />
+        <Newsletter />
         
       <main>
         <h1>Bienvenue sur la page d'accueil !</h1>
