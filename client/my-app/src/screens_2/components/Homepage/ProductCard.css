@@ -33,7 +33,7 @@
 }
 
 .sold-out-badge {
-    display: inline-flex;
+    display: flex;
     padding: 5px 10px;
     align-items: flex-start;
     gap: 10px;
