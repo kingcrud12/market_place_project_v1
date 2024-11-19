@@ -11,6 +11,7 @@ import ComputerAccessories from '../components/Homepage/ComputerAccessories';
 import LatestNews from '../components/Homepage/LatestNews';
 import Newsletter from '../components/Homepage/Newsletter';
 import Footer from '../components/Homepage/Footer';
+import ProductGrid from '../components/Homepage/ProductGrid';
 
 function Homepage () {
   return (
@@ -24,14 +25,11 @@ function Homepage () {
         <SmallBanner />
         <ComputerAccessories />
         <LargeBanner />
+        <ProductGrid />
         <LatestNews />
         <Newsletter />
         <Footer />
-        
-      <div>
-        <h1>Bienvenue sur la page d'accueil !</h1>
-        <p>On va commencer par afficher les éléments et les ranger avant de pouvoir intégrer au fur et à mesure les assets.</p>
-      </div>
+    
     </div>
   );
 };

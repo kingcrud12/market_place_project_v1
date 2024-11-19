@@ -265,6 +265,7 @@
     justify-content: center;
     align-items: center;
     gap: 24px;
+    position: relative;
     
   }
 
@@ -277,7 +278,21 @@
     border-radius: 2px;
     background: var(--Gray-50, #F2F4F5);
     border: none;
+    transition: background-color 0.3s ease; /*fluidifier l'animation de fermeture et ouverture*/
   }
+  .category-button.active {
+    border-radius: 2px;
+    background: var(--Primary-500, #FA8232);  
+  }
+
+  .category-button.active .category-text {
+   color: white;  
+  }
+
+  .category-button.active .icon-category {
+    filter: invert(100%) sepia(67%) saturate(0%) brightness(100%) contrast(100%);
+  }
+
   .category-text {
     color: var(--Gray-900, #191C1F);
     /* Body/Small/500 */
@@ -291,6 +306,12 @@
   .icon-category {
     width: 16px;
     height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .icon-category.rotated {
+    transform: rotate(180deg);
+    color: white;
   }
 
   .nav-order {

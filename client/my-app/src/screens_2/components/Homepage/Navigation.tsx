@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import './Navigation.css';
 import Twitter from '../../../assets_2/icons/Twitter.svg';
 import Facebook from '../../../assets_2/icons/Facebook.svg'
@@ -19,9 +19,57 @@ import HeadPhones from '../../../assets_2/icons/Regular/Headphones.svg'
 import Help from '../../../assets_2/icons/Regular/Info.svg'
 import Phone from '../../../assets_2/icons/Regular/PhoneCall.svg'
 import Vectorpoint from '../../../assets_2/icons/Vectorpoint.svg'
+import CategoryPopups, {Category} from './CategoryPopups';
+
+const categories: Category[] = [
+  { id: 1, name: 'Computer & Laptop' },
+  { id: 2, name: 'Computer Accessories' },
+  { id: 3, name: 'Smartphone' },
+  { id: 4, name: 'Headphones' },
+  { id: 5, name: 'Mobile Accessories' },
+  { id: 6, name: 'Gaming Console' },
+  { id: 7, name: 'Camera & Photo' },
+  { id: 8, name: 'TV & Homes Appliances' },
+  { id: 9, name: 'Watchs & Accessories' },
+  { id: 10, name: 'GPS & Navigation' },
+  { id: 11, name: 'Warable Technology' },
+];
 
 function Navigation ()  {
+   
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // etat popup
+  const popupRef = useRef<HTMLDivElement>(null);
+  
+  const togglePopup = () => {
+    setIsPopupOpen (!isPopupOpen); // ineverse état popup
 
+  };
+  
+  const closePopup = () => {
+    setIsPopupOpen (false);
+  };
+
+  // Fermer le popup si on clique en dehors
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        closePopup(); // Fermer le popup
+      }
+    };
+
+    if (isPopupOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isPopupOpen]);
+
+  
+  
   const [ cartCount, setCartCount] = useState(0);
 
   const addToCart = () => {
@@ -31,6 +79,8 @@ function Navigation ()  {
   const handleSearch = () => {
     console.log("Icône de recherche cliquée !");
   };
+
+
 
 
   
@@ -122,11 +172,16 @@ function Navigation ()  {
       {/* Section inférieure */}
       <div className="bottom-nav">
          {/* Contenu de BottomNav, comme les liens supplémentaires ou offres spéciales */}
-         <div className='category-nav'>
-          <button  className='category-button'>
+         <div className='category-nav' ref={popupRef}>
+          <button  className={`category-button ${isPopupOpen ? 'active' : ''}`} onClick={togglePopup}>
             <span className= 'category-text'>All Category</span>
-            <img src={CategoryIcon} alt="buttoncategory" className='icon-category'/>
+            <img src={CategoryIcon} alt="buttoncategory" className={`icon-category ${isPopupOpen ? 'rotated' : ''}`}/>
             </button>
+            <CategoryPopups 
+            categories={categories} // Liste des catégories 
+            isOpen={isPopupOpen} // Contrôle si le popup est ouvert
+            onClose={closePopup} // Fonction pour fermer le popup
+            />
             <a href='https://www.google.fr/' className='nav-order' target='_blank' rel='noopener noreferrer'>
             <img src={TrackIcon} alt='track order' className='img-nav'/>
             <span className= 'track-order'>Track Order</span>
