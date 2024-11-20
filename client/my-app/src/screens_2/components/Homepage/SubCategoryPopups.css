@@ -1,0 +1,108 @@
+.subcategory-popups {
+    position: absolute;
+    display: inline-flex;
+    padding: 20px;
+    align-items: flex-start;
+    gap: 20px;    
+    border-radius: 3px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);
+    
+    /* Dropdown Shadow */
+    box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.12);   
+}
+
+.subcategory-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;   
+    border-radius: 3px; 
+}
+
+.subcategory-item {
+    display: flex;
+    width: 164px;
+    height: 36px;
+    align-items: center;
+    cursor: pointer;
+    color: var(--Gray-600, #5F6C72);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */  
+   
+  }
+
+  .subcategory-item:hover {
+    background: var(--Grayc-50, #F2F4F5); /* Fond gris clair au survol */
+  }
+
+  .featured-section-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;  
+  }
+
+  .featured-title-popup {
+    width: 312px;
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Medium/600 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 150% */  
+  }
+
+  .product-item-popup {
+    display: flex;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border-radius: 3px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);    
+  }
+
+  .product-list-popup {
+    display: flex;
+    flex-direction: column;
+    gap:16px; 
+  }
+  .product-info-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;  
+  }
+
+
+  .product-name-popup {
+    width: 196px;
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */    
+  }
+
+  .product-price-popup {
+    color: var(--Secondary-500, #2DA5F3);
+
+    /* Body/Small/600 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */  
+  }
+  

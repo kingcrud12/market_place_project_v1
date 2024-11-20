@@ -11,7 +11,7 @@ import Pc8 from '../../../assets_2/products/pc8.png';
 import ArrowRight from '../../../assets_2/icons/Regular/Regular/Regular/ArrowRight.svg';
 import ArrowRightWhite from '../../../assets_2/icons/Regular/Regular/ArrowRight.svg';
 import Webcam9 from '../../../assets_2/products/webcam9.png';
-import CompBuds from '../../../assets_2/products/Image_computer_airbuds.png'
+import CompBuds from '../../../assets_2/products/Image_computer_airbuds.png';
 import GeneralProducts from './GeneralProducts';
 
 const products = [

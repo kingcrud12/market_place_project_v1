@@ -279,6 +279,7 @@
     background: var(--Gray-50, #F2F4F5);
     border: none;
     transition: background-color 0.3s ease; /*fluidifier l'animation de fermeture et ouverture*/
+    cursor: pointer;
   }
   .category-button.active {
     border-radius: 2px;

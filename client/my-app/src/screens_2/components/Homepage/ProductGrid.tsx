@@ -13,7 +13,7 @@ import Image11 from "../../../assets_2/products/Image11.png";
 import Image12 from "../../../assets_2/products/Image12.png";
 import "./ProductGrid.css";
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   price: string;
@@ -21,12 +21,12 @@ interface Product {
   badge?: string; // Optionnel : pour afficher un badge
 }
 
-interface Section {
+export interface Section {
   title: string;
   products: Product[];
 }
 
-const sections: Section[] = [
+export const sections: Section[] = [
   {
     title: "Flash Sale Today",
     products: [
