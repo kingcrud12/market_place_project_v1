@@ -97,3 +97,4 @@ model Blacklist {
   token     String   @unique
   createdAt DateTime @default(now())
 }
+

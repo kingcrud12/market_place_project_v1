@@ -1,0 +1,36 @@
+.homepage {
+display: inline-flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background: #FFF;
+max-width: 1920px;
+width: 100%;
+margin: 0 auto;
+padding: 0 20px;
+}
+
+/* Breakpoints */
+@media (max-width: 1920px) {
+    .homepage {
+        padding: 0 40px; /* Espacement autour pour des écrans larges */
+    }
+}
+
+@media (max-width: 1280px) {
+    .homepage {
+        padding: 0 20px; /* Réduit l'espacement latéral pour les écrans de 1280px */
+    }
+}
+
+@media (max-width: 768px) {
+    .homepage {
+        padding: 0 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+
+
