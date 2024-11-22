@@ -62,48 +62,6 @@
     background: #FFF;
   }
 
-  .global-eng {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-   
-  }
-
-  .eng-text {
-    color: var(--Gray-00, #FFF);
-    /* Body/Small/400 */
-    font-family: "Public Sans";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
-  }
-
-  .global-usd {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    display: flex;
-  }
-
-  .usd-txt {
-    color: #FFF;
-    /* Body/Small/400 */
-    font-family: "Public Sans";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
-  }
-
-  .rowDown {
-    width: 12px;
-    height: 12px;
-    opacity: 0.5;
-  }
-
   .middle-nav {
     display: flex;
     padding: 20px 100%;
@@ -179,6 +137,7 @@
     display: flex;
     align-items: center;
     gap: 24px;
+    position: relative;
   }
 
   .iconCart {

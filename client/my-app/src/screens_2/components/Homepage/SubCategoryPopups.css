@@ -1,7 +1,7 @@
 .subcategory-popups {
     position: absolute;
     display: inline-flex;
-    padding: 20px;
+    padding:20px;
     align-items: flex-start;
     gap: 20px;    
     border-radius: 3px;
@@ -106,3 +106,14 @@
     line-height: 20px; /* 142.857% */  
   }
   
+  .first-banner-computer-popup {
+    display: flex;
+    padding: 32px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    border-radius: 4px;
+    background: var(--Warning-200, #F7E99E);    
+    height: 327px;  
+  }

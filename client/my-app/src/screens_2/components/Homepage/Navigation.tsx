@@ -1,25 +1,29 @@
 import React, { useState, useRef, useEffect} from 'react';
 import './Navigation.css';
 import Twitter from '../../../assets_2/icons/Twitter.svg';
-import Facebook from '../../../assets_2/icons/Facebook.svg'
-import Pinterest  from '../../../assets_2/icons/Pinterest.svg'
-import Reddit from '../../../assets_2/icons/Reddit.svg'
-import Youtube from '../../../assets_2/icons/Youtube.svg'
-import Instagram from '../../../assets_2/icons/Instagram.svg'
-import Carret from '../../../assets_2/icons/Regular/Multi-Currency/Regular/CaretDown.svg'
-import LogoClicon from '../../../assets_2/branding/Icon3.svg'
-import SearchIcon from '../../../assets_2/icons/Regular/MagnifyingGlass.svg'
-import Cart from '../../../assets_2/icons/Vector.svg'
-import Heart from '../../../assets_2/animations/Heart.svg'
-import User from '../../../assets_2/icons/Regular/User.svg'
-import CategoryIcon from '../../../assets_2/icons/Regular/CaretDown.svg'
-import TrackIcon from '../../../assets_2/icons/Regular/MapPinLine.svg'
-import DoubleArrows from '../../../assets_2/icons/Duotone/ArrowsCounterClockwise.svg'
-import HeadPhones from '../../../assets_2/icons/Regular/Headphones.svg'
-import Help from '../../../assets_2/icons/Regular/Info.svg'
-import Phone from '../../../assets_2/icons/Regular/PhoneCall.svg'
-import Vectorpoint from '../../../assets_2/icons/Vectorpoint.svg'
+import Facebook from '../../../assets_2/icons/Facebook.svg';
+import Pinterest  from '../../../assets_2/icons/Pinterest.svg';
+import Reddit from '../../../assets_2/icons/Reddit.svg';
+import Youtube from '../../../assets_2/icons/Youtube.svg';
+import Instagram from '../../../assets_2/icons/Instagram.svg';
+import LogoClicon from '../../../assets_2/branding/Icon3.svg';
+import SearchIcon from '../../../assets_2/icons/Regular/MagnifyingGlass.svg';
+import Cart from '../../../assets_2/icons/Vector.svg';
+import Heart from '../../../assets_2/animations/Heart.svg';
+import User from '../../../assets_2/icons/Regular/User.svg';
+import CategoryIcon from '../../../assets_2/icons/Regular/CaretDown.svg';
+import TrackIcon from '../../../assets_2/icons/Regular/MapPinLine.svg';
+import DoubleArrows from '../../../assets_2/icons/Duotone/ArrowsCounterClockwise.svg';
+import HeadPhones from '../../../assets_2/icons/Regular/Headphones.svg';
+import Help from '../../../assets_2/icons/Regular/Info.svg';
+import Phone from '../../../assets_2/icons/Regular/PhoneCall.svg';
+import Vectorpoint from '../../../assets_2/icons/Vectorpoint.svg';
 import CategoryPopups, {Category} from './CategoryPopups';
+import DropdownPopup from './DropdownPopup';
+import English from '../../../assets_2/icons/Multi-Language/Ellipse 10.svg';
+import Mandarin from '../../../assets_2/icons/Multi-Language/Multi-Language/Ellipse 10.svg';
+import Russian from '../../../assets_2/icons/Multi-Language/Multi-Language/Multi-Language/Ellipse 10.svg';
+import UserPopup from './UserPopup'
 
 const categories: Category[] = [
   { id: 1, name: 'Computer & Laptop' },
@@ -51,11 +55,12 @@ const categories: Category[] = [
   { id: 11, name: 'Warable Technology' },
 ];
 
-function Navigation ()  {
-   
+const Navigation: React.FC = () =>  {
+   // Etat pour le popup des catégories
   const [isPopupOpen, setIsPopupOpen] = useState(false); // etat popup
   const popupRef = useRef<HTMLDivElement>(null);
   
+  //Gestion du popup des catégories
   const togglePopup = () => {
     setIsPopupOpen (!isPopupOpen); // ineverse état popup
 
@@ -85,12 +90,24 @@ function Navigation ()  {
   }, [isPopupOpen]);
 
   
-  
+  // etat pour le compteur du panier
   const [ cartCount, setCartCount] = useState(0);
 
-  const addToCart = () => {
+  const addToCart = () => 
     setCartCount (cartCount + 1);
-  }
+
+  //etat et logique  pour UserPopup
+  const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
+  const toggleUserPopup = () => setIsUserPopupOpen(!isUserPopupOpen);
+  
+  //Gestion des optiosn selectionnées
+  const handleLanguageChange = (option: {id: number; label: string; shortLabel: string; icon?: string}) => {
+    console.log('Langue sélectionnée :', option.label);
+  };
+
+  const handleCurrencyChange = (option: { id: number; label: string}) => {
+    console.log('Devise séléctionnée :', option.label);
+  };
 
   const handleSearch = () => {
     console.log("Icône de recherche cliquée !");
@@ -138,18 +155,25 @@ function Navigation ()  {
             
           </div>
         
-        <span className= 'barre'></span>
-        
-        <span className= 'global-eng'>
-          <span className='eng-text'>Eng</span>
-          <img src={Carret} alt= 'rowdown' className='rowDown' />
-        </span>
+           <span className= 'barre'></span>
+           <DropdownPopup
+            label="Eng"
+            options={[
+              { id: 1, label: "English", shortLabel: 'Eng', icon: English },
+              { id: 2, label: "Mandarin", shortLabel: 'Man', icon: Mandarin },
+              { id: 3, label: "Russian", shortLabel: 'Rus', icon: Russian },
+            ]}
+            onOptionSelect={handleLanguageChange}
+          />
 
-        <span className='global-usd'>
-          <span className= 'usd-txt'>USD</span>
-          <img src={Carret} alt= 'rowdown' className='rowDown' />
-        </span>
-
+          <DropdownPopup
+            label="USD"
+            options={[
+              { id: 1, label: "Dollar (USD)", shortLabel: "USD" },
+              { id: 2, label: "Euro (EUR)", shortLabel: "EUR" },
+            ]}
+            onOptionSelect={handleCurrencyChange}
+          />
         </div>
       
       </div>
@@ -179,7 +203,17 @@ function Navigation ()  {
             </div>
           
           <img src={Heart} alt='Heart' className= 'heart-icon' />
-          <img src={User} alt='User' className= 'user-icon' />
+          <img 
+             src={User} 
+             alt='User' 
+             className= 'user-icon'
+             onClick={toggleUserPopup}
+             />
+
+            <UserPopup
+            isOpen={isUserPopupOpen}
+            onClose={() => setIsUserPopupOpen(false)}
+            />
         
         </div>
       

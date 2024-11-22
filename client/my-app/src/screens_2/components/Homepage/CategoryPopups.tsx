@@ -60,6 +60,7 @@ const CategoryPopups: React.FC<CategoryPopupsProps> = ({ categories, isOpen, onC
             {category.subcategories && <img src={IconRight} alt="category-icon" className="category-icon" />}
             
             {openCategory === category.id && category.subcategories && (
+              <div className="subcategories"> 
               <SubCategoryPopups
                 subcategories={category.subcategories}
                 featuredSection={{
@@ -72,6 +73,7 @@ const CategoryPopups: React.FC<CategoryPopupsProps> = ({ categories, isOpen, onC
                   ],
                 }}
               />
+              </div>
             )}
           </li>
         ))}

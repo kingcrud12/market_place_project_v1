@@ -1,7 +1,7 @@
 import React from "react";
 import { Section } from "../../../screens_2/components/Homepage/ProductGrid"; 
 import ArrowRightWhite from '../../../assets_2/icons/Regular/Regular/ArrowRight.svg';
-import CompBuds from '../../../assets_2/products/Image_computer_airbuds.png';
+import SmartBanner from '../../../assets_2/image/bannersmart.png'
 import "./SubCategoryPopups.css";
 
 interface SubCategory {
@@ -49,12 +49,12 @@ const SubCategoryPopups: React.FC<SubCategoryPopupsProps> = ({
       </div>
 
       {/* Bannière */}
-      <div className= 'first-banner-computer'>
+      <div className= 'first-banner-computer-popup'>
             <div className= 'first-content-computer'>
-              <img src={CompBuds} alt='' className='image-compbuds' />
+              <img src={SmartBanner} alt='' className='image-compbuds' />
               <div className='first-second-content'>
                 <span className='title-firts-banner-computer'>
-                Xiaomi True Wireless Earbuds
+                21% Discount
                 </span>
                 <span className='subtitle-firts-banner-computer'>
                 Escape the noise, It’s time to hear the magic with Xiaomi Earbuds.
@@ -65,7 +65,7 @@ const SubCategoryPopups: React.FC<SubCategoryPopupsProps> = ({
                 Only for:
                 </span>
                 <span className='computer-badge-price'>
-                $299 USD
+                $99 USD
                 </span>
 
               </div>

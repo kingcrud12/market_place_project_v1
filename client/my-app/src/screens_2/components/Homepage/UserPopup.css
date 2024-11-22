@@ -1,0 +1,227 @@
+.user-popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: inline-flex;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+
+    border-radius: 4px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);
+    
+    /* Dropdown Shadow */
+    box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.12);  
+    z-index: 1000;
+  }
+  
+  .form-group {
+    display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+    gap: 20px;
+  }
+
+  .user-title-popup {
+    width: 360px;
+    color: var(--Gray-900, #191C1F);
+    text-align: center;
+    
+    /* Body/XL/600 */
+    font-family: "Public Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px; /* 140% */    
+  }
+
+  .user-input-popup {
+    display: flex;
+    width: 360px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;  
+  }
+
+  .input-popup {
+    width: 100%; 
+    height: 44px;
+    align-self: stretch; 
+    border-radius: 2px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);
+  }
+
+  .input-popup-password {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    border-radius: px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);  
+    font-family: "Public Sans"; /* Fixez la police */
+    font-size: 14px; /* Assurez une taille de police fixe */
+    line-height: 200px;
+    box-sizing: border-box;  
+  }
+
+  
+  .label-email {
+    align-self: stretch;
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */  
+  }
+
+  .input-email {
+    height: 44px;
+    align-self: stretch;
+    border-radius: 2px;
+    border: 1px solid var(--Gray-100, #E4E7E9);
+    background: var(--Gray-00, #FFF);  
+  }
+
+  .user-password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;  
+  }
+  
+  .label-password {
+    color: var(--Gray-900, #191C1F);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */  
+  }
+  
+  .forget-password {
+    color: var(--Secondary-500, #2DA5F3);
+
+    /* Body/Small/500 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+  }
+  
+  .forget-password:hover {
+    text-decoration: underline;
+  }
+  
+  .login-button {
+    display: flex;
+    width: 100%;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    background: var(--Primary-500, #FA8232); 
+    
+    color: var(--Gray-00, #FFF);
+
+    /* Heading/07 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 342.857% */
+    letter-spacing: 0.168px;
+    text-transform: uppercase;
+    border: none;  
+  }
+  
+  .login-button:hover {
+    background: #e56e00;
+  }
+  
+  .create-account {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;  
+  }
+  .text-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* S'étend sur tout l'espace disponible */
+    gap: 8px; /* Espace entre les lignes et le texte */
+  }
+
+  .text-divider::before,
+  .text-divider::after {
+  content: "";
+  flex: 1; /* Les lignes prennent tout l'espace possible */
+  height: 1px;
+  background-color: var(--Gray-200, #E4E7E9); /* Couleur grise */
+}
+  
+  .create-label  {
+    color: var(--Gray-500, #77878F);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */  
+  }
+  
+  .create-account-button {
+    display: flex;
+    width: 360px;
+    padding: 0px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 2px;
+    border: 2px solid var(--Primary-100, #FFE7D6);  
+
+    color: var(--Primary-500, #FA8232);
+
+    /* Heading/07 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px; /* 342.857% */
+    letter-spacing: 0.168px;
+    text-transform: uppercase;  
+    background: none;
+  }
+  
+  .create-account-button:hover {
+    text-decoration: underline;
+  }
+
+  .password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Icône afficher/masquer */
+  .password-toggle-icon {
+   position: absolute;
+   right: 16px;
+   top: 16px;
+   width: 20px;
+   height: 20px;
+   cursor: pointer;
+   align-items: center;
+}

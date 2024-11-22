@@ -55,6 +55,24 @@
     opacity: 1; /* Icône visible uniquement au survol */
   }
 
+  .popup-menu .subcategories {
+    position: absolute;
+    top: 0;
+    left: 100%; /* Place le sous-menu juste à droite du menu principal */
+    display: flex;
+    padding-left: 12px;
+    box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+  }
+
+  .subcategories .subcategory-item {
+    cursor: pointer;
+    transition: background 0.1s ease-in-out;
+  }
+  
+  .subcategories .subcategory-item:hover {
+    background: var(--Gray-50, #F2F4F5);
+  }
   
   
   
