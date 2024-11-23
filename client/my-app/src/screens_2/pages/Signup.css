@@ -1,4 +1,4 @@
-.signin {
+.signup{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -12,18 +12,18 @@
     
 }
 
-.body-signin {
+.body-signup {
     display: flex;
     padding: 100px 748px;
     align-items: flex-start;
     gap: 10px;    
 }
 
-.form-group-signin {
+.form-group-signup {
   
     display: flex;
     width: 426px;
-    height: 550px;
+    height: 744px;
    
     flex-direction: column;
     
@@ -39,7 +39,7 @@
     margin: 0 auto 
  }
 
- .head-signin {
+ .head-signup {
   /* Header */
 
     display: flex;
@@ -47,7 +47,7 @@
 
     }
 
-.first-signin-style {
+.first-signup-style {
     display: flex;
     padding: 16px 0px;
     align-items: flex-start;
@@ -112,14 +112,14 @@
  
   /* Inputs */
 
-  .user-input-signin {
+  .user-input-signup {
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;  
   }
 
-  .user-input-popup-signin {
+  .user-input-popup-signup {
     display: flex;
     width: 360px;
     flex-direction: column;
@@ -127,7 +127,7 @@
     gap: 8px;  
   }
   
-  .label-email-signin {
+  .label-email-signup {
     align-self: stretch;
     
     color: var(--Gray-900, #191C1F);
@@ -140,7 +140,7 @@
     line-height: 20px; /* 142.857% */  
   }
 
-  .input-popup-signin {
+  .input-popup-signup {
     height: 44px;
     align-self: stretch; 
     border-radius: 2px;
@@ -149,7 +149,7 @@
     width: 100%;
   }
   
-  .label-password-signin {
+  .label-password-signup {
     color: var(--Gray-900, #191C1F);
 
     /* Body/Small/400 */
@@ -160,7 +160,7 @@
     line-height: 20px; /* 142.857% */
   }
 
-  .forget-password-signin {
+  .forget-password-signup {
     color: var(--Secondary-500, #2DA5F3);
 
     /* Body/Small/500 */
@@ -171,21 +171,21 @@
     line-height: 20px; /* 142.857% */  
   }
 
-  .user-password-signin {
+  .user-password-signup {
     display: flex;
     justify-content: space-between;
     align-items: center;
     align-self: stretch;  
   }
   
-  .password-container-signin {
+  .password-container-signup {
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
   }
  
-  .input-popup-password-signin {
+  .input-popup-password-signup {
     display: flex;
     width: 100%;
     width: 360px;
@@ -201,7 +201,7 @@
   
   
   
-  .password-toggle-icon-signin {
+  .password-toggle-icon-signup {
     position: absolute;
     right: 16px;
     top: 16px;
@@ -210,9 +210,53 @@
     cursor: pointer;
     align-items: center;
   }
+
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;  
+  }
+  .checkbox-input {
+    appearance: none; /* Supprime le style par défaut du navigateur */
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e4e7e9;
+    border-radius: 2px; /* Optionnel, pour un style arrondi */
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-input:checked {
+    background-color: #fa8232; /* Couleur de fond lorsque cochée */
+    border-color: #fa8232; /* Change aussi la couleur de la bordure */
+  }
+
+  .term-condition {
+    width: 332px;
+    color: var(--Gray-700, #475156);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */  
+  }
+
+  .different-color {
+    color: var(--Secondary-500, #2DA5F3);
+
+    /* Body/Small/500 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+  }
   
   /* Buttons */
-  .login-button-signin {
+  .login-button-signup {
     display: flex;
     width: 360px;
     padding: 0px 24px;
@@ -235,7 +279,7 @@
     border: none;  
   }
   
-  .login-button-signin:hover {
+  .login-button-signup:hover {
     background-color: #e56e00;
   }
   
@@ -262,7 +306,7 @@
     width: 20px;
   }
   
-  .text-divider-signin {
+  .text-divider-signup {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -270,8 +314,8 @@
     gap: 8px;
   }
   
-  .text-divider-signin::before,
-  .text-divider-signin::after {
+  .text-divider-signup::before,
+  .text-divider-signup::after {
     content: '';
     flex: 1;
     height: 1px;
@@ -293,13 +337,13 @@
       margin-right: 27%; /* Ajouter un espacement pour les icônes */
   }
   
-  .first-signin-style {
+  .first-signup-style {
       box-shadow: 0px -3px 0px 0px #FA8232 inset; /* Supprimer le padding du soulignement */
     
   }
   
   /* Styles pour les onglets */
-.head-signin {
+.head-signup {
     display: flex;
     width: 100%;
   }
@@ -343,21 +387,22 @@
 
  /* Breakpoints */
 @media (max-width: 1920px) {
-    .signin {
+    .signup {
         padding: 0 40px; /* Espacement autour pour des écrans larges */
     }
 }
 
 @media (max-width: 1280px) {
-    .signin {
+    .signup {
         padding: 0 20px; /* Réduit l'espacement latéral pour les écrans de 1280px */
     }
 }
 
 @media (max-width: 768px) {
-    .signin {
+    .signup {
         padding: 0 10px;
         flex-direction: column;
         align-items: flex-start;
     }
 }
+

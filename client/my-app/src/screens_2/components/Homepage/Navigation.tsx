@@ -256,7 +256,7 @@ const Navigation: React.FC = () =>  {
         </div>
       
       </div>
-      <button onClick={addToCart}>Ajout panier</button>
+      
     </div>
   );
 }
