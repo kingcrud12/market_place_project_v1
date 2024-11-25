@@ -8,16 +8,47 @@ import EyeOffIcon from '../../assets_2/icons/Regular/PhoneCall.svg';
 import Footer from './../components/Homepage/Footer';
 import Google from './../../assets_2/image/Login/Google.png';
 import Apple from './../../assets_2/image/Login/Apple.svg';
+import { API_URL } from '../../secret';
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate(); // Initialisation du hook useNavigate
+  const [email, setEmail] = useState ('');
+  const [password, setPassword] = useState (''); 
+  const [error, setError] = useState ('');
+  
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password}),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Connexion réussie !");
+        localStorage.setItem('token', data.token);
+        navigate('/');
+      } else {
+        setError(`Erreur : ${data.message}`);
+        
+      }
+    } catch (error) {
+      console.error("Error signing in:", error);
+    }
+  };
+  
 
   return (
     <div className="signin">
       <Navigation />
       <BreadCrumb />
-      <div className="body-signin">
+      <form onSubmit={handleSubmit} className="body-signin">
         <div className="form-group-signin">
           {/* Header */}
           <div className="head-signin">
@@ -39,20 +70,32 @@ const Signin: React.FC = () => {
             {/* Email Input */}
             <div className="user-input-popup-signin">
               <label htmlFor="email" className="label-email-signin">Email Address</label>
-              <input id="email" type="email" className="input-popup-signin"  />
+              <input  
+              id="email" 
+              type="email" 
+              placeholder="Email"
+              className="input-popup-signin" 
+              value= {email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+              />
             </div>
 
             {/* Password Input */}
             <div className="user-input-popup-signin">
               <div className="user-password-signin">
                 <label htmlFor="password" className="label-password-signin">Password</label>
-                <span className="forget-password-signin">Forget Password?</span>
+                <span  onClick={() => navigate('/forgotpassword')}  className="forget-password">Forget Password?</span>
               </div>
               <div className="password-container-signin">
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
+                  placeholder='password'
                   className="input-popup-password-signin"
+                  value= {password}
+                  onChange={(e) => setPassword(e.target.value)}
+
                 />
                 <img
                   src={showPassword ? EyeOffIcon : EyeIcon}
@@ -62,6 +105,9 @@ const Signin: React.FC = () => {
                 />
               </div>
             </div>
+
+             {/* Affichage de l'erreur */}
+            {error && <div className="error-message">{error}</div>}
 
             {/* Sign In Button */}
             <button type="submit" className="login-button-signin">Sign In →</button>
@@ -80,7 +126,7 @@ const Signin: React.FC = () => {
             Login with Apple
           </button>
         </div>
-      </div>
+      </form>
       <Footer />
     </div>
   );

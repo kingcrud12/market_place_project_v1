@@ -2,6 +2,8 @@ import React, { useState ,useEffect, useRef } from "react";
 import "./UserPopup.css";
 import EyeIcon from '../../../assets_2/icons/Regular/Eye.svg';
 import EyeOffIcon from '../../../assets_2/icons/Regular/PhoneCall.svg';
+import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../../secret';
 
 interface UserPopupProps {
   isOpen: boolean;
@@ -13,6 +15,37 @@ const UserPopup: React.FC<UserPopupProps> = ({ isOpen, onClose }) => {
 
   //Etat pour afficher ou masquer le mot de passe
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const [email, setEmail] = useState ('');
+  const [password, setPassword] = useState (''); 
+  const [error, setError] = useState ('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password}),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Connexion réussie !");
+        localStorage.setItem('token', data.token);
+        navigate('/');
+      } else {
+        setError(`Erreur : ${data.message}`);
+        
+      }
+    } catch (error) {
+      console.error("Error signing in:", error);
+      setError("Something went wrong. Please try again later."); // Affiche un message générique
+    }
+  };
 
   // Fermer le popup si on clique en dehors
   useEffect(() => {
@@ -34,23 +67,41 @@ const UserPopup: React.FC<UserPopupProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="user-popup" ref={popupRef}>
-        <form className="form-group">
+        <form   onSubmit={handleSubmit} className="form-group">
       <span className= "user-title-popup">Sign in to your account</span>
       
+       
+
       {/* Email Input */}
         <div className="user-input-popup">
           <span className= "label-email">Email Address</span>
-          <input type="email"  className='input-popup' />
+          <input 
+          id="email" 
+          type="email" 
+          placeholder="Email" 
+          className='input-popup'
+          value= {email}
+          onChange={(e) => setEmail(e.target.value)}
+          required 
+          />
         </div>
         
         {/* Password Input */}
         <div className="user-input-popup">
            <div className="user-password">
              <span className="label-password">Password</span>
-             <span  className="forget-password">Forget Password</span>
+             <span onClick={() => navigate('/forgotpassword')}  className="forget-password">Forget Password?</span>
            </div>
            <div className="password-container">
-          <input type={showPassword ?"text" : "password"} className='input-popup-password' />
+          <input 
+            id="password"
+            type={showPassword ?"text" : "password"}
+            className='input-popup-password'
+            placeholder='password'
+            value= {password}
+            onChange={(e) => setPassword(e.target.value)}
+           />
+          
           <img
               src={showPassword ? EyeOffIcon : EyeIcon}
               alt={showPassword ? "Hide password" : "Show password"}
@@ -60,14 +111,19 @@ const UserPopup: React.FC<UserPopupProps> = ({ isOpen, onClose }) => {
             
           </div>
         </div>
-        
-        <button type="submit" className="login-button">Login →</button>
+         
+         {/* Affichage de l'erreur */}
+       {error && <div className="error-message">{error}</div>}
+
+        <button 
+          type="submit" 
+          className="login-button">Login →</button>
       </form>
       <div className="create-account">
         <div className="text-divider">
         <span className="create-label">Don’t have an account</span>
         </div>
-        <button className="create-account-button">Create Account</button>
+        <button onClick={() => navigate('/signup')} className="create-account-button">Create Account</button>
       </div>
     </div>
   );
