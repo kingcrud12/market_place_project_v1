@@ -135,30 +135,6 @@ const Signup: React.FC = () => {
               </div>
             </div>
 
-             {/* Password Input */}
-             <div className="user-input-popup-signup">
-              <div className="user-password-signup">
-                <label htmlFor="password" className="label-password-signup">Password</label>
-              </div>
-              <div className="password-container-signup">
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  className="input-popup-password-signup"
-                  placeholder="8+ characters"
-                  value= {password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required  
-                />
-                <img
-                  src={showPassword ? EyeOffIcon : EyeIcon}
-                  alt={showPassword ? 'Hide password' : 'Show password'}
-                  className="password-toggle-icon-signup"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </div>
-            </div>
-
              {/* Affichage de l'erreur */}
              {error && <div className="error-message">{error}</div>}
 

@@ -1,0 +1,131 @@
+.global-product-list {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFF;
+    max-width: 1920px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    
+}
+
+
+.product-list {
+    display: flex;
+    padding: 40px 0px 72px 0px;
+    align-items: flex-start;
+    gap: 24px;    
+}
+
+.filter-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;    
+}
+.category-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;  
+    width: 100%;  
+}
+
+.category-label {
+    width: 312px;
+    color: var(--Gray-900, #191C1F);
+
+    /* Label/02 */
+    font-family: "Public Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+    text-transform: uppercase;        
+}
+
+.categories-shopage {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;    
+}
+
+ .category-item-shopage {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+ 
+  }
+
+  .label-shopage {
+    display: flex;
+    width: 284px;
+    color: var(--Gray-700, #475156);
+
+    /* Body/Small/400 */
+    font-family: "Public Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */  
+  }
+
+  /* Stylisation de l'input radio */
+.categories-shopage input[type="radio"] {
+    /* Cache l'apparence par défaut */
+    margin-right: 8px;
+    appearance: none;
+    -webkit-appearance: none; /* Support pour Safari */
+    -moz-appearance: none;
+    
+    /* Dimensions du bouton radio */
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--Gray-200, #C9CFD2);
+    border-radius: 50%; /* Cercle */
+    background: var(--Gray-00, #FFF);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  /* Style lorsque le bouton est sélectionné */
+  .categories-shopage input[type="radio"]:checked {
+    background-color: var(--Primary, #FA8232); /* Couleur de fond une fois sélectionné */
+    box-shadow: 0 0 4px var(--Primary, #FA8232);
+  }
+  
+  /* Cercle intérieur pour l'état sélectionné */
+  .categories-shopage input[type="radio"]:checked::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #FFF;
+    border-radius: 50%;
+    margin: auto;
+    
+  }
+  
+  /* Ajout d'un hover pour améliorer l'UX */
+  .categories-shopage input[type="radio"]:hover {
+    border-color: var(--Primary-Light, #f2deaa);
+  }
+  
+  /* Ajout d'un focus pour accessibilité */
+  .categories-shopage input[type="radio"]:focus {
+    outline: 1px solid var(--Primary-Light, #f0e49c);
+    outline-offset: 1px;
+  }
+
+  .diviser-shopage {
+    width: 312px;
+    height: 1px;
+    background: #E4E7E9;  
+  }

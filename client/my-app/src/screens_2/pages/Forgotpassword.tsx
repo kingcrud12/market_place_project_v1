@@ -15,13 +15,16 @@ const Forgotpassword: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+        alert("Lien envoyé");
+
+        // Ajout de l'email dans la query string
+        const response = await fetch(`${API_URL}/auth/confirm-email?email=${encodeURIComponent(email)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+      
       const data = await response.json();
 
       if (response.ok) {

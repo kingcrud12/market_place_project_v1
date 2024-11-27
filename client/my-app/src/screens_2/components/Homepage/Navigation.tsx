@@ -91,11 +91,7 @@ const Navigation: React.FC = () =>  {
 
   
   // etat pour le compteur du panier
-  const [ cartCount, setCartCount] = useState(0);
-
-  const addToCart = () => 
-    setCartCount (cartCount + 1);
-
+  
   //etat et logique  pour UserPopup
   const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
   const toggleUserPopup = () => setIsUserPopupOpen(!isUserPopupOpen);
@@ -199,7 +195,7 @@ const Navigation: React.FC = () =>  {
             <img src={Cart} alt='cart' className= 'cart-icon' />
             <img src={Vectorpoint} alt='cart' className= 'point-1'/>
             <img src={Vectorpoint} alt= 'cart' className= 'point-2'/>
-              <span className='text-cart'>{cartCount}</span>
+              
             </div>
           
           <img src={Heart} alt='Heart' className= 'heart-icon' />

@@ -11,7 +11,6 @@ import { API_URL } from '../../secret';
 const Forgotpassword: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);  
   const navigate = useNavigate(); // Initialisation du hook useNavigate
-  const [email, setEmail] = useState ('');
   const [password, setPassword] = useState ('');
   const [confirmPassword, setconfirmPassword] = useState ('');
   const [error, setError] = useState ('');
@@ -25,7 +24,7 @@ const Forgotpassword: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, confirmPassword }),
+        body: JSON.stringify({ password, confirmPassword }),
       });
       const data = await response.json();
 
@@ -98,7 +97,7 @@ const Forgotpassword: React.FC = () => {
                   className="input-popup-password-signup"
                   placeholder="confirm your password"
                   value= {confirmPassword}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setconfirmPassword(e.target.value)}
                   required  
                 />
                 <img
