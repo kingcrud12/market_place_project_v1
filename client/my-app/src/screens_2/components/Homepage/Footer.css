@@ -245,7 +245,7 @@
     gap: 18px;  
   }
   
-  .footer-tags {
+  .footer-tags{
     display: flex;
     flex-wrap: wrap;
     gap:8px; 

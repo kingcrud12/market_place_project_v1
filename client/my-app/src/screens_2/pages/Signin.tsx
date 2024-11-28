@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import de useNavigate
+import { useNavigate, Link } from 'react-router-dom'; // Import de useNavigate
 import './Signin.css';
 import Navigation from './../components/Homepage/Navigation';
 import BreadCrumb from './../components/Others/BreadCrumb';
@@ -15,11 +15,15 @@ const Signin: React.FC = () => {
   const navigate = useNavigate(); // Initialisation du hook useNavigate
   const [email, setEmail] = useState ('');
   const [password, setPassword] = useState (''); 
-  const [error, setError] = useState ('');
+  const [error, setError] = useState ({ message:'', showResetLink: false});
+  const [resetRequestMessage, setResetRequestMessage] = useState('');
+  const [showResetPrompt, setShowResetPrompt] = useState(false);
   
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError({ message: '', showResetLink: false }); // Réinitialiser l'état des erreurs
+
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -29,21 +33,53 @@ const Signin: React.FC = () => {
         body: JSON.stringify({ email, password}),
       });
       const data = await response.json();
+      
 
       if (response.ok) {
         alert("Connexion réussie !");
         localStorage.setItem('token', data.token);
         navigate('/');
       } else {
-        setError(`Erreur : ${data.message}`);
+        setError({
+          message: data.message || 'une erreur est survenue.',
+          showResetLink: data.message?.includes('password is incorrect') || false,
+        });
         
       }
     } catch (error) {
       console.error("Error signing in:", error);
+      setError({
+        message: "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+        showResetLink: false,
+      });  
+    }
+  };
+
+   // Fonction pour demander la réinitialisation du mot de passe
+   const requestPasswordReset = async () => {
+    try {
+      const response = await fetch(`${API_URL}/user/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }) // Envoyer l'email dans le body
+      });
+
+      if (response.ok) {
+        setResetRequestMessage('Un lien de réinitialisation de mot de passe vous a été envoyé.');
+      } else {
+        const data = await response.json();
+        setResetRequestMessage(`Erreur : ${data.message}`);
+      }
+      setShowResetPrompt(false);
+    } catch (error) {
+      console.error('Erreur lors de la demande de réinitialisation de mot de passe:', error);
+      setResetRequestMessage('Une erreur inattendue s\'est produite. Veuillez réessayer.');
+      setShowResetPrompt(false);
     }
   };
   
-
   return (
     <div className="signin">
       <Navigation />
@@ -85,7 +121,13 @@ const Signin: React.FC = () => {
             <div className="user-input-popup-signin">
               <div className="user-password-signin">
                 <label htmlFor="password" className="label-password-signin">Password</label>
-                <span  onClick={() => navigate('/forgotpassword')}  className="forget-password">Forget Password?</span>
+                
+                <span
+                onClick={() => setShowResetPrompt(true)}
+                className={`forget-password ${!email ? 'disabled' : ''}`}
+                >Forget Password?
+                </span>
+
               </div>
               <div className="password-container-signin">
                 <input
@@ -107,11 +149,42 @@ const Signin: React.FC = () => {
             </div>
 
              {/* Affichage de l'erreur */}
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="error-message">{error.message}</div>}
 
             {/* Sign In Button */}
             <button type="submit" className="login-button-signin">Sign In →</button>
           </div>
+          {/* Affichage conditionnel du lien de réinitialisation */}
+          {error.showResetLink && (
+            <p className="reset-password">
+              Mot de passe oublié ?{' '}
+              <Link className='link-reset-passwrd' to="#" onClick={requestPasswordReset}>
+                Réinitialisez votre mot de passe en cliquant sur ce lien
+              </Link>.
+            </p>
+          )}
+
+          {showResetPrompt && (
+            <div className="reset-prompt">
+              <p className="reset-write">Voulez-vous réinitialiser votre mot de passe ?</p>
+               <Link
+               className="reset-link"
+               to="#"
+               onClick={requestPasswordReset}
+               >
+                Cliquez ici pour le réinitialiser
+                </Link>
+                <button
+                onClick={() => setShowResetPrompt(false)}
+                className="cancel-reset"
+                >
+                  Annuler
+                </button>
+                </div>
+              )}
+
+          {resetRequestMessage && <div className="reset-password">{resetRequestMessage}</div>}    
+
 
           {/* Divider & External Login */}
           <div className="text-divider-signin">
