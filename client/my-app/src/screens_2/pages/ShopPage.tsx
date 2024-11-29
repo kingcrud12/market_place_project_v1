@@ -134,10 +134,10 @@ const products = [
     
     
     {
-      id: 2,
+      id: 10,
       name: "Bose Sport Earbuds - Wireless Earphones - Bluetooth In Ear...",
       rating:5,
-      reviews: 567,
+      reviews: 568,
       price: 2300,  
       isHot: false,
       isSoldOut: true,
@@ -145,10 +145,10 @@ const products = [
     },
 
     {
-      id: 3,
+      id: 11,
       name: "Simple Mobile 4G LTE Prepaid Smartphone",
       rating:5,
-      reviews: 567,
+      reviews: 569,
       price: 220, 
       isSale: true,
       isSoldOut: false,
@@ -156,10 +156,10 @@ const products = [
     },
 
     {
-      id: 4,
+      id: 12,
       name: "4K UHD LED Smart TV with Chromecast Built-in",
       rating:5,
-      reviews: 567,
+      reviews: 570,
       price: 150, 
       originalPrice: 865,
       discount: "19% OFF",
@@ -169,10 +169,10 @@ const products = [
     },
 
     {
-      id: 5,
+      id: 13,
       name: "Sony DSCHX8 High Zoom Point & Shoot Camera",
       rating:5,
-      reviews: 567,
+      reviews: 571,
       price: 1200,  
       isBestDeal: true,
       isSoldOut: false,
@@ -180,10 +180,10 @@ const products = [
     },
 
     {
-      id: 6,
+      id: 14,
       name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor",
       rating:5,
-      reviews: 567,
+      reviews: 580,
       price: 299,  
       isHot: false,
       isSoldOut: false,
@@ -191,10 +191,10 @@ const products = [
     },
 
     {
-      id: 7,
+      id: 15,
       name: "Portable Wshing Machine, 11lbs capacity Model 18NMFIAM",
       rating:5,
-      reviews: 567,
+      reviews: 545,
       price: 70,  
       originalPrice: 865.99,
       isHot: false,
@@ -203,10 +203,10 @@ const products = [
     },
 
     {
-      id: 8,
+      id: 16,
       name: "2-Barrel Carburetor Carb 2100 Engine Increase Horsepower",
       rating:5,
-      reviews: 567,
+      reviews: 500,
       price: 160,  
       isHot: true,
       isSoldOut: false,
@@ -214,10 +214,10 @@ const products = [
     },
 
     {
-      id: 9,
+      id: 17,
       name: "Bose Sport Earbuds - Wireless Earphones - Bluetooth In Ear...",
       rating:5,
-      reviews: 567,
+      reviews: 578,
       price: 250,  
       isHot: false,
       discount: "32% OFF",
@@ -228,10 +228,10 @@ const products = [
    
     
     {
-      id: 2,
+      id: 18,
       name: "Bose Sport Earbuds - Wireless Earphones - Bluetooth In Ear...",
       rating:5,
-      reviews: 567,
+      reviews: 590,
       price: 2300,  
       isHot: false,
       isSoldOut: true,
@@ -239,10 +239,10 @@ const products = [
     },
 
     {
-      id: 3,
+      id: 19,
       name: "Simple Mobile 4G LTE Prepaid Smartphone",
       rating:5,
-      reviews: 567,
+      reviews: 591,
       price: 220, 
       isSale: true,
       isSoldOut: false,
@@ -250,10 +250,10 @@ const products = [
     },
 
     {
-      id: 4,
+      id: 20,
       name: "4K UHD LED Smart TV with Chromecast Built-in",
       rating:5,
-      reviews: 567,
+      reviews: 595,
       price: 150, 
       originalPrice: 865,
       discount: "19% OFF",
@@ -263,10 +263,10 @@ const products = [
     },
 
     {
-      id: 5,
+      id: 21,
       name: "Sony DSCHX8 High Zoom Point & Shoot Camera",
       rating:5,
-      reviews: 567,
+      reviews: 589,
       price: 1200,  
       isBestDeal: true,
       isSoldOut: false,
@@ -274,10 +274,10 @@ const products = [
     },
 
     {
-      id: 6,
+      id: 22,
       name: "Dell Optiplex 7000x7480 All-in-One Computer Monitor",
       rating:5,
-      reviews: 567,
+      reviews: 557,
       price: 299,  
       isHot: false,
       isSoldOut: false,
@@ -285,10 +285,10 @@ const products = [
     },
 
     {
-      id: 7,
+      id: 23,
       name: "Portable Wshing Machine, 11lbs capacity Model 18NMFIAM",
       rating:5,
-      reviews: 567,
+      reviews: 547,
       price: 70,  
       originalPrice: 865.99,
       isHot: false,
@@ -297,10 +297,10 @@ const products = [
     },
 
     {
-      id: 8,
+      id: 24,
       name: "2-Barrel Carburetor Carb 2100 Engine Increase Horsepower",
       rating:5,
-      reviews: 567,
+      reviews: 5617,
       price: 160,  
       isHot: true,
       isSoldOut: false,
@@ -308,7 +308,7 @@ const products = [
     },
 
     {
-      id: 9,
+      id: 25,
       name: "Bose Sport Earbuds - Wireless Earphones - Bluetooth In Ear...",
       rating:5,
       reviews: 567,
@@ -452,7 +452,7 @@ const ShopPage: React.FC = () => {
     
     // Pagination: État pour la gestion des pages
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 12; // Nombre de produits par page
+    const itemsPerPage = 8; // Nombre de produits par page
   
     // Calcul des indices pour afficher les produits de la page actuelle
     const startIndex = (currentPage - 1) * itemsPerPage;
