@@ -23,7 +23,7 @@ import DropdownPopup from './DropdownPopup';
 import English from '../../../assets_2/icons/Multi-Language/Ellipse 10.svg';
 import Mandarin from '../../../assets_2/icons/Multi-Language/Multi-Language/Ellipse 10.svg';
 import Russian from '../../../assets_2/icons/Multi-Language/Multi-Language/Multi-Language/Ellipse 10.svg';
-import UserPopup from './UserPopup'
+import UserPopup from './UserPopup';
 
 const categories: Category[] = [
   { id: 1, name: 'Computer & Laptop' },
